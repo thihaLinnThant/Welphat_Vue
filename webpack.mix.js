@@ -1,13 +1,15 @@
 const mix = require('laravel-mix');
 
 
-mix.webpackConfig({
-    resolve: {
-      alias: {
-        'vue$': 'vue/dist/vue.runtime.esm.js'
-      }
-    }
-  });
+// mix.webpackConfig({
+//     resolve: {
+//       alias: {
+//         'vue$': 'vue/dist/vue.esm.js'
+//       }
+//     }
+//   });
+
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
