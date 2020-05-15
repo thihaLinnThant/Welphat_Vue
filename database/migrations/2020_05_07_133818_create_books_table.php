@@ -19,9 +19,7 @@ class CreateBooksTable extends Migration
             $table->longText('description');
             $table->double('price');
             $table->date('published_date');
-            $table->timestamps();
-
-            $table->primary('id');
+            $table->timestamps();            
         });
     }
 

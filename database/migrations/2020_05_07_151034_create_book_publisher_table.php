@@ -15,13 +15,9 @@ class CreateBookPublisherTable extends Migration
     {
         Schema::create('book_publisher', function (Blueprint $table) {
             $table->id('id');
-            $table->id('book_id');
-            $table->id('publisher_id');
+            $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreignId('publisher_id')->nullable()->references('id')->on('publishers')->onDelete('set null');
             $table->timestamps();
-
-            $table->primary('id');
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->foreign('publisher_id')->references('id')->on('publishers')->onDelete('set null');
         });
     }
 

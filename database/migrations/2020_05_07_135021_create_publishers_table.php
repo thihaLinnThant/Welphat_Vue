@@ -17,8 +17,6 @@ class CreatePublishersTable extends Migration
             $table->id('id');
             $table->string('name');
             $table->timestamps();
-
-            $table->primary('id');
         });
     }
 

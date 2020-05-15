@@ -14,14 +14,10 @@ class CreateBookCategoryTable extends Migration
     public function up()
     {
         Schema::create('book_category', function (Blueprint $table) {
-            $table->id('id');
-            $table->id('book_id');
-            $table->id('category_id');
+            $table->id('id');            
+            $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreignId('catagory_id')->nullable()->references('id')->on('categories')->onDelete('set null');
             $table->timestamps();
-
-            $table->primary('id');
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->foreign('catagory_id')->references('id')->on('catagories')->onDelete('set null');
         });
     }
 

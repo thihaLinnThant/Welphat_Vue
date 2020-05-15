@@ -15,13 +15,9 @@ class CreateBookAuthorTable extends Migration
     {
         Schema::create('book_author', function (Blueprint $table) {
             $table->id('id');
-            $table->id('book_id');
-            $table->id('author_id');
+            $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreignId('author_id')->nullable()->references('id')->on('authors')->onDelete('set null');
             $table->timestamps();
-
-            $table->primary('id');
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->foreign('author_id')->references('id')->on('authors')->onDelete('set null');
         });
     }
 
