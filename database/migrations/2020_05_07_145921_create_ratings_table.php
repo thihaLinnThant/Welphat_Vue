@@ -17,7 +17,7 @@ class CreateRatingsTable extends Migration
             $table->id('id');
             $table->integer('rating');
             $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->index('book_id');
             $table->timestamps();
         });

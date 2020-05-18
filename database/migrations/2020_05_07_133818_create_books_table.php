@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('name');            
             $table->longText('description');
             $table->double('price');
+            $table->foreignId('publisher_id')->nullable()->references('id')->on('publishers')->onDelete('set null');
             $table->date('published_date');
             $table->timestamps();            
         });

@@ -8,9 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/admin_style.css')}}" type="text/css">
     {{-- <link rel="stylesheet" href="{{ asset('/css/vue-style.css')}}" type="text/css"> --}}
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
         window.welphat_server_data = "{!! addslashes(json_encode($data)) !!}"
-    </script> --}}
+        window.csrf_token = "{{ csrf_token() }}"
+    </script>
 </head>
 <body>
 <div id="app"></div>

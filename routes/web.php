@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin', 'CategoryController@get_home_web');
 
-Route::get('/admin', function () {
-    return view('admin.app');
-});
+Route::get('/admin/categories/', 'CategoryController@get_categories_web');
+
+Route::get('/admin/dummy', 'CategoryController@get_home_web');
