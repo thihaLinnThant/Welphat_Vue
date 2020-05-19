@@ -9,7 +9,7 @@ import Dummy from '../components/admin/dummy.vue';
 
 let router = new VueRouter({
     mode: 'history',
-    routes: [
+    routes: [        
         { path: '/admin/categories', component: Categories, name: 'categories'},
         { path: '/admin/dummy', component: Dummy, name: 'dummy'},
     ]
@@ -17,15 +17,31 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next)=> {
     let serverData = JSON.parse(window.welphat_server_data);
-    if(serverData.path === '/admin/dummy') {
+
+    if(serverData.path === '/admin/categories' || to.path === '/admin/categories') {
+        if(Store.state.categories.length > 0){
+            next();
+        }
+        else {
+            Axios.get(`/api${to.path}`).then(({data}) => {
+                Store.commit('addData', {route: to.name, data})
+                next();
+            });
+        }
+    }
+    else if(serverData.path === '/admin' || to.path === '/admin') {
         next();
     }
-    else if(serverData.path === '/admin/categories') {
-        Axios.get(`/api${to.path}`).then(({data}) => {
-            Store.commit('addData', {route: to.name, data})
-            next();
-        });
+    else if(serverData.path === '/admin/dummy' || to.path == '/dummy') {
+        next();
     }
+    // else if(!serverData.path || to.path !== serverData.path) {
+    //     Axios.get(`/api${to.path}`).then(({data}) => {
+    //         Store.commit('addData', {route: to.name, data})
+    //         next();
+    //     });
+    // }
+    
 });
 
 export default router;

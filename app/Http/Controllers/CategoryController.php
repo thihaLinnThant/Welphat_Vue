@@ -10,7 +10,6 @@ class CategoryController extends Controller
     //Temporary -----------------------------------------    
     public function get_home_web(Request $request) {
         $data = collect([
-                'categories' => Category::all()->random(3),
                 'path' => $request->getPathInfo()
             ]);
         return view('admin.app', ['data' => $data]);

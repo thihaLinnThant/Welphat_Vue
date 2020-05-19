@@ -13,6 +13,11 @@ export default new Vuex.Store({
     state: {
         categories: []
     },
+    getters: {
+        getCategories(state) {            
+            return state.categories;
+        }
+    },
     mutations: {
         addData(state, { route, data }) {
             if (route === 'categories') {

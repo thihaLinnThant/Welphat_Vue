@@ -1,17 +1,17 @@
 <template>
 <div>
     <entry-card entryName="Category Entry"></entry-card>
-    <data-chips :items=categories></data-chips>
+    <data-cards :items=categories></data-cards>
 </div>
 </template>
 
 <script>
 import EntryCard from './EntryCard.vue';
-import DataChips from './DataChips.vue';
+import DataCards from './DataCards.vue';
 export default {
     components: {
         EntryCard,
-        DataChips
+        DataCards
     },
     computed: {
         categories() {

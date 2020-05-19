@@ -1,7 +1,9 @@
 <template>
     <v-row align="stratch" justify="start" class="ml-10 mr-0">
         <v-card v-for="(item, i) in items" :key=i color="#2a2a2a" raised dense class="ma-3">
-            
+
+            <slot></slot> <!-- for card-image -->
+
             <v-card-title dense class="pr-0">
                 {{ item.name }}
                 <v-spacer></v-spacer>
