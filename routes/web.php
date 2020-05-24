@@ -18,6 +18,15 @@ Route::get('/', function () {
 });
 Route::get('/admin', 'CategoryController@get_home_web');
 
-Route::get('/admin/categories/', 'CategoryController@get_categories_web');
+//books
+Route::get('/admin/books', 'BookController@get_books_web');
+
+//categories
+Route::get('/admin/categories', 'CategoryController@get_categories_web');
+Route::post('/admin/categories/addcategory', 'CategoryController@create');
+
+Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
+Route::get('/admin/tags', 'TagController@get_tags_web');
 
 Route::get('/admin/dummy', 'CategoryController@get_home_web');
+

@@ -7,6 +7,30 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+
+    private function get_tags() {
+        $collection = Tag::all([ 'id', 'name' ]);
+        $tags = collect();
+        foreach($collection as $tag) {
+            $tag->count = $tag->books()->count();
+            $tags->push($tag);
+        }        
+        return collect(['tags' => $tags]);
+    }
+
+    private function add_meta_data($request) {
+        return collect(['path' => $request->getPathInfo()]);
+    }
+
+    public function get_tags_api() {
+        $data = $this->get_tags();
+        return response()->json($data);
+    }
+
+    public function get_tags_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
     /**
      * Display a listing of the resource.
      *

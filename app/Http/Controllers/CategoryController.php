@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -17,14 +18,17 @@ class CategoryController extends Controller
     // --------------------------------------------------    
 
     private function get_categories() {
-        $categories = Category::all([ 'id', 'name' ]);
+        $collection = Category::all([ 'id', 'name' ]);
+        $categories = collect();
+        foreach($collection as $category) {
+            $category->count = $category->books()->count();
+            $categories->push($category);
+        }        
         return collect(['categories' => $categories]);
     }
 
-    private function add_meta_data($collection, $request) {
-        return $collection->merge([
-            'path' => $request->getPathInfo()
-        ]);
+    private function add_meta_data($request) {
+        return collect(['path' => $request->getPathInfo()]);
     }
 
     public function get_categories_api() {
@@ -33,13 +37,12 @@ class CategoryController extends Controller
     }
 
     public function get_categories_web(Request $request) {
-        $data = $this->get_categories();
-        $data = $this->add_meta_data($data, $request);
+        $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
     /**
      * Display a listing of the resource.
-     *
+     *e
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -52,9 +55,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+        Category::create([ 'name' => $request->name ]);        
     }
 
     /**

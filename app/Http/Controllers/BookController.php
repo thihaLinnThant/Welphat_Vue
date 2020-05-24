@@ -3,10 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    private function add_meta_data($request) {
+        return collect(['path' => $request->getPathInfo()]);
+    }
+
+    private function get_book_list() {
+        $collection = Book::with('authors')->with('categories')->with('tags')->get();
+        $books = collect();
+        foreach($collection as $book) {
+            $book->thumb = asset('storage/images/books/'. $book->id . '/thumb_nail.png');
+            $books->push($book);
+        }
+        return collect(['books' => $books]);
+    }
+
+    public function get_books_api(){
+        $data = $this->get_book_list()->toArray();
+        return response()->json($data);
+    }
+
+    public function get_books_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data ]);
+    }
     /**
      * Display a listing of the resource.
      *

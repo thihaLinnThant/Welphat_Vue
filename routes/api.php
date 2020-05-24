@@ -20,6 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/admin', 'CategoryController@get_categories_api');
 
+Route::get('/admin/books', 'BookController@get_books_api');
+
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
+
+Route::get('/admin/tags', 'TagController@get_tags_api');
+
+Route::get('/admin/publishers', 'PublisherController@get_publishers_api');
 
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');

@@ -11,7 +11,10 @@ axios.defaults.headers.common = {
 
 export default new Vuex.Store({
     state: {
-        categories: []
+        books: [],
+        categories: [],
+        tags: [],
+        publishers: []
     },
     getters: {
         getCategories(state) {            
@@ -20,8 +23,17 @@ export default new Vuex.Store({
     },
     mutations: {
         addData(state, { route, data }) {
-            if (route === 'categories') {
+            if(route === 'books') {
+                state.books = data.books;
+            }
+            else if (route === 'categories') {
                 state.categories = data.categories;
+            }
+            else if (route === 'tags') {
+                state.tags = data.tags;
+            }
+            else if (route === 'publishers') {
+                state.publishers = data.publishers;
             }
         }
     }

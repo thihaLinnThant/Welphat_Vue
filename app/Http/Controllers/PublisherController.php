@@ -7,6 +7,30 @@ use Illuminate\Http\Request;
 
 class PublisherController extends Controller
 {
+
+    private function get_publishers() {
+        $collection = Publisher::all([ 'id', 'name' ]);
+        $publishers = collect();
+        foreach($collection as $publisher) {
+            $publisher->count = $publisher->books()->count();
+            $publishers->push($publisher);
+        }        
+        return collect(['publishers' => $publishers]);
+    }
+
+    private function add_meta_data($request) {
+        return collect(['path' => $request->getPathInfo()]);
+    }
+
+    public function get_publishers_api() {
+        $data = $this->get_publishers();
+        return response()->json($data);
+    }
+
+    public function get_publishers_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
     /**
      * Display a listing of the resource.
      *
