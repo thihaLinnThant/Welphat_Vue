@@ -16,8 +16,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/admin', 'CategoryController@get_home_web');
 
-Route::get('/admin/categories/', 'CategoryController@get_categories_web');
+Auth::routes();
 
-Route::get('/admin/dummy', 'CategoryController@get_home_web');
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm')->name('login.admin');
+Route::get('/register/admin', 'Auth\RegisterController@showAdminRegisterForm')->name('register.admin');
+
+Route::post('/login/admin', 'Auth\LoginController@loginAdmin')->name('login.admin');
+Route::post('/register/admin', 'Auth\RegisterController@createAdmin')->name('register.admin');
+
+Route::group(['middleware' => 'auth:admin'], function () {
+    Route::get('/admin', 'CategoryController@get_home_web');
+
+    Route::get('/admin/categories/', 'CategoryController@get_categories_web');
+
+    Route::get('/admin/dummy', 'CategoryController@get_home_web');
+});

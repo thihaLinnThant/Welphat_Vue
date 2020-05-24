@@ -1,15 +1,5 @@
 const mix = require('laravel-mix');
 
-
-mix.webpackConfig({
-    resolve: {
-      alias: {
-        'vue$': 'vue/dist/vue.esm.js'
-      }
-    }
-});
-
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -21,12 +11,5 @@ mix.webpackConfig({
  |
  */
 
-// mix.options({
-//   extractVueStyles: 'public/css/vue-style.css'
-// });
-
-mix.js('resources/js/admin_app.js', 'public/js/admin_app.js')
-    .sass('resources/sass/admin.scss', 'public/css/admin_style.css')
-    .styles([
-      'resources/css/admin_style.css'
-    ], 'public/css/admin_style.css');
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css');
