@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    //Temporary -----------------------------------------    
+    //Temporary -----------------------------------------
     public function get_home_web(Request $request) {
         $data = collect([
                 'path' => $request->getPathInfo()
             ]);
         return view('admin.app', ['data' => $data]);
     }
-    // --------------------------------------------------    
+    // --------------------------------------------------
 
     private function get_categories() {
         $collection = Category::all([ 'id', 'name' ]);

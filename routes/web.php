@@ -16,17 +16,29 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/admin', 'CategoryController@get_home_web');
 
-//books
-Route::get('/admin/books', 'BookController@get_books_web');
 
-//categories
-Route::get('/admin/categories', 'CategoryController@get_categories_web');
-Route::post('/admin/categories/addcategory', 'CategoryController@create');
+Auth::routes();
 
-Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
-Route::get('/admin/tags', 'TagController@get_tags_web');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin/dummy', 'CategoryController@get_home_web');
 
+Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm')->name('login.admin');
+Route::get('/register/admin', 'Auth\RegisterController@showAdminRegisterForm')->name('register.admin');
+
+Route::post('/login/admin', 'Auth\LoginController@loginAdmin')->name('login.admin');
+Route::post('/register/admin', 'Auth\RegisterController@createAdmin')->name('register.admin');
+
+Route::group(['middleware' => 'auth:admin'], function () {
+
+    Route::get('/admin/books', 'BookController@get_books_web');
+
+    Route::get('/admin/categories', 'CategoryController@get_categories_web');
+    Route::post('/admin/categories/addcategory', 'CategoryController@create');
+
+    Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
+    Route::get('/admin/tags', 'TagController@get_tags_web');
+
+    Route::get('/admin/dummy', 'CategoryController@get_home_web');
+
+});
