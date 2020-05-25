@@ -40,7 +40,8 @@
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>WelPhat Admin Panel</v-toolbar-title>
             <!-- <v-spacer></v-spacer> -->
-            <v-btn class="ml-5" outlined >Logout</v-btn>
+            <v-btn @click="logout" class="ml-5" outlined >Logout</v-btn>
+            <form id="logout_form" method="POST" action="/logout" sytle="display:hidden"><input type="hidden" name="_token" :value="csrf_token"/></form>
         </v-app-bar>
     
         <v-content>
@@ -63,7 +64,8 @@
       source: String,
     },
     data: () => ({
-      drawer: null,    
+      drawer: null,
+      csrf_token: window.csrf_token,
       items: [
         { text: 'Books' , icon: 'fas fa-book' , link: 'books', inactive: false},
         { text: 'Admins' , icon: 'fas fa-user-shield', link: 'dummy', inactive: false },
@@ -79,6 +81,11 @@
     created () {
       this.$vuetify.theme.dark = true
     },
+    methods: {
+        logout() {
+            document.getElementById('logout_form').submit();
+        }
+    }
   }
 </script>
 <style>

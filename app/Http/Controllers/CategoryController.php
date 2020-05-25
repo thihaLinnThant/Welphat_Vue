@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
     public function get_categories_api() {
         $data = $this->get_categories();
-        return response()->json($data);
+        return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
     }
 
     public function get_categories_web(Request $request) {
