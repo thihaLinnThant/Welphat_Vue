@@ -1,5 +1,5 @@
 <template>
-    <v-row align="stratch" justify="start" class="ml-10 mr-0">
+    <v-row align="stratch" justify="start" class="ml-10 mr-0 data-cards">
         <v-card v-for="(item, i) in items" :key=i :dark=true raised dense class="ma-3">
 
             <slot></slot> <!-- for card-image -->
@@ -26,5 +26,7 @@ export default {
 </script>
 
 <style>
-
+.data-cards {
+    transition: ease-in-out 0.5s;
+}
 </style>

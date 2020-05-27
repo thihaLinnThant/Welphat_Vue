@@ -36,6 +36,11 @@ class CategoryController extends Controller
         return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
     }
 
+    public function get_lastCategory_api() {
+        $data = Category::latest()->first();        
+        return response()->json($data);
+    }
+
     public function get_categories_web(Request $request) {
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
@@ -60,7 +65,10 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        Category::create([ 'name' => $request->name ]);        
+        
+        Category::create([ 'name' => $request->name ]);
+
+        return response()->json(null, 200);
     }
 
     /**

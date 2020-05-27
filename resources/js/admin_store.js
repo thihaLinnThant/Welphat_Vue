@@ -16,25 +16,17 @@ export default new Vuex.Store({
         tags: [],
         publishers: []
     },
-    getters: {
-        getCategories(state) {            
-            return state.categories;
-        }
-    },
+    // getters: {
+    //     getCategories(state) {            
+    //         return state.categories;
+    //     }
+    // },
     mutations: {
+        addOneRecord(state, { route, data }) {
+            state[route].push(data);
+        },
         addData(state, { route, data }) {
-            if(route === 'books') {
-                state.books = data.books;
-            }
-            else if (route === 'categories') {
-                state.categories = data.categories;
-            }
-            else if (route === 'tags') {
-                state.tags = data.tags;
-            }
-            else if (route === 'publishers') {
-                state.publishers = data.publishers;
-            }
+            state[route] = data[route];
         }
     }
 });

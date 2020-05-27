@@ -31,6 +31,11 @@ class PublisherController extends Controller
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
+
+    public function get_lastPublisher_api() {
+        $data = Publisher::latest()->first();        
+        return response()->json($data);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -46,9 +51,15 @@ class PublisherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+        
+        Publisher::create([ 'name' => $request->name ]);
+
+        return response()->json(null,200);
     }
 
     /**

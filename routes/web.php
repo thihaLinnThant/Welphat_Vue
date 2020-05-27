@@ -29,15 +29,17 @@ Route::get('/register/admin', 'Auth\RegisterController@showAdminRegisterForm')->
 Route::post('/login/admin', 'Auth\LoginController@loginAdmin')->name('login.admin');
 Route::post('/register/admin', 'Auth\RegisterController@createAdmin')->name('register.admin');
 
-Route::group(['middleware' => 'auth:admin'], function () {
-
+Route::group(['middleware' => 'auth:admin'], function () {    
     Route::get('/admin/books', 'BookController@get_books_web');
 
     Route::get('/admin/categories', 'CategoryController@get_categories_web');
-    Route::post('/admin/categories/addcategory', 'CategoryController@create');
+    Route::post('/admin/categories/addcategory', 'CategoryController@create');    
 
     Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
+    Route::post('/admin/publishers/addpublisher', 'PublisherController@create');
+
     Route::get('/admin/tags', 'TagController@get_tags_web');
+    Route::post('/admin/tags/addtag', 'TagController@create');
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');
 

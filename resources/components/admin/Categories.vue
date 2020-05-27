@@ -1,6 +1,6 @@
 <template>
 <div>
-    <entry-card entryName="Category Entry"></entry-card>
+    <entry-card entryName="Category Entry" act="/admin/categories/addcategory" statename="categories" routename="category"></entry-card>
     <data-cards :items=categories></data-cards>
 </div>
 </template>

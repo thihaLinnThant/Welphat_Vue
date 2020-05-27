@@ -1,6 +1,6 @@
 <template>
     <div>
-        <entry-card entryName="Category Entry"></entry-card>
+        <entry-card entryName="Publisher Entry" act="/admin/publishers/addpublisher" statename="publishers" routename="publisher"></entry-card>
         <data-cards :items=publishers></data-cards>
     </div>
 </template>
