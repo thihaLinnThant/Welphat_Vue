@@ -1,4 +1,4 @@
-<template>    
+<template>
     <v-app id="inspire">
         <v-navigation-drawer
             v-model="drawer"
@@ -29,10 +29,10 @@
                         </v-list-item>
                     </router-link>
                 </div>
-                
+
             </v-list>
         </v-navigation-drawer>
-    
+
         <v-app-bar
             app
             clipped-left
@@ -43,13 +43,13 @@
             <v-btn @click="logout" class="ml-5" outlined >Logout</v-btn>
             <form id="logout_form" method="POST" action="/logout" sytle="display:hidden"><input type="hidden" name="_token" :value="csrf_token"/></form>
         </v-app-bar>
-    
+
         <v-content>
-            <v-container fluid>                
-                <router-view></router-view>                
+            <v-container fluid>
+                <router-view></router-view>
             </v-container>
         </v-content>
-    
+
         <v-footer app>
             <span>&copy; 2020</span>
         </v-footer>
@@ -73,10 +73,10 @@
         { text: 'Authors' , icon: 'fas fa-feather-alt', link: 'dummy', inactive: false },
         { text: 'Categories' , icon: 'fas fa-list', link: 'categories', inactive: false },
         { text: 'Tags' , icon: 'fas fa-tags', link: 'tags', inactive: false  },
-        { text: 'Comments' , icon: 'fas fa-comments', link: 'dummy', inactive: false  },
+        { text: 'Comments' , icon: 'fas fa-comments', link: 'comments', inactive: false  },
         { text: 'Publishers' , icon: 'fas fa-building', link: 'publishers', inactive: false },
         { text: 'Orders' , icon: 'fas fa-clipboard-list', link: 'dummy', inactive: false  }
-      ]      
+      ]
     }),
     created () {
       this.$vuetify.theme.dark = true
@@ -96,6 +96,6 @@
     height: 0px;
     border: 1px solid dimgray;
     width: 90%;
-    margin: auto;    
+    margin: auto;
 }
 </style>

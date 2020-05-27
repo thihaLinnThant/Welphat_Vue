@@ -8,7 +8,7 @@ import Books from '../components/admin/Books.vue';
 import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
 import Publishers from '../components/admin/publishers.vue';
-import Dummy from '../components/admin/dummy.vue';
+import Comment from '../components/admin/Comments.vue'
 
 let router = new VueRouter({
     mode: 'history',
@@ -18,7 +18,7 @@ let router = new VueRouter({
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },
         { path: '/admin/categories/addcategory', name: 'addcategory' },
-        { path: '/admin/dummy', component: Dummy, name: 'dummy' },
+        { path: '/admin/comments', component: Comment, name: 'comments' },
     ],
     // methods: {
     //     getApiData() {

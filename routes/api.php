@@ -29,3 +29,5 @@ Route::get('/admin/tags', 'TagController@get_tags_api');
 Route::get('/admin/publishers', 'PublisherController@get_publishers_api');
 
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');
+
+Route::get('/admin/comments', 'CommentController@get_comments_api');
