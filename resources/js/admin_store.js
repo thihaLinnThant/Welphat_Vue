@@ -12,6 +12,7 @@ axios.defaults.headers.common = {
 export default new Vuex.Store({
     state: {
         books: [],
+        authors: [],
         categories: [],
         tags: [],
         publishers: []

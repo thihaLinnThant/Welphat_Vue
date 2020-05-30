@@ -1,4 +1,6 @@
+import Lastrecord from './lastRecordmixin'
 export default {
+    mixins: [Lastrecord],
     data() {
         return {
             csrf_token: window.csrf_token,
@@ -21,9 +23,11 @@ export default {
                     this.loaded = true;
                     this.success = true;                    
                     this.goterror = false;
-                    axios.get(`/api/lastrecord/${this.routename}`).then(({ data }) => {
-                        this.$store.commit('addOneRecord', { route: this.statename, data })
-                    });
+
+                    //there will be a condition later
+                    this.lastrecord(this.routename, this.statename);
+                    //
+
                 }).catch(error => {
                     this.loaded = true;
                     this.goterror = true;

@@ -22,6 +22,8 @@ Route::get('/admin', 'CategoryController@get_categories_api');
 
 Route::get('/admin/books', 'BookController@get_books_api');
 
+Route::get('/admin/authors', 'AuthorController@get_authors_api');
+
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
 Route::get('lastrecord/category','CategoryController@get_lastCategory_api');
 
