@@ -6,21 +6,20 @@
 </template>
 
 <script>
-import EntryCard from './EntryCard.vue';
-import DataCards from './DataCards.vue';
+import EntryCard from "./EntryCard.vue";
+import DataCards from "./DataCards.vue";
 export default {
-    components: {
-        EntryCard,
-        DataCards
-    },
-    computed: {
-        categories() {
-            return this.$store.state.categories;
-        }
+  components: {
+    EntryCard,
+    DataCards
+  },
+  computed: {
+    categories() {
+      return this.$store.state.categories;
     }
-}
+  }
+};
 </script>
 
 <style>
-
 </style>

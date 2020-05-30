@@ -11,7 +11,7 @@ import AuthorRegister from '../components/admin/AuthorRegister.vue'
 import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
 import Publishers from '../components/admin/publishers.vue';
-import Dummy from '../components/admin/dummy.vue';
+import Comment from '../components/admin/Comments.vue'
 
 let router = new VueRouter({
     mode: 'history',
@@ -28,6 +28,7 @@ let router = new VueRouter({
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },        
         { path: '/admin/dummy', component: Dummy, name: 'dummy' },
+        { path: '/admin/comments', component: Comment, name: 'comments' },
     ],
     // methods: {
     //     getApiData() {
@@ -58,6 +59,8 @@ router.beforeEach((to, from, next) => {
     else if (to.path === '/admin/tags') { if(Store.state.tags.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/publishers') { if(Store.state.publishers.length > 0) { next() } else { getApiData(to.path, to.name) } }
+
+    else if (to.path === '/admin/comments') { if (Store.state.comments.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin') { next(); }
 

@@ -23,7 +23,7 @@ class CategoryController extends Controller
         foreach($collection as $category) {
             $category->count = $category->books()->count();
             $categories->push($category);
-        }        
+        }
         return collect(['categories' => $categories]);
     }
 

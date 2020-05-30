@@ -15,13 +15,14 @@ export default new Vuex.Store({
         authors: [],
         categories: [],
         tags: [],
-        publishers: []
+        publishers: [],
+        comments : []
     },
-    // getters: {
-    //     getCategories(state) {            
-    //         return state.categories;
-    //     }
-    // },
+    getters: {
+        getCategories(state) {
+            return state.categories;
+        }
+    },
     mutations: {
         addOneRecord(state, { route, data }) {
             state[route].push(data);

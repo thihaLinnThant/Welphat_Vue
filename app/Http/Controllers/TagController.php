@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use Illuminate\Http\Request;
+use SebastianBergmann\Environment\Console;
 
 class TagController extends Controller
 {
@@ -14,7 +15,7 @@ class TagController extends Controller
         foreach($collection as $tag) {
             $tag->count = $tag->books()->count();
             $tags->push($tag);
-        }        
+        }
         return collect(['tags' => $tags]);
     }
 
