@@ -8,13 +8,14 @@ class CommentController extends Controller
 {
 
     private function get_comments() {
-        $collection = Comment::all();
-        return $collection;
+        $collection = Comment::with('book')->with('user')->get();
+        return collect(['comments' => $collection]);
+
     }
 
     public function get_comments_api(){
         $data = $this->get_comments();
-        return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
+        return response()->json($data);
 
     }
 

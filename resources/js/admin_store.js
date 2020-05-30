@@ -14,10 +14,11 @@ export default new Vuex.Store({
         books: [],
         categories: [],
         tags: [],
-        publishers: []
+        publishers: [],
+        comments : []
     },
     getters: {
-        getCategories(state) {            
+        getCategories(state) {
             return state.categories;
         }
     },
@@ -34,6 +35,9 @@ export default new Vuex.Store({
             }
             else if (route === 'publishers') {
                 state.publishers = data.publishers;
+            }
+            else if (route === 'comments') {
+                state.comments = data.comments;
             }
         }
     }

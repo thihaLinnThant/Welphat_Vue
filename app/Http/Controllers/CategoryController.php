@@ -23,7 +23,7 @@ class CategoryController extends Controller
         foreach($collection as $category) {
             $category->count = $category->books()->count();
             $categories->push($category);
-        }        
+        }
         return collect(['categories' => $categories]);
     }
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        Category::create([ 'name' => $request->name ]);        
+        Category::create([ 'name' => $request->name ]);
     }
 
     /**

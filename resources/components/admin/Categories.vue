@@ -2,6 +2,7 @@
   <div>
     <entry-card entryName="Category Entry"></entry-card>
     <data-cards :items="categories"></data-cards>
+    <p>{{categories}}</p>
   </div>
 </template>
 

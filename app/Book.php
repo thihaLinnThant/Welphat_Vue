@@ -23,4 +23,9 @@ class Book extends Model
     public function publisher(){
         return $this->belongsTo('App\Publisher');
     }
+
+    public function comments(){
+        return $this->hasMany('App\Comment');
+    }
+
 }

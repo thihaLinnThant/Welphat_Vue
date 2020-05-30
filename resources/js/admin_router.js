@@ -40,13 +40,15 @@ router.beforeEach((to, from, next) => {
         });
     }
 
-    if (to.path === '/admin/books') { if(Store.state.books.length > 0) { next() } else {getApiData()} }
+    if (to.path === '/admin/books') { if (Store.state.books.length > 0) { next() } else { getApiData() } }
 
-    else if (to.path === '/admin/categories') { if(Store.state.categories.length > 0) { next() } else { getApiData() } }
+    else if (to.path === '/admin/categories') { if (Store.state.categories.length > 0) { next() } else { getApiData() } }
 
-    else if (to.path === '/admin/tags') { if(Store.state.tags.length > 0) { next() } else { getApiData() } }
+    else if (to.path === '/admin/tags') { if (Store.state.tags.length > 0) { next() } else { getApiData() } }
 
-    else if (to.path === '/admin/publishers') { if(Store.state.publishers.length > 0) { next() } else { getApiData() } }
+    else if (to.path === '/admin/publishers') { if (Store.state.publishers.length > 0) { next() } else { getApiData() } }
+
+    else if (to.path === '/admin/comments') { if (Store.state.comments.length > 0) { next() } else { getApiData() } }
 
     else if (to.path === '/admin') { next(); }
 
