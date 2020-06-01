@@ -16,7 +16,7 @@ import Comment from '../components/admin/Comments.vue'
 let router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/admin/books', component: Books, name: 'books' },        
+        { path: '/admin/books', component: Books, name: 'books' },
         { path: '/admin/books/register', component: BookRegister, name: 'book_register'},
 
         { path: '/admin/authors', component: Authors, name: 'authors' },
@@ -24,10 +24,9 @@ let router = new VueRouter({
 
         { path: '/admin/categories', component: Categories, name: 'categories' },
         { path: '/admin/categories/addcategory', name: 'addcategory' },
-        
+
         { path: '/admin/tags', component: Tags, name: 'tags' },
-        { path: '/admin/publishers', component: Publishers, name: 'publishers' },        
-        { path: '/admin/dummy', component: Dummy, name: 'dummy' },
+        { path: '/admin/publishers', component: Publishers, name: 'publishers' },
         { path: '/admin/comments', component: Comment, name: 'comments' },
     ],
     // methods: {
@@ -64,8 +63,7 @@ router.beforeEach((to, from, next) => {
 
     else if (to.path === '/admin') { next(); }
 
-    else if (to.path === '/dummy') { next(); }
-    
+
     else if (to.path === '/admin/books/register') {
         if(Store.state.categories.length <= 0){
             getApiData('/admin/categories', 'categories');
@@ -76,10 +74,16 @@ router.beforeEach((to, from, next) => {
         if(Store.state.publishers.length <= 0){
             getApiData('/admin/publishers', 'publishers');
         }
+        if(Store.state.authors.length <= 0) {
+            getApiData('/admin/authors', 'authors');
+        }
+        if(Store.state.tags.length <= 0) {
+            getApiData('/admin/tags', 'tags')
+        }
         // if(Store.state.categories.length <= 0){
         //     getApiData('/admin/categories', 'categories');
-        // }        
-        next(); 
+        // }
+        next();
     }
     else {
         next();

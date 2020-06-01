@@ -2252,51 +2252,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       book_name: null,
-      image_url: " "
+      image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ3mlqedKcDFuzWNP0CybnRWz8H9TTZVw8d5yUjf1dclZrJX53g&usqp=CAU"
     };
   },
   computed: {
     categories: function categories() {
       return this.$store.state.categories;
     },
+    authors: function authors() {
+      return this.$store.state.authors;
+    },
+    tags: function tags() {
+      return this.$store.state.tags;
+    },
+    publishers: function publishers() {
+      return this.$store.state.publishers;
+    },
     category_list: function category_list() {
-      var temp = [];
-
-      for (var item in this.categories) {
-        temp.push([function (text) {
-          return item.name;
-        }, function (value) {
-          return item.id;
-        }]);
-      }
-
-      return temp;
+      var categoryTemp = [];
+      this.categories.forEach(function (element) {
+        categoryTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return categoryTemp;
+    },
+    author_list: function author_list() {
+      var authorTemp = [];
+      this.authors.forEach(function (element) {
+        authorTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return authorTemp;
+    },
+    tag_list: function tag_list() {
+      var tagTemp = [];
+      this.tags.forEach(function (element) {
+        tagTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return tagTemp;
+    },
+    publisher_list: function publisher_list() {
+      var publisherTemp = [];
+      this.publishers.forEach(function (element) {
+        publisherTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return publisherTemp;
     }
   },
   methods: {
@@ -7122,7 +7136,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nrouter\n.cust-badge {\n    min-width: 40px;\n    text-align: center;\n    border-radius: 30px;\n    padding: 0px 8px;\n    background-color: #4054b5;    \n    margin-right: 5px;\n    transition: ease-in-out 0.1s;\n}\n.cust-badge > a {    \n    color: white !important; \n    text-decoration: none;\n    overflow: initial;\n}\n.cust-badge:hover {\n    background: blueviolet;\n}\n", ""]);
+exports.push([module.i, "\nrouter\n.cust-badge {\n    min-width: 40px;\n    text-align: center;\n    border-radius: 30px;\n    padding: 0px 8px;\n    background-color: #4054b5;\n    margin-right: 5px;\n    transition: ease-in-out 0.1s;\n}\n.cust-badge > a {\n    color: white !important;\n    text-decoration: none;\n    overflow: initial;\n}\n.cust-badge:hover {\n    background: blueviolet;\n}\n", ""]);
 
 // exports
 
@@ -41354,7 +41368,13 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-autocomplete", {
-                attrs: { outlined: "", multiple: "", label: "Author(s)" }
+                attrs: {
+                  outlined: "",
+                  items: _vm.author_list,
+                  "item-text": "name",
+                  multiple: "",
+                  label: "Author(s)"
+                }
               })
             ],
             1
@@ -41367,7 +41387,8 @@ var render = function() {
               _c("v-autocomplete", {
                 attrs: {
                   outlined: "",
-                  items: _vm.category_list,
+                  items: _vm.categories,
+                  "item-text": "name",
                   multiple: "",
                   label: "Categories"
                 }
@@ -41381,7 +41402,13 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-autocomplete", {
-                attrs: { outlined: "", multiple: "", label: "Tags" }
+                attrs: {
+                  items: _vm.tag_list,
+                  "item-text": "name",
+                  outlined: "",
+                  multiple: "",
+                  label: "Tags"
+                }
               })
             ],
             1
@@ -41392,7 +41419,12 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-autocomplete", {
-                attrs: { outlined: "", label: "Publisher" }
+                attrs: {
+                  items: _vm.publisher_list,
+                  "item-text": "name",
+                  outlined: "",
+                  label: "Publisher"
+                }
               })
             ],
             1
@@ -41491,11 +41523,11 @@ var render = function() {
       _c(
         "v-row",
         { staticClass: "ml-1 mr-0", attrs: { justify: "start" } },
-        _vm._l(_vm.books, function(book) {
+        _vm._l(_vm.books, function(book, index) {
           return _c(
             "v-card",
             {
-              key: book.id,
+              key: index,
               staticClass: "ma-2 book-card",
               attrs: { width: "250px" }
             },
@@ -41531,8 +41563,8 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "d-inline-flex" },
-                  _vm._l(book.authors, function(author) {
-                    return _c("div", { key: author.id }, [
+                  _vm._l(book.authors, function(author, index) {
+                    return _c("div", { key: index }, [
                       _c("p", { staticClass: "mb-0" }, [
                         _vm._v("   " + _vm._s(author.name) + ",")
                       ])
@@ -41549,11 +41581,11 @@ var render = function() {
                     _c("b", [_vm._v("Categories:")])
                   ]),
                   _vm._v(" "),
-                  _vm._l(book.categories, function(category) {
+                  _vm._l(book.categories, function(category, index) {
                     return _c(
                       "v-chip",
                       {
-                        key: category.id,
+                        key: index,
                         staticClass: "ma-1",
                         attrs: { color: "#4054b5", small: "" }
                       },
@@ -41571,11 +41603,11 @@ var render = function() {
                     _c("b", [_vm._v("Tags:")])
                   ]),
                   _vm._v(" "),
-                  _vm._l(book.tags, function(tag) {
+                  _vm._l(book.tags, function(tag, index) {
                     return _c(
                       "v-chip",
                       {
-                        key: tag.id,
+                        key: index,
                         staticClass: "ma-1",
                         attrs: { color: "#4054b5", small: "" }
                       },
@@ -101182,10 +101214,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_admin_publishers_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     name: 'publishers'
   }, {
-    path: '/admin/dummy',
-    component: Dummy,
-    name: 'dummy'
-  }, {
     path: '/admin/comments',
     component: _components_admin_Comments_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     name: 'comments'
@@ -101253,8 +101281,6 @@ router.beforeEach(function (to, from, next) {
     }
   } else if (to.path === '/admin') {
     next();
-  } else if (to.path === '/dummy') {
-    next();
   } else if (to.path === '/admin/books/register') {
     if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.categories.length <= 0) {
       getApiData('/admin/categories', 'categories');
@@ -101266,9 +101292,17 @@ router.beforeEach(function (to, from, next) {
 
     if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.publishers.length <= 0) {
       getApiData('/admin/publishers', 'publishers');
+    }
+
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.authors.length <= 0) {
+      getApiData('/admin/authors', 'authors');
+    }
+
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.tags.length <= 0) {
+      getApiData('/admin/tags', 'tags');
     } // if(Store.state.categories.length <= 0){
     //     getApiData('/admin/categories', 'categories');
-    // }        
+    // }
 
 
     next();
@@ -101452,8 +101486,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })
