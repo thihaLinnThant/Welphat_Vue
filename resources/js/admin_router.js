@@ -12,6 +12,7 @@ import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
 import Publishers from '../components/admin/publishers.vue';
 import Comment from '../components/admin/Comments.vue'
+import Admin from '../components/admin/Admins'
 
 let router = new VueRouter({
     mode: 'history',
@@ -28,6 +29,7 @@ let router = new VueRouter({
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },
         { path: '/admin/comments', component: Comment, name: 'comments' },
+        { path: '/admin/admins', component : Admin , name : 'admins'}
     ],
     // methods: {
     //     getApiData() {
@@ -60,6 +62,8 @@ router.beforeEach((to, from, next) => {
     else if (to.path === '/admin/publishers') { if(Store.state.publishers.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/comments') { if (Store.state.comments.length > 0) { next() } else { getApiData(to.path, to.name) } }
+
+    else if (to.path === '/admin/admins') { if (Store.state.admins.length > 0) {next() } else  { getApiData(to.path , to.name)}}
 
     else if (to.path === '/admin') { next(); }
 

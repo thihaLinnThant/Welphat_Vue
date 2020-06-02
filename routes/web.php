@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/comments', 'CommentController@get_comments_web');
 
+    Route::get('/admin/admins','AdminController@get_admins_web');
+
     Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
     Route::post('/admin/publishers/addpublisher', 'PublisherController@create');
 

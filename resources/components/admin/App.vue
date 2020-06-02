@@ -68,7 +68,7 @@
       csrf_token: window.csrf_token,
       items: [
         { text: 'Books' , icon: 'fas fa-book' , link: 'books', inactive: false},
-        { text: 'Admins' , icon: 'fas fa-user-shield', link: 'dummy', inactive: false },
+        { text: 'Admins' , icon: 'fas fa-user-shield', link: 'admins', inactive: false },
         { text: 'Users' , icon: 'fas fa-user', link: 'dummy', inactive: false },
         { text: 'Authors' , icon: 'fas fa-feather-alt', link: 'authors', inactive: false },
         { text: 'Categories' , icon: 'fas fa-list', link: 'categories', inactive: false },

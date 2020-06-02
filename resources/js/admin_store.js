@@ -11,6 +11,7 @@ axios.defaults.headers.common = {
 
 export default new Vuex.Store({
     state: {
+        admins : [],
         books: [],
         authors: [],
         categories: [],
@@ -29,6 +30,7 @@ export default new Vuex.Store({
         },
         addData(state, { route, data }) {
             state[route] = data[route];
+            console.log(state)
         }
     }
 });
