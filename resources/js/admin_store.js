@@ -17,7 +17,8 @@ export default new Vuex.Store({
         categories: [],
         tags: [],
         publishers: [],
-        comments : []
+        comments : [],
+        users : []
     },
     getters: {
         getCategories(state) {

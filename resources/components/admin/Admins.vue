@@ -34,7 +34,14 @@
               <td>{{admin.email}}</td>
               <td>
                 <a :href="'mailto:'+admin.email">
-                  <v-btn class="mt-1">send email</v-btn>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn class="mt-1" text icon v-on="on">
+                        <v-icon>mdi-email</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>send email</span>
+                  </v-tooltip>
                 </a>
               </td>
             </tr>
@@ -57,9 +64,9 @@ export default {
           align: "start",
           value: "id"
         },
-        { text: "Profile", value: "avatar_url" },
-        { text: "Name", value: "user_id" },
-        { text: "Email", value: "book_id" },
+        { text: "Profile", value: "profile_image" },
+        { text: "Name", value: "name" },
+        { text: "Email", value: "email" },
         { text: "Actions", value: "actions" }
       ],
       admins: this.$store.state.admins

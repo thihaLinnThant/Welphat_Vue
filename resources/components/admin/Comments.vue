@@ -21,10 +21,22 @@
               <td>{{comment.book.name}}</td>
               <td>{{comment.comment_text}}</td>
               <td class="d-flex flex-row">
-
-                  <v-btn class="mt-1">view book</v-btn>
-                  <v-btn class="mt-1 ml-2">delete</v-btn>
-
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn class="mt-1" text icon v-on="on">
+                      <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>view book</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn class="mt-1" text icon v-on="on">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>delete comment</span>
+                </v-tooltip>
               </td>
             </tr>
           </tbody>

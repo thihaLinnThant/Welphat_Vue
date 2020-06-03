@@ -69,7 +69,7 @@
       items: [
         { text: 'Books' , icon: 'mdi-bookshelf' , link: 'books', inactive: false},
         { text: 'Admins' , icon: 'mdi-shield-account', link: 'admins', inactive: false },
-        { text: 'Users' , icon: 'mdi-account', link: 'dummy', inactive: false },
+        { text: 'Users' , icon: 'mdi-account', link: 'users', inactive: false },
         { text: 'Authors' , icon: 'mdi-lead-pencil', link: 'authors', inactive: false },
         { text: 'Categories' , icon: 'mdi-menu', link: 'categories', inactive: false },
         { text: 'Tags' , icon: 'mdi-tag', link: 'tags', inactive: false  },

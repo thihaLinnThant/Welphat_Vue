@@ -1956,6 +1956,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1966,13 +1973,13 @@ __webpack_require__.r(__webpack_exports__);
         value: "id"
       }, {
         text: "Profile",
-        value: "avatar_url"
+        value: "profile_image"
       }, {
         text: "Name",
-        value: "user_id"
+        value: "name"
       }, {
         text: "Email",
-        value: "book_id"
+        value: "email"
       }, {
         text: "Actions",
         value: "actions"
@@ -2073,7 +2080,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Users',
         icon: 'mdi-account',
-        link: 'dummy',
+        link: 'users',
         inactive: false
       }, {
         text: 'Authors',
@@ -2597,6 +2604,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2724,6 +2743,128 @@ __webpack_require__.r(__webpack_exports__);
     tags: function tags() {
       return this.$store.state.tags;
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Users.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/Users.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: "",
+      headers: [{
+        text: "Id",
+        align: "start",
+        value: "id"
+      }, {
+        text: "Profile",
+        value: "profile_image"
+      }, {
+        text: "Name",
+        value: "name"
+      }, {
+        text: "Email",
+        value: "email"
+      }, {
+        text: "Ph number",
+        value: "ph_no"
+      }, {
+        text: "Address",
+        value: "address"
+      }, {
+        text: "Actions",
+        value: "actions"
+      }],
+      users: this.$store.state.users
+    };
   }
 });
 
@@ -41218,9 +41359,46 @@ var render = function() {
                             "a",
                             { attrs: { href: "mailto:" + admin.email } },
                             [
-                              _c("v-btn", { staticClass: "mt-1" }, [
-                                _vm._v("send email")
-                              ])
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-btn",
+                                              _vm._g(
+                                                {
+                                                  staticClass: "mt-1",
+                                                  attrs: { text: "", icon: "" }
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-email")
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("send email")])
+                                ]
+                              )
                             ],
                             1
                           )
@@ -42135,13 +42313,80 @@ var render = function() {
                           "td",
                           { staticClass: "d-flex flex-row" },
                           [
-                            _c("v-btn", { staticClass: "mt-1" }, [
-                              _vm._v("view book")
-                            ]),
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { bottom: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-btn",
+                                            _vm._g(
+                                              {
+                                                staticClass: "mt-1",
+                                                attrs: { text: "", icon: "" }
+                                              },
+                                              on
+                                            ),
+                                            [_c("v-icon", [_vm._v("mdi-eye")])],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [_vm._v(" "), _c("span", [_vm._v("view book")])]
+                            ),
                             _vm._v(" "),
-                            _c("v-btn", { staticClass: "mt-1 ml-2" }, [
-                              _vm._v("delete")
-                            ])
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { bottom: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-btn",
+                                            _vm._g(
+                                              {
+                                                staticClass: "mt-1",
+                                                attrs: { text: "", icon: "" }
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _c("v-icon", [
+                                                _vm._v("mdi-delete")
+                                              ])
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("delete comment")])
+                              ]
+                            )
                           ],
                           1
                         )
@@ -42365,6 +42610,283 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("data-cards", { attrs: { items: _vm.tags } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Users.vue?vue&type=template&id=1da6e032&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/Users.vue?vue&type=template&id=1da6e032& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-card-title",
+            [
+              _vm._v("\n      Users\n      "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-data-table", {
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.users,
+              search: _vm.search
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "body",
+                fn: function(ref) {
+                  var items = ref.items
+                  return _vm._l(items, function(user, index) {
+                    return _c("tbody", { key: index }, [
+                      _c("tr", [
+                        _c("td", [_vm._v(_vm._s(user.id))]),
+                        _vm._v(" "),
+                        user.profile_image
+                          ? _c(
+                              "td",
+                              [
+                                _c("v-avatar", [
+                                  _c("img", {
+                                    attrs: {
+                                      src: user.profile_image,
+                                      alt: "John"
+                                    }
+                                  })
+                                ])
+                              ],
+                              1
+                            )
+                          : _c(
+                              "td",
+                              [
+                                _c("v-avatar", { attrs: { size: "36" } }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSnIUIg8ZovaJTxegrtf0tlG2e68gEPDzqmoEjhRWsOzfS1d2FV&usqp=CAU",
+                                      alt: "John"
+                                    }
+                                  })
+                                ])
+                              ],
+                              1
+                            ),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.email))]),
+                        _vm._v(" "),
+                        user.ph_no
+                          ? _c("td", [_vm._v(_vm._s(user.ph_no))])
+                          : _c("td", [_vm._v("not available")]),
+                        _vm._v(" "),
+                        user.address
+                          ? _c("td", [_vm._v(_vm._s(user.address))])
+                          : _c("td", [_vm._v("not available")]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "row",
+                              {
+                                staticClass: "d-flex",
+                                attrs: { justify: "space-between" }
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  { attrs: { href: "mailto:" + user.email } },
+                                  [
+                                    _c(
+                                      "v-tooltip",
+                                      {
+                                        attrs: { bottom: "" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "activator",
+                                              fn: function(ref) {
+                                                var on = ref.on
+                                                return [
+                                                  _c(
+                                                    "v-btn",
+                                                    _vm._g(
+                                                      {
+                                                        staticClass: "mt-1",
+                                                        attrs: {
+                                                          text: "",
+                                                          icon: ""
+                                                        }
+                                                      },
+                                                      on
+                                                    ),
+                                                    [
+                                                      _c("v-icon", [
+                                                        _vm._v("mdi-email")
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      },
+                                      [
+                                        _vm._v(" "),
+                                        _c("span", [_vm._v("send email")])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            return [
+                                              _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    staticClass: "mt-1",
+                                                    attrs: {
+                                                      text: "",
+                                                      icon: ""
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c("v-icon", [
+                                                    _vm._v("mdi-pencil")
+                                                  ])
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [_vm._v(" "), _c("span", [_vm._v("edit")])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            return [
+                                              _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    staticClass: "mt-1",
+                                                    attrs: {
+                                                      text: "",
+                                                      icon: ""
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c("v-icon", [
+                                                    _vm._v("mdi-delete")
+                                                  ])
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("delete user")])
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ])
+                  })
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -101235,6 +101757,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/components/admin/Users.vue":
+/*!**********************************************!*\
+  !*** ./resources/components/admin/Users.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Users_vue_vue_type_template_id_1da6e032___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Users.vue?vue&type=template&id=1da6e032& */ "./resources/components/admin/Users.vue?vue&type=template&id=1da6e032&");
+/* harmony import */ var _Users_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Users.vue?vue&type=script&lang=js& */ "./resources/components/admin/Users.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Users_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Users_vue_vue_type_template_id_1da6e032___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Users_vue_vue_type_template_id_1da6e032___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/components/admin/Users.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/components/admin/Users.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/components/admin/Users.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Users_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Users.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Users.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Users_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/components/admin/Users.vue?vue&type=template&id=1da6e032&":
+/*!*****************************************************************************!*\
+  !*** ./resources/components/admin/Users.vue?vue&type=template&id=1da6e032& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Users_vue_vue_type_template_id_1da6e032___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Users.vue?vue&type=template&id=1da6e032& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Users.vue?vue&type=template&id=1da6e032&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Users_vue_vue_type_template_id_1da6e032___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Users_vue_vue_type_template_id_1da6e032___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/components/admin/publishers.vue":
 /*!***************************************************!*\
   !*** ./resources/components/admin/publishers.vue ***!
@@ -101639,11 +102230,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_publishers_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/admin/publishers.vue */ "./resources/components/admin/publishers.vue");
 /* harmony import */ var _components_admin_Comments_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/admin/Comments.vue */ "./resources/components/admin/Comments.vue");
 /* harmony import */ var _components_admin_Admins__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/admin/Admins */ "./resources/components/admin/Admins.vue");
+/* harmony import */ var _components_admin_Users__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/admin/Users */ "./resources/components/admin/Users.vue");
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -101694,6 +102287,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/admin/admins',
     component: _components_admin_Admins__WEBPACK_IMPORTED_MODULE_12__["default"],
     name: 'admins'
+  }, {
+    path: '/admin/users',
+    component: _components_admin_Users__WEBPACK_IMPORTED_MODULE_13__["default"],
+    name: 'users'
   }] // methods: {
   //     getApiData() {
   //         Axios.get(`/api${to.path}`).then(({ data }) => {
@@ -101758,6 +102355,12 @@ router.beforeEach(function (to, from, next) {
     }
   } else if (to.path === '/admin/admins') {
     if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.admins.length > 0) {
+      next();
+    } else {
+      getApiData(to.path, to.name);
+    }
+  } else if (to.path === '/admin/users') {
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.users.length > 0) {
       next();
     } else {
       getApiData(to.path, to.name);
@@ -101833,7 +102436,8 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
     categories: [],
     tags: [],
     publishers: [],
-    comments: []
+    comments: [],
+    users: []
   },
   getters: {
     getCategories: function getCategories(state) {

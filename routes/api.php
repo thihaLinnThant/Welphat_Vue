@@ -26,6 +26,8 @@ Route::get('/admin/authors', 'AuthorController@get_authors_api');
 
 Route::get('/admin/admins','AdminController@get_admins_api');
 
+Route::get('/admin/users', 'UserController@get_users_api');
+
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
 Route::get('lastrecord/category','CategoryController@get_lastCategory_api');
 
