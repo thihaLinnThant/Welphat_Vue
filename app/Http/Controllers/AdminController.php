@@ -8,12 +8,12 @@ use App\Admin;
 class AdminController extends Controller
 {
     public function get_admins_api(){
-        $data = $this->get_admins_list()->toArray();
+        $data = $this->get_admins_list();
         return response()->json($data);
     }
     private function get_admins_list(){
         $collections = Admin::all();
-        return $collections;
+        return collect(['admins' => $collections]);
     }
     public function get_admins_web(Request $request){
         $data = $this->add_meta_data($request);

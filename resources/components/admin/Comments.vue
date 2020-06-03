@@ -37,9 +37,7 @@
 export default {
   data() {
     return {
-      dialog: false,
       search: "",
-      formTitle: "Edit",
       headers: [
         {
           text: "Id",
