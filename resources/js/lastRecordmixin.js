@@ -1,7 +1,8 @@
 export default {
     methods: {
-        lastrecord(routename, statename) {
-            axios.get(`/api/lastrecord/${routename}`).then(({ data }) => {
+        // Get latest data from database to state
+        lastrecord(statename) {
+            axios.get(`/api/admin/${statename}/lastrecord`).then(({ data }) => {
                 this.$store.commit('addOneRecord', { route: statename, data })
             });
         }

@@ -61,22 +61,26 @@ class AuthorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {
+    {        
         $request->validate([
             'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
-        ]);
+            'bio'  => 'required',
+            'image' => 'required|image'
+        ]);        
 
-        Author::create(['name' => $request->name]);
+        Author::create([
+                    'name' => $request->name,
+                    'bio'  => $request->bio,
+                ]);
 
-        // $lastid = Author::latest()->first(['id']);
-        // $file = file_get_contents($request->image);
-        // $path = '/images/books/' . $lastid . "/image_1.png";
-        // Storage::disk('public')->put($path , $file);
+        $lastid = Author::latest()->first(['id']);
+        $file = file_get_contents($request->image);
+        $path = '/images/authors/' . $lastid . "/image_1.png";
+        Storage::disk('public')->put($path , $file);
 
-        // $thumb_file = file_get_contents('https://dummyimage.com/150x200/4053b5/f0e8f0');
-        // $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
-        // Storage::disk('public')->put($thumb_path , $thumb_file);
+        $thumb_file = file_get_contents($request->image);
+        $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
+        Storage::disk('public')->put($thumb_path , $thumb_file);
 
 
         return response()->json(null,200);

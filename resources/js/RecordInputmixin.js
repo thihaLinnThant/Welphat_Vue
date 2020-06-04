@@ -8,7 +8,8 @@ export default {
             errors: {},
             goterror: false,
             success: false,
-            loaded: true,            
+            loaded: true,
+            alert: false
         }
     },
     methods: {
@@ -18,21 +19,29 @@ export default {
                 this.success = false;
                 this.errors = {};
 
+                //post request to the server with request fields
+                //(this.act)action and (this.fields)fields will be from component's data
                 axios.post(this.act, this.fields).then(response => {
                     this.fields = {}; //Clear input fields.
                     this.loaded = true;
                     this.success = true;                    
                     this.goterror = false;
+                    this.alert = true;
 
-                    //there will be a condition later
-                    this.lastrecord(this.routename, this.statename);
-                    //
+                    this.lastrecord(this.statename);
+                    
+                    // //to get registered record to state
+                    // if(this.statename !== null){
+                    //     //(this.statename) will be from component's data. Default is null
+                    //     this.lastrecord(this.statename);
+                    // }
 
                 }).catch(error => {
+                    //Catch will excecuted when the validation got error
                     this.loaded = true;
                     this.goterror = true;
                     if (error.response.status === 422) {
-                        this.errors = error.response.data.errors || {};
+                        this.errors = error.response.data.errors || {}; //get error json file from controller
                     }
                 });
             }

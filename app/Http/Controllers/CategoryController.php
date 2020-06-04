@@ -42,8 +42,7 @@ class CategoryController extends Controller
     }
 
     public function get_categories_web(Request $request) {
-        $data = $this->add_meta_data($request);
-        $data->count = $data->books()->count();
+        $data = $this->add_meta_data($request);        
         return view('admin.app', ['data' => $data]);
     }
     /**

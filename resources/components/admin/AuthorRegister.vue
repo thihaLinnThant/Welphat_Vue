@@ -1,14 +1,16 @@
 <template>    
-    <v-form class="ma-10" enctype="multipart/form-data">
+    <v-form class="ma-10" @submit.prevent="submit" enctype="multipart/form-data">
         <h2>Author Register</h2>             
-        <v-row align="center" justify="center" class="ma-10">
+        <v-row justify="center" class="ma-10">
             <v-col
                 cols="12"
                 md="8"
             >
-                <v-text-field name="name" v-model="author_name" outlined label="Name"></v-text-field>
-                <v-file-input :value="image_file" name="image" @change="Preview_image($event)" outlined label="Upload Image"></v-file-input>
+                <v-text-field :error=goterror :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>                
+                <v-textarea :error=goterror :error-messages=errors.bio v-model="fields.bio" name="bio" label="Bio" outlined></v-textarea>
+                <v-file-input :error=goterror :error-messages=errors.image v-model="fields.image" name="image" class="d-none" label="Upload Image" outlined></v-file-input>
                 <v-btn @click="toggleShow">Upload Image</v-btn>
+                <small class="text-danger">{{ errors.image }}</small>
                 <my-upload field="img"
                     @crop-success="cropSuccess"
                     @crop-upload-success="cropUploadSuccess"
@@ -17,20 +19,19 @@
                     v-model="show"
                     :width="300"
                     :height="300"
-                    url=""
-                    :params="image_file"
+                    url=""                    
                     img-format="png"></my-upload>
                 <v-btn type="submit" outlined="">Submit</v-btn>
             </v-col>
 
-            <v-card width="200px">
+            <v-card width="200px" height="250px">
                 <v-img
                     class="white--text align-end"
                     height="200px"                
                     :src="image_url"
                 >
                 </v-img>
-                <v-card-text>{{ author_name }}</v-card-text>
+                <v-card-text>{{ fields.name }}</v-card-text>
             </v-card>
         </v-row>
     </v-form>
@@ -41,21 +42,20 @@ import myUpload from 'vue-image-crop-upload';
 import InputMixin from '../../js/RecordInputmixin';
 export default {    
     data() {
-        return {
-            author_name: " ",
+        return {            
+            act: "/admin/authors/register",
             image_file: null,
             image_url: " ",
-            show: false
+            show: false,            
+            statename: "authors"
         }
     },
     components: {
+        // I got the cropper from here "https://vuejsexamples.com/a-beautiful-vue-component-for-image-cropping-and-uploading/"
         'my-upload': myUpload
     },
     mixins: [InputMixin],
-    methods: {
-        Preview_image(e) {
-            this.image_url = URL.createObjectURL(e);
-        },
+    methods: {        
         toggleShow() {
 				this.show = !this.show;
             },
@@ -67,31 +67,22 @@ export default {
          * [param] imgDataUrl
          * [param] field
          */
-        cropSuccess(imgDataUrl, field){
-            console.log('-------- crop success --------');
-            this.image_url = imgDataUrl;
-            convertURIToImageData(imgDataUrl).then(function(imageData) {
-                // Here you can use imageData
-                console.log(imageData);
-                this.image_file = imageData;
-                
-            });
+        cropSuccess(imgDataUrl, field){                        
 
-            function convertURIToImageData(URI) {
-                return new Promise(function(resolve, reject) {
-                    if (URI == null) return reject();
-                    var canvas = document.createElement('canvas'),
-                    context = canvas.getContext('2d'),
-                    image = new Image();
-                    image.addEventListener('load', function() {
-                        canvas.width = image.width;
-                        canvas.height = image.height;
-                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-                        resolve(context.getImageData(0, 0, canvas.width, canvas.height));
-                    }, false);
-                    image.src = URI;                    
-                });
+            // This ready to use cropper only provide dataurl!!
+            // A function to change dataurl to file. I don't know how it works!! ( T_T )
+            function dataURLtoFile(dataurl, filename) {
+                var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                while(n--){
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new File([u8arr], filename, {type:mime});
             }
+            this.fields.image = dataURLtoFile(imgDataUrl, 'upload.png');     
+            this.image_url = imgDataUrl;       
+
+            console.log('-------- crop success --------');
         },
         /**
          * upload success

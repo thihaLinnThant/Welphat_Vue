@@ -23,19 +23,20 @@ Route::get('/admin', 'CategoryController@get_categories_api');
 Route::get('/admin/books', 'BookController@get_books_api');
 
 Route::get('/admin/authors', 'AuthorController@get_authors_api');
+Route::get('/admin/authors/lastrecord','AuthorController@get_lastAuthor_api');
 
 Route::get('/admin/admins','AdminController@get_admins_api');
 
 Route::get('/admin/users', 'UserController@get_users_api');
 
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
-Route::get('lastrecord/category','CategoryController@get_lastCategory_api');
+Route::get('/admin/categories/lastrecord','CategoryController@get_lastCategory_api');
 
 Route::get('/admin/tags', 'TagController@get_tags_api');
-Route::get('lastrecord/tag','TagController@get_lastTag_api');
+Route::get('/admin/tags/lastrecord','TagController@get_lastTag_api');
 
 Route::get('/admin/publishers', 'PublisherController@get_publishers_api');
-Route::get('lastrecord/publisher','PublisherController@get_lastPublisher_api');
+Route::get('/admin/publishers/lastrecord','PublisherController@get_lastPublisher_api');
 
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');
 

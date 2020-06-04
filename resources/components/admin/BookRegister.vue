@@ -6,19 +6,19 @@
         <v-text-field v-model="book_name" outlined label="Name"></v-text-field>
       </v-col>
       <v-col cols="12" md="6">
-        <v-autocomplete outlined :items="author_list" item-text="name" multiple label="Author(s)"></v-autocomplete>
+        <v-autocomplete :error="goterror" :error-messages="errors.authors" v-model="fields.authors" outlined :items="author_list" item-text="name" multiple label="Author(s)"></v-autocomplete>
       </v-col>
       <v-col cols="12" md="6">
-        <v-autocomplete outlined :items="categories" item-text="name" multiple label="Categories"></v-autocomplete>
+        <v-autocomplete :error="goterror" :error-messages="errors.categories" v-model="fields.categories" outlined :items="categories" item-text="name" multiple label="Categories"></v-autocomplete>
       </v-col>
       <v-col cols="12" md="6">
-        <v-autocomplete :items="tag_list" item-text="name" outlined multiple label="Tags"></v-autocomplete>
+        <v-autocomplete :error="goterror" :error-messages="errors.tags" v-model="fields.tags" :items="tag_list" item-text="name" outlined multiple label="Tags"></v-autocomplete>
       </v-col>
       <v-col cols="12" md="6">
-        <v-autocomplete :items="publisher_list" item-text="name" outlined label="Publisher"></v-autocomplete>
+        <v-autocomplete :error="goterror" :error-messages="errors.publishers" v-model="fields.publishers" :items="publisher_list" item-text="name" outlined label="Publisher"></v-autocomplete>
       </v-col>
       <v-col cols="12" md="6">
-        <v-file-input @change="Preview_image($event)" outlined label="Upload Image"></v-file-input>
+        <v-file-input :error="goterror" :error-messages="errors.image" v-model="fields.image" @change="Preview_image($event)" outlined label="Upload Image"></v-file-input> 
       </v-col>
 
       <v-card width="250px">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import RecordInput from '../../js/RecordInputmixin';
 export default {
   data() {
     return {
