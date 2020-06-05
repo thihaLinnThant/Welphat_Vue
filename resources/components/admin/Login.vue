@@ -3,7 +3,7 @@
       <v-card>
           <v-card-title>Admin Login</v-card-title>
 
-          <v-form>
+          <v-form> //role="form" method="POST" action="/admin/login"
             <v-text-field                
                 label="Name"
                 required

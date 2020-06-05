@@ -1,75 +1,105 @@
 <template>
-    <v-row justify="start" class="ml-1 mr-0">        
-        <v-card class="ma-2 book-card" width="250px" v-for="book in books" :key=book.id>
-            <v-img
-                class="white--text align-end"
-                height="200px"                
-                :src=book.thumb
-            >
-                <v-card-title>{{ book.name }}</v-card-title>
-            </v-img>
-
-            <v-card-actions align="center">
-                <v-btn>View</v-btn>
-                <v-btn>Edit</v-btn>
-                <v-btn>Delete</v-btn>
-            </v-card-actions>
-
-            <v-card-subtitle class="pb-1 pt-1">
-                <p class="mb-0"><b>Authors:</b></p>
-                <div class="d-inline-flex">
-                    <div v-for="author in book.authors" :key=author.id>
-                        <p class="mb-0" >&nbsp;&nbsp; {{ author.name }},</p>
-                    </div>
-                </div>
-            </v-card-subtitle>
-
-            <v-card-text >
-                <p class="mb-0"><b>Categories:</b></p>
-                <div class="d-flex">
-                    &nbsp;&nbsp; <div class="cust-badge" v-for="category in book.categories" :key=category.id><a href="#">{{category.name}}</a></div>
-                </div>
-                
-                <p class="mb-0 mt-1"><b>Tags:</b></p>                    
-                    <v-chip-group
-                        dense
-                        active-class="primary--text"
-                    >
-                        <v-chip small v-for="tag in book.tags" :key=tag.id>
-                        {{ tag.name }}
-                        </v-chip>
-                    </v-chip-group>                                    
-            </v-card-text>
-        </v-card>        
+  <v-container fluid>
+    <v-row class="d-flex">
+      <h2>Books</h2>
+      <v-spacer></v-spacer>
+      <router-link tag="p" to="books/register">
+        <v-btn class="ml-5" outlined style="text-decoration:none !important">Create New +</v-btn>
+      </router-link>
     </v-row>
+    <v-row>
+      <v-col cols="12" md="4" v-for="(book,index) in books" :key="index">
+        <v-card max-width="344" class="mx-auto">
+          <span>
+            <v-img
+              class="white--text align-end"
+              height="200px"
+              src="https://i.pinimg.com/originals/ef/c3/35/efc335ff7f03fc4ba2603b9178918c2d.jpg"
+            >
+              <v-card-title class="justify-center">{{ book.name }}</v-card-title>
+            </v-img>
+          </span>
+
+          <!-- <span v-else>
+            <v-img
+              class="white--text align-end"
+              height="200px"
+              src="https://i.pinimg.com/originals/ef/c3/35/efc335ff7f03fc4ba2603b9178918c2d.jpg"
+            >
+              <v-card-title class="justify-center">{{ book.name }}</v-card-title>
+            </v-img>
+          </span>-->
+
+          <div v-for="(author,index) in book.authors" :key="index" class="justify-center">
+            <p class="mb-0" style="color: grey;text-align:center">{{ author.name }}</p>
+          </div>
+
+          <v-card-actions class="justify-center">
+            <v-btn>View</v-btn>
+            <v-btn>Edit</v-btn>
+            <v-btn>Delete</v-btn>
+          </v-card-actions>
+
+          <v-card-text>
+            <span class="d-flex">
+              <p class="mb-0">
+                <b>Categories</b>
+              </p>
+              <v-spacer></v-spacer>
+              <v-chip
+                color="#4054b5"
+                class="ma-1"
+                small
+                v-for="(category,index) in book.categories"
+                :key="index"
+              >{{ category.name }}</v-chip>
+            </span>
+            <span class="d-flex">
+              <p class="mb-0 mt-1">
+                <b>Tags</b>
+              </p>
+              <v-spacer></v-spacer>
+              <v-chip
+                color="#4054b5"
+                class="ma-1"
+                small
+                v-for="(tag,index) in book.tags"
+                :key="index"
+              >{{ tag.name }}</v-chip>
+            </span>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
-    computed: {
-        books() {
-            return this.$store.state.books;
-        }
+  computed: {
+    books() {
+      return this.$store.state.books;
     }
-}
+  }
+};
 </script>
 
 <style>
-.cust-badge {
-    min-width: 40px;
-    text-align: center;
-    border-radius: 30px;
-    padding: 0px 8px;
-    background-color: #4054b5;    
-    margin-right: 5px;
-    transition: ease-in-out 0.1s;    
+router .cust-badge {
+  min-width: 40px;
+  text-align: center;
+  border-radius: 30px;
+  padding: 0px 8px;
+  background-color: #4054b5;
+  margin-right: 5px;
+  transition: ease-in-out 0.1s;
 }
-.cust-badge > a {    
-    color: white !important; 
-    text-decoration: none;
-    overflow: initial;
+.cust-badge > a {
+  color: white !important;
+  text-decoration: none;
+  overflow: initial;
 }
 .cust-badge:hover {
-    background: blueviolet;
+  background: blueviolet;
 }
 </style>

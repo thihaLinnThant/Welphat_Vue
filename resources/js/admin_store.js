@@ -11,11 +11,14 @@ axios.defaults.headers.common = {
 
 export default new Vuex.Store({
     state: {
+        admins : [],
         books: [],
+        authors: [],
         categories: [],
         tags: [],
         publishers: [],
-        comments : []
+        comments : [],
+        users : []
     },
     getters: {
         getCategories(state) {
@@ -23,22 +26,19 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        addOneRecord(state, { route, data }) {
+            state[route].push(data);
+        },
+        deleteOneRecord(state, { route, id }) {
+            var index = state[route].findIndex(route => route.id == id)
+            state[route].splice(index, 1)
+        },
+        replaceOneRecord(state, { route, id}) {
+            var index = state[route].findIndex(route => route.id == id)
+            axios.get(`/api/admin/${statename}/${id}`)
+        },
         addData(state, { route, data }) {
-            if(route === 'books') {
-                state.books = data.books;
-            }
-            else if (route === 'categories') {
-                state.categories = data.categories;
-            }
-            else if (route === 'tags') {
-                state.tags = data.tags;
-            }
-            else if (route === 'publishers') {
-                state.publishers = data.publishers;
-            }
-            else if (route === 'comments') {
-                state.comments = data.comments;
-            }
+            state[route] = data[route];            
         }
     }
 });

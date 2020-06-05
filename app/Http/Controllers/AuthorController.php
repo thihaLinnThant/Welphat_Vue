@@ -4,9 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AuthorController extends Controller
 {
+    private function add_meta_data($request) {
+        return collect(['path' => $request->getPathInfo()]);
+    }
+
+    private function get_authors() {
+        $collection = Author::all([ 'id', 'name' ]);
+        $authors = collect();
+        foreach($collection as $author) {
+            $author->thumb = asset('storage/images/books/'. $author->id . '/thumb_nail.png');
+            $author->count = $author->books()->count();
+            $authors->push($author);
+        }        
+        return collect(['authors' => $authors]);
+    }
+
+    public function get_authors_api() {
+        $data = $this->get_authors();
+        return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
+    }
+
+    public function get_lastAuthor_api() {
+        $data = Author::latest()->first();
+        $data->thumb = asset('storage/images/books/'. $data->id . '/thumb_nail.png');
+        $data->count = $data->books()->count();
+        return response()->json($data);
+    }
+
+    public function get_authors_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +60,30 @@ class AuthorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(Request $request)
+    {        
+        $request->validate([
+            'name' => 'required',
+            'bio'  => 'required',
+            'image' => 'required|image'
+        ]);        
+
+        Author::create([
+                    'name' => $request->name,
+                    'bio'  => $request->bio,
+                ]);
+
+        $lastid = Author::latest()->first(['id']);
+        $file = file_get_contents($request->image);
+        $path = '/images/authors/' . $lastid . "/image_1.png";
+        Storage::disk('public')->put($path , $file);
+
+        $thumb_file = file_get_contents($request->image);
+        $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
+        Storage::disk('public')->put($thumb_path , $thumb_file);
+
+
+        return response()->json(null,200);
     }
 
     /**

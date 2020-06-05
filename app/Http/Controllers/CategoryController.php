@@ -36,8 +36,13 @@ class CategoryController extends Controller
         return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
     }
 
+    public function get_lastCategory_api() {
+        $data = Category::latest()->first();        
+        return response()->json($data);
+    }
+
     public function get_categories_web(Request $request) {
-        $data = $this->add_meta_data($request);
+        $data = $this->add_meta_data($request);        
         return view('admin.app', ['data' => $data]);
     }
     /**
@@ -60,7 +65,10 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
+        
         Category::create([ 'name' => $request->name ]);
+
+        return response()->json(null, 200);
     }
 
     /**
@@ -105,7 +113,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'edit_name' => 'required'
+        ]);
+
+        $category->name = $request->edit_name;
+        $category->save();
+
+        return response()->json(null,200);
     }
 
     /**
@@ -114,8 +129,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        return response()->json(null, 200);
     }
 }

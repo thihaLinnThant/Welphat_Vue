@@ -31,6 +31,11 @@ class BookController extends Controller
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data ]);
     }
+
+    public function register_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
     /**
      * Display a listing of the resource.
      *
