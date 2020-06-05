@@ -14,12 +14,12 @@
         <v-card-title>
           Tags
           <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit" >
-            <input type="hidden" name="_token" :value="csrf_token"/>
+          <v-form class="d-flex" @submit.prevent="submit" >            
             <v-text-field
               append-icon="mdi-plus"
               label="Add new"
-              single-line              
+              single-line          
+              hide-details    
               :error=goterror
               :error-messages=errors.name              
               color="#4054b5"
@@ -91,7 +91,6 @@ export default {
       ],
       act: "/admin/tags/addtag",
       statename: "tags",
-      routename: "tag"
     }
   },
   computed: {

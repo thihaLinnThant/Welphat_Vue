@@ -6,9 +6,9 @@
                 cols="12"
                 md="8"
             >
-                <v-text-field :error=goterror :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>                
-                <v-textarea :error=goterror :error-messages=errors.bio v-model="fields.bio" name="bio" label="Bio" outlined></v-textarea>
-                <v-file-input :error=goterror :error-messages=errors.image v-model="fields.image" name="image" class="d-none" label="Upload Image" outlined></v-file-input>
+                <v-text-field :error=errors.name :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>                
+                <v-textarea :error=errors.bio :error-messages=errors.bio v-model="fields.bio" name="bio" label="Bio" outlined></v-textarea>
+                <v-file-input :error=errors.image :error-messages=errors.image @change="selectFile" v-model="image_file" name="image" label="Upload Image" outlined></v-file-input>
                 <v-btn @click="toggleShow">Upload Image</v-btn>
                 <small class="text-danger">{{ errors.image }}</small>
                 <my-upload field="img"
@@ -46,7 +46,7 @@ export default {
             act: "/admin/authors/register",
             image_file: null,
             image_url: " ",
-            show: false,            
+            show: false,
             statename: "authors"
         }
     },
@@ -59,6 +59,10 @@ export default {
         toggleShow() {
 				this.show = !this.show;
             },
+        selectFile(event) {
+            this.fields.image = event.files[0];
+            console.log(this.fields.image);
+        },
             
         
         /**
@@ -79,7 +83,7 @@ export default {
                 }
                 return new File([u8arr], filename, {type:mime});
             }
-            this.fields.image = dataURLtoFile(imgDataUrl, 'upload.png');     
+            this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');            
             this.image_url = imgDataUrl;       
 
             console.log('-------- crop success --------');

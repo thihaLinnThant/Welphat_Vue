@@ -13,7 +13,7 @@
                         </v-avatar>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>ADMIN NAME</v-list-item-title>
+                        <v-list-item-title>{{ admin_name }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <hr>
@@ -66,6 +66,7 @@
     data: () => ({
       drawer: null,
       csrf_token: window.csrf_token,
+      admin_name: window.admin_name,
       items: [
         { text: 'Books' , icon: 'mdi-bookshelf' , link: 'books', inactive: false},
         { text: 'Admins' , icon: 'mdi-shield-account', link: 'admins', inactive: false },

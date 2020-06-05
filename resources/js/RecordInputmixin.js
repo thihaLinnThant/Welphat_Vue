@@ -4,6 +4,7 @@ export default {
     data() {
         return {
             csrf_token: window.csrf_token,
+            statename: null,
             fields: {},
             errors: {},
             goterror: false,
@@ -14,6 +15,7 @@ export default {
     },
     methods: {
         submit() {
+            console.log(this.fields);
             if (this.loaded) {
                 this.loaded = false;
                 this.success = false;

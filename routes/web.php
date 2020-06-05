@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/categories', 'CategoryController@get_categories_web');
     Route::post('/admin/categories/addcategory', 'CategoryController@create');
+    Route::post('/admin/categories/update/{id}', 'CategoryController@update');
+    Route::post('/admin/categories/delete/{id}','CategoryController@destroy');
 
     Route::get('/admin/comments', 'CommentController@get_comments_web');
 

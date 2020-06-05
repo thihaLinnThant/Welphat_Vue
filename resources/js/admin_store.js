@@ -29,9 +29,16 @@ export default new Vuex.Store({
         addOneRecord(state, { route, data }) {
             state[route].push(data);
         },
+        deleteOneRecord(state, { route, id }) {
+            var index = state[route].findIndex(route => route.id == id)
+            state[route].splice(index, 1)
+        },
+        replaceOneRecord(state, { route, id}) {
+            var index = state[route].findIndex(route => route.id == id)
+            axios.get(`/api/admin/${statename}/${id}`)
+        },
         addData(state, { route, data }) {
-            state[route] = data[route];
-            console.log(state)
+            state[route] = data[route];            
         }
     }
 });
