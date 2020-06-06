@@ -15,7 +15,6 @@ export default {
     },
     methods: {
         submit() {
-            console.log(this.fields);
             if (this.loaded) {
                 this.loaded = false;
                 this.success = false;
@@ -26,12 +25,12 @@ export default {
                 axios.post(this.act, this.fields).then(response => {
                     this.fields = {}; //Clear input fields.
                     this.loaded = true;
-                    this.success = true;                    
+                    this.success = true;
                     this.goterror = false;
                     this.alert = true;
 
                     this.lastrecord(this.statename);
-                    
+
                     // //to get registered record to state
                     // if(this.statename !== null){
                     //     //(this.statename) will be from component's data. Default is null
@@ -44,7 +43,10 @@ export default {
                     this.goterror = true;
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors || {}; //get error json file from controller
+                        console.log(error.response);
                     }
+
+                    console.log(error.response);
                 });
             }
         },

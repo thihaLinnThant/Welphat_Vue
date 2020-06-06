@@ -2946,6 +2946,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
 //
 //
 //
@@ -3025,7 +3026,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       search: "",
@@ -3052,8 +3114,34 @@ __webpack_require__.r(__webpack_exports__);
         text: "Actions",
         value: "actions"
       }],
-      users: this.$store.state.users
+      act: "/admin/users/adduser",
+      statename: "users",
+      addNew_Dialog: false,
+      password_visible: false,
+      rules: {
+        required: function required(value) {
+          return !!value || "Required.";
+        }
+      }
     };
+  },
+  computed: {
+    users: function users() {
+      return this.$store.state.users;
+    }
+  },
+  methods: {
+    reset: function reset() {
+      this.fields = {};
+    },
+    close: function close() {
+      this.addNew_Dialog = false;
+      this.reset();
+    },
+    save: function save() {
+      this.addNew_Dialog = false;
+      this.submit();
+    }
   }
 });
 
@@ -43398,12 +43486,259 @@ var render = function() {
     "div",
     [
       _c(
+        "v-row",
+        { attrs: { justify: "center" } },
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "600px" },
+              model: {
+                value: _vm.addNew_Dialog,
+                callback: function($$v) {
+                  _vm.addNew_Dialog = $$v
+                },
+                expression: "addNew_Dialog"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", [
+                    _c("span", { staticClass: "headline" }, [
+                      _vm._v("Add User")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.submit($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-container",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: { label: "Name*", required: "" },
+                                        model: {
+                                          value: _vm.fields.name,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "name", $$v)
+                                          },
+                                          expression: "fields.name"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Email*",
+                                          required: ""
+                                        },
+                                        model: {
+                                          value: _vm.fields.email,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "email", $$v)
+                                          },
+                                          expression: "fields.email"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        staticClass: "input-group--focused",
+                                        attrs: {
+                                          rules: [_vm.rules.required],
+                                          "append-icon": _vm.password_visible
+                                            ? "mdi-eye"
+                                            : "mdi-eye-off",
+                                          type: _vm.password_visible
+                                            ? "text"
+                                            : "password",
+                                          name: "input-10-2",
+                                          label: "Password*",
+                                          hint: "At least 8 characters",
+                                          value: ""
+                                        },
+                                        on: {
+                                          "click:append": function($event) {
+                                            _vm.password_visible = !_vm.password_visible
+                                          }
+                                        },
+                                        model: {
+                                          value: _vm.fields.password,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.fields,
+                                              "password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "fields.password"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "6" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Phone Number(optional)"
+                                        },
+                                        model: {
+                                          value: _vm.fields.ph_no,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "ph_no", $$v)
+                                          },
+                                          expression: "fields.ph_no"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "6" } },
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: {
+                                          label: "Address(optional)",
+                                          "auto-grow": "",
+                                          outlined: "",
+                                          rows: "3",
+                                          "row-height": "15"
+                                        },
+                                        model: {
+                                          value: _vm.fields.address,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "address", $$v)
+                                          },
+                                          expression: "fields.address"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { outlined: "", color: "error" },
+                                      on: { click: _vm.reset }
+                                    },
+                                    [_vm._v("reset")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("small", [_vm._v("*indicates required field")])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", text: "" },
+                          on: { click: _vm.close }
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", text: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.save($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-card",
         [
           _c(
             "v-card-title",
             [
               _vm._v("\n      Users\n      "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { outlined: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.addNew_Dialog = true
+                    }
+                  }
+                },
+                [_vm._v("Create New +")]
+              ),
+              _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
               _c("v-text-field", {
@@ -102734,8 +103069,6 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      console.log(this.fields);
-
       if (this.loaded) {
         this.loaded = false;
         this.success = false;
@@ -102763,7 +103096,11 @@ __webpack_require__.r(__webpack_exports__);
 
           if (error.response.status === 422) {
             _this.errors = error.response.data.errors || {}; //get error json file from controller
+
+            console.log(error.response);
           }
+
+          console.log(error.response);
         });
       }
     }
@@ -103113,6 +103450,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/admin/users',
     component: _components_admin_Users__WEBPACK_IMPORTED_MODULE_13__["default"],
     name: 'users'
+  }, {
+    path: '/admin/users/adduser',
+    name: 'adduser'
   }] // methods: {
   //     getApiData() {
   //         Axios.get(`/api${to.path}`).then(({ data }) => {
@@ -103364,7 +103704,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("deleted"); //delete from state
 
         _this.$store.commit('deleteOneRecord', {
-          route: statename,
+          route: _this.statename,
           id: id
         });
       });
@@ -103480,8 +103820,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

@@ -7,7 +7,7 @@ export default {
                 console.log("deleted");
 
                 //delete from state
-                this.$store.commit('deleteOneRecord', { route: statename, id })
+                this.$store.commit('deleteOneRecord', { route: this.statename, id })
             });
         }
     }

@@ -10,11 +10,11 @@
         Edit Category title
       </v-card-title>
       <v-card-text>
-        <v-text-field                    
+        <v-text-field
           :error-messages=errors.edit_name
           name="edit_name"
           v-model="fields.edit_name"
-          label="category name"          
+          label="category name"
         ></v-text-field>
       </v-card-text>
       <v-card-actions>
@@ -80,12 +80,12 @@
         <v-card-title>
           Categories
           <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit">            
+          <v-form class="d-flex" @submit.prevent="submit">
             <v-text-field
               append-icon="mdi-plus"
               label="Add new"
               single-line
-              hide-details              
+              hide-details
               :error-messages=errors.name
               color="#4054b5"
               v-model="fields.name"
@@ -101,7 +101,7 @@
             single-line
             hide-details
           ></v-text-field>
-          
+
         </v-card-title>
         <v-data-table :headers="headers" :items="categories" :search="search">
           <template v-slot:body="{ items }">
@@ -131,7 +131,7 @@
                       </v-btn>
                     </template>
                     <span>view books</span>
-                  </v-tooltip>                  
+                  </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn @click="deleteDialog = true; target_item_id = category.id" class="mt-1" text icon v-on="on">
@@ -176,11 +176,11 @@ export default {
       deleteDialog: false,
       target_item_id: '',
       target_item_value: '',
-      cascade: null,      
+      cascade: null,
     }
   },
   computed: {
-    categories() {      
+    categories() {
       return this.$store.state.categories;
     }
   }
