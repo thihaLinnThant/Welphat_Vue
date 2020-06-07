@@ -36,6 +36,11 @@ class PublisherController extends Controller
         $data = Publisher::latest()->first();        
         return response()->json($data);
     }
+
+    public function get_oneRecord_api($id){
+        $data = Publisher::find($id);
+        return response()->json($data);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -102,9 +107,17 @@ class PublisherController extends Controller
      * @param  \App\Publisher  $publisher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Publisher $publisher)
+    public function update($id,Request $request)
     {
-        //
+        $request->validate([
+            'edit_name' => 'required'
+        ]);
+        
+        $category = Publisher::find($id);
+        $category->name = $request->edit_name;
+        $category->save();
+
+        return response()->json(null,200);
     }
 
     /**
@@ -113,8 +126,9 @@ class PublisherController extends Controller
      * @param  \App\Publisher  $publisher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Publisher $publisher)
+    public function destroy($id)
     {
-        //
+        Publisher::destroy($id);
+        return response()->json(null, 200);
     }
 }

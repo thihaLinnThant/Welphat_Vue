@@ -1,5 +1,33 @@
 <template>
   <div>
+    <v-dialog
+      v-model="deleteDialog"
+      max-width="350"
+      persistent
+    >
+      <v-card>
+        <v-card-text>
+          Do you want to delete this category?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            @click="deleteDialog = false; target_item_id = '';"
+          >
+            No
+          </v-btn>
+
+          <v-btn
+            text
+            @click="deleteDialog = false; submitDelete(target_item_id);"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-card>
       <v-card-title>
         Comments
@@ -31,7 +59,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn class="mt-1" text icon v-on="on">
+                    <v-btn @click="deleteDialog = true; target_item_id = comment.id" class="mt-1" text icon v-on="on">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </template>
@@ -46,7 +74,9 @@
   </div>
 </template>
 <script>
+import DeleteMixin from '../../js/deleteForm';
 export default {
+  mixins: [ DeleteMixin ],
   data() {
     return {
       search: "",
@@ -61,7 +91,10 @@ export default {
         { text: "Comment", value: "comment_text" },
         { text: "Actions", value: "actions" }
       ],
-      comments: this.$store.state.comments
+      comments: this.$store.state.comments,
+      deleteDialog: false,
+      statename: "comments",
+      target_item_id: '',
     };
   }
 };

@@ -12,6 +12,7 @@ import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
 import Publishers from '../components/admin/publishers.vue';
 import Comment from '../components/admin/Comments.vue'
+import Order from '../components/admin/Orders.vue'
 import Admin from '../components/admin/Admins'
 import User from '../components/admin/Users';
 
@@ -25,11 +26,11 @@ let router = new VueRouter({
         { path: '/admin/authors/register', component: AuthorRegister, name: 'author_register' },
 
         { path: '/admin/categories', component: Categories, name: 'categories' },
-        { path: '/admin/categories/addcategory', name: 'addcategory' },
 
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },
         { path: '/admin/comments', component: Comment, name: 'comments' },
+        { path: '/admin/orders', component: Order, name: 'orders' },
         { path: '/admin/admins', component: Admin, name: 'admins' },
         { path: '/admin/users', component: User, name : 'users'}
     ],
@@ -64,6 +65,8 @@ router.beforeEach((to, from, next) => {
     else if (to.path === '/admin/publishers') { if (Store.state.publishers.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/comments') { if (Store.state.comments.length > 0) { next() } else { getApiData(to.path, to.name) } }
+    
+    else if (to.path === '/admin/orders') { if (Store.state.orders.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/admins') { if (Store.state.admins.length > 0) { next() } else { getApiData(to.path, to.name) } }
 

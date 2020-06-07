@@ -12,7 +12,7 @@ class UserController extends Controller
         return response()->json($data);
     }
     private function get_users_list(){
-        $collection = User::all();
+        $collection = User::with('wishes')->get();
         return collect(['users' => $collection]);
     }
     public function get_users_web(Request $request){

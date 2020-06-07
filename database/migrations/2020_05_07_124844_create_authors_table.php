@@ -17,7 +17,8 @@ class CreateAuthorsTable extends Migration
             $table->id('id');
             $table->string('name');
             $table->longText('bio');
-            $table->timestamps();            
+            $table->index('name');
+            $table->timestamps();
         });
     }
 

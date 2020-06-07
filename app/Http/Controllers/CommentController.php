@@ -27,4 +27,10 @@ class CommentController extends Controller
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
+
+    public function destroy($id)
+    {
+        Comment::destroy($id);
+        return response()->json(null, 200);
+    }
 }

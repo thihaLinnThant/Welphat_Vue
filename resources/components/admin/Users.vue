@@ -1,5 +1,30 @@
 <template>
   <div>
+    <v-dialog
+      v-model="wishList_dialog"
+      max-width="350"
+    >
+      <v-card
+        class="mx-auto"
+        max-width="400"
+        tile
+      >
+        <v-list
+          disabled          
+        >
+          <v-card-title>Wish List</v-card-title>
+            <v-list-item
+              v-for="(item, i) in target_item_wish_list"
+              :key="i"
+              inactive
+            >
+              <v-list-item-title>
+                {{ item.book_name }}
+              </v-list-item-title>
+            </v-list-item>
+        </v-list>
+      </v-card>
+    </v-dialog>
     <v-card>
       <v-card-title>
         Users
@@ -38,6 +63,15 @@
               <td v-else>not available</td>
               <td>
                 <row class="d-flex" justify="space-between">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="showWishList(user.wishes)" class="mt-1" text icon v-on="on">
+                        <v-icon>mdi-heart</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>show wish list</span>
+                  </v-tooltip>
+
                   <a :href="'mailto:'+user.email">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
@@ -95,8 +129,17 @@ export default {
         { text: "Address", value: "address" },
         { text: "Actions", value: "actions" }
       ],
-      users: this.$store.state.users
+      users: this.$store.state.users,
+      wishList_dialog: false,
+      target_item_id: '',
+      target_item_wish_list: ''
     };
+  },
+  methods: {
+    showWishList(list){
+      this.wishList_dialog = true;
+      this.target_item_wish_list = list;
+    }
   }
 };
 </script>

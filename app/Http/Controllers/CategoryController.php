@@ -41,6 +41,11 @@ class CategoryController extends Controller
         return response()->json($data);
     }
 
+    public function get_oneRecord_api($id){
+        $data = Category::find($id);
+        return response()->json($data);
+    }
+
     public function get_categories_web(Request $request) {
         $data = $this->add_meta_data($request);        
         return view('admin.app', ['data' => $data]);
@@ -111,12 +116,13 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update($id, Request $request)
     {
         $request->validate([
             'edit_name' => 'required'
         ]);
-
+        
+        $category = Category::find($id);
         $category->name = $request->edit_name;
         $category->save();
 

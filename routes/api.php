@@ -31,12 +31,21 @@ Route::get('/admin/users', 'UserController@get_users_api');
 
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
 Route::get('/admin/categories/lastrecord','CategoryController@get_lastCategory_api');
+Route::get('/admin/categories/onerecord/{id}', 'CategoryController@get_oneRecord_api');
 
 Route::get('/admin/tags', 'TagController@get_tags_api');
 Route::get('/admin/tags/lastrecord','TagController@get_lastTag_api');
+Route::get('/admin/tags/onerecord/{id}', 'TagController@get_oneRecord_api');
+
 
 Route::get('/admin/publishers', 'PublisherController@get_publishers_api');
 Route::get('/admin/publishers/lastrecord','PublisherController@get_lastPublisher_api');
+Route::get('/admin/publishers/onerecord/{id}', 'PublisherController@get_oneRecord_api');
+
+Route::get('/admin/orders', 'OrderController@get_orders_api');
+Route::get('/admin/orders/lastrecord','OrderController@get_lastorder_api');
+Route::get('/admin/orders/onerecord/{id}', 'OrderController@get_oneRecord_api');
+
 
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');
 

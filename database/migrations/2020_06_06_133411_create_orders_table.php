@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatingsTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->id('id');
-            $table->integer('rating');
-            $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade');
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
+            $table->string('phone_no');            
+            $table->longText('address');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('orders');
     }
 }

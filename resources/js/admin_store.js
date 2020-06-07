@@ -18,7 +18,8 @@ export default new Vuex.Store({
         tags: [],
         publishers: [],
         comments : [],
-        users : []
+        users : [],
+        orders: []
     },
     getters: {
         getCategories(state) {
@@ -33,9 +34,9 @@ export default new Vuex.Store({
             var index = state[route].findIndex(route => route.id == id)
             state[route].splice(index, 1)
         },
-        replaceOneRecord(state, { route, id}) {
+        replaceOneRecord(state, { route, data, id}) {
             var index = state[route].findIndex(route => route.id == id)
-            axios.get(`/api/admin/${statename}/${id}`)
+            state[route][index] = data;            
         },
         addData(state, { route, data }) {
             state[route] = data[route];            

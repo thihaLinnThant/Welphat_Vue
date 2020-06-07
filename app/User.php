@@ -40,4 +40,16 @@ class User extends Authenticatable
     public function comments(){
         return $this->hasMany('App\Comment');
     }
+
+    public function ratings(){
+        return $this->hasMany('App\Rating');
+    }
+
+    public function wishes(){
+        return $this->hasMany('App\Wish');
+    }
+
+    public function orders(){
+        return $this->hasMany('App\Order');
+    }  
 }

@@ -1,40 +1,5 @@
 <template>
-<div>
-  <v-dialog
-    v-model="editDialog"
-    max-width="350"
-    persistent
-  >
-    <v-card>
-      <v-card-title primary-title>
-        Edit Tag title
-      </v-card-title>
-      <v-card-text>
-        <v-text-field
-          :error-messages=errors.edit_name
-          name="edit_name"
-          v-model="fields.edit_name"
-          label="tag name"
-        ></v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          text
-          @click="editDialog = false; target_item = ''; target_item_value = ''"
-        >
-          Cancel
-        </v-btn>
-        <v-btn
-          text
-          @click="submitEdit(target_item, fields)"
-        >
-          Edit
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-
+<div>  
   <v-dialog
     v-model="deleteDialog"
     max-width="350"
@@ -42,7 +7,7 @@
   >
     <v-card>
       <v-card-text>
-        Do you want to delete this tag?
+        Do you want to delete this order?
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -72,28 +37,14 @@
     transition="scroll-y-transition"
     dismissible
   >
-    Tag registered
+    order registered
   </v-alert>
 
     <div>
       <v-card>
         <v-card-title>
-          Tags
-          <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit">            
-            <v-text-field
-              append-icon="mdi-plus"
-              label="Add new"
-              single-line
-              hide-details              
-              :error-messages=errors.name
-              color="#4054b5"
-              v-model="fields.name"
-              name="name"
-              required
-            ></v-text-field>
-          </v-form>
-          <v-spacer></v-spacer>
+          orders
+          <v-spacer></v-spacer>          
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
@@ -103,21 +54,24 @@
           ></v-text-field>
           
         </v-card-title>
-        <v-data-table :headers="headers" :items="tags" :search="search">
+        <v-data-table :headers="headers" :items="orders" :search="search">          
           <template v-slot:body="{ items }">
-            <tbody v-for="(tag,index) in items" :key="index">
+            <tbody v-for="(order,index) in items" :key="index">
               <tr>
-                <td>{{tag.id}}</td>
-                <td>{{tag.name}}</td>
-                <td>{{tag.count}}</td>
+                <td>{{order.id}}</td>
+                <td>{{ order.user.name }}</td>
+                <td>
+                  <span v-for="(books,index) in order.book_orders" :key="index">
+                    <br>{{ books.book_name }}&#8195;({{ books.book_price }}ks)<br>
+                  </span>
+                </td>
+                <td>{{ order.total_price }}ks</td>
+                <td>{{ order.phone_no }}</td>
+                <td>{{ order.address }}</td>
                 <td class="d-flex flex-row">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn
-                        @click="editDialog = true;
-                        target_item = tag;
-                        fields.edit_name = tag.name"
-                        class="mt-1" text icon v-on="on">
+                      <v-btn @click="openEditForm" class="mt-1" text icon v-on="on">
                         <v-icon>mdi-pencil</v-icon>
                       </v-btn>
                     </template>
@@ -133,11 +87,11 @@
                   </v-tooltip>                  
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn @click="deleteDialog = true; target_item = tag" class="mt-1" text icon v-on="on">
+                      <v-btn @click="deleteDialog = true; target_item = order" class="mt-1" text icon v-on="on">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </template>
-                    <span>delete tag</span>
+                    <span>delete order</span>
                   </v-tooltip>
                 </td>
               </tr>
@@ -165,23 +119,30 @@ export default {
           align: "start",
           value: "id"
         },
-        { text: "Name", value: "name" },
-        { text: "Book Count", value: "count" },
+        { text: "User name", value: "user.name" },
+        { text: "Books", value: "books.book_name" },
+        { text: "Total Price", value: "total_price" },
+        { text: "phone no.", value: "phone_no" },
+        { text: "address.", value: "address" },
         { text: "Actions", value: "actions" }
       ],
-      act: "/admin/tags/addtag",
-      statename: "tags",
+      act: "/admin/orders/addorder",
+      statename: "orders",
       editDialog: false,
       deleteDialog: false,
-      target_item: '',
-      target_item_value: '',
+      target_item: '',      
       cascade: null,      
     }
   },
   computed: {
-    tags() {      
-      return this.$store.state.tags;
+    orders() {      
+      return this.$store.state.orders;
     }
+  },
+  methods: {
+      openEditForm(){
+          this.editDialog = true;          
+      },
   }
 };
 </script>

@@ -2,47 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
+use App\Order;
 use Illuminate\Http\Request;
-use SebastianBergmann\Environment\Console;
 
-class TagController extends Controller
+class OrderController extends Controller
 {
 
-    private function get_tags() {
-        $collection = Tag::all([ 'id', 'name' ]);
-        $tags = collect();
-        foreach($collection as $tag) {
-            $tag->count = $tag->books()->count();
-            $tags->push($tag);
+    private function get_orders() {
+        $collection = Order::with('user')->with('book_orders')->get();
+        $orders = collect();
+        foreach($collection as $order){
+            $order->total_price = $order->totalPrice();
+            $count = 0;
+            foreach($order->book_orders as $book){
+                if($order->books->find($book->book_id)){
+                    $order->book_orders[$count]->deleted = false;
+                }else {
+                    $order->book_orders[$count]->deleted = true;
+                }
+                $count++;
+            }
+            $orders->push($order);
         }
-        return collect(['tags' => $tags]);
+        return collect(['orders' => $orders]);
     }
 
     private function add_meta_data($request) {
         return collect(['path' => $request->getPathInfo()]);
     }
 
-    public function get_tags_api() {
-        $data = $this->get_tags();
+    public function get_orders_api() {
+        $data = $this->get_orders();
         return response()->json($data);
     }
 
-    public function get_tags_web(Request $request) {
+    public function get_orders_web(Request $request) {
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
 
-    public function get_lastTag_api() {
-        $data = Tag::latest()->first();        
+    public function get_lastorder_api() {
+        $data = Order::latest()->first();        
         return response()->json($data);
     }
 
     public function get_oneRecord_api($id){
-        $data = Tag::find($id);
+        $data = Order::find($id);
         return response()->json($data);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -58,15 +65,9 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
-        
-        tag::create([ 'name' => $request->name ]);
-
-        return response()->json(null,200);
+        //
     }
 
     /**
@@ -83,10 +84,10 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(Order $order)
     {
         //
     }
@@ -94,10 +95,10 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tag $tag)
+    public function edit(Order $order)
     {
         //
     }
@@ -106,31 +107,22 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tag  $tag
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update($id,Request $request)
+    public function update(Request $request, Order $order)
     {
-        $request->validate([
-            'edit_name' => 'required'
-        ]);
-        
-        $category = Tag::find($id);
-        $category->name = $request->edit_name;
-        $category->save();
-
-        return response()->json(null,200);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        Tag::destroy($id);
-        return response()->json(null, 200);
+        //
     }
 }

@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/categories/delete/{id}','CategoryController@destroy');
 
     Route::get('/admin/comments', 'CommentController@get_comments_web');
+    Route::post('/admin/comments/delete/{id}','CommentController@destroy');
 
     Route::get('/admin/admins','AdminController@get_admins_web');
 
@@ -49,9 +50,19 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
     Route::post('/admin/publishers/addpublisher', 'PublisherController@create');
+    Route::post('/admin/publishers/update/{id}', 'PublisherController@update');
+    Route::post('/admin/publishers/delete/{id}','PublisherController@destroy');
 
     Route::get('/admin/tags', 'TagController@get_tags_web');
     Route::post('/admin/tags/addtag', 'TagController@create');
+    Route::post('/admin/tags/update/{id}', 'TagController@update');
+    Route::post('/admin/tags/delete/{id}','TagController@destroy');
+
+    Route::get('/admin/orders', 'OrderController@get_orders_web');
+    Route::post('/admin/orders/addorder', 'OrderController@create');
+    Route::post('/admin/orders/update/{id}', 'OrderController@update');
+    Route::post('/admin/orders/delete/{id}','OrderController@destroy');
+    
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');
 

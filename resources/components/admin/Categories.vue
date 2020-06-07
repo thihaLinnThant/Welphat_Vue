@@ -10,24 +10,24 @@
         Edit Category title
       </v-card-title>
       <v-card-text>
-        <v-text-field                    
+        <v-text-field
           :error-messages=errors.edit_name
           name="edit_name"
           v-model="fields.edit_name"
-          label="category name"          
+          label="category name"
         ></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
           text
-          @click="editDialog = false; target_item_id = ''; target_item_value = ''"
+          @click="editDialog = false; target_item = ''"
         >
           Cancel
         </v-btn>
         <v-btn
           text
-          @click="submitEdit(target_item_id, fields)"
+          @click="submitEdit(target_item.id, fields)"
         >
           Edit
         </v-btn>
@@ -55,7 +55,7 @@
 
         <v-btn
           text
-          @click="deleteDialog = false; submitDelete(target_item_id);"
+          @click="deleteDialog = false; submitDelete(target_item.id);"
         >
           Yes
         </v-btn>
@@ -115,8 +115,7 @@
                     <template v-slot:activator="{ on }">
                       <v-btn
                         @click="editDialog = true;
-                        target_item_id = category.id;
-                        target_item_value=category.name
+                        target_item = category;
                         fields.edit_name = category.name"
                         class="mt-1" text icon v-on="on">
                         <v-icon>mdi-pencil</v-icon>
@@ -134,7 +133,7 @@
                   </v-tooltip>                  
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn @click="deleteDialog = true; target_item_id = category.id" class="mt-1" text icon v-on="on">
+                      <v-btn @click="deleteDialog = true; target_item = category" class="mt-1" text icon v-on="on">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </template>
@@ -174,8 +173,7 @@ export default {
       statename: "categories",
       editDialog: false,
       deleteDialog: false,
-      target_item_id: '',
-      target_item_value: '',
+      target_item: '',      
       cascade: null,      
     }
   },

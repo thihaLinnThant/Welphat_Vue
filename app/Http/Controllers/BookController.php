@@ -15,7 +15,8 @@ class BookController extends Controller
     private function get_book_list() {
         $collection = Book::with('authors')->with('categories')->with('tags')->get();
         $books = collect();
-        foreach($collection as $book) {
+        foreach($collection as $book) {    
+            $book->rates = $book->averageRating();
             $book->thumb = asset('storage/images/books/'. $book->id . '/thumb_nail.png');
             $books->push($book);
         }

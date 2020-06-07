@@ -20,7 +20,8 @@ class CreateBooksTable extends Migration
             $table->double('price');
             $table->foreignId('publisher_id')->nullable()->references('id')->on('publishers')->onDelete('set null');
             $table->date('published_date');
-            $table->timestamps();            
+            $table->index('name');
+            $table->timestamps();
         });
     }
 
