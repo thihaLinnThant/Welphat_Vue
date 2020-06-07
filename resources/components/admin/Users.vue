@@ -1,41 +1,71 @@
 <template>
   <div>
+    <v-snackbar v-model="alert" color="success">
+      User
+      <b>{{lastRecord}}</b> registered!
+      <v-btn color="error" text @click="alert = false">Close</v-btn>
+    </v-snackbar>
     <v-row justify="center">
       <v-dialog v-model="addNew_Dialog" persistent max-width="600px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Add User</span>
-          </v-card-title>
-          <v-card-text>
-            <v-form @submit.prevent="submit">
+        <v-form @submit.prevent="submit">
+          <v-card>
+            <v-card-title>
+              <span class="headline">Add User</span>
+            </v-card-title>
+            <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12">
-                    <v-text-field label="Name*" required v-model="fields.name"></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field label="Email*" required v-model="fields.email"></v-text-field>
+                    <v-text-field
+                      label="Name*"
+                      :error="errors.name"
+                      :error-messages="errors.name"
+                      required
+                      name="name"
+                      v-model="fields.name"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
+                      name="email"
+                      label="Email*"
+                      :error="errors.email"
+                      :error-messages="errors.email"
+                      required
+                      v-model="fields.email"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      :error="errors.password"
+                      :error-messages="errors.password"
                       :rules="[rules.required]"
                       :append-icon="password_visible ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="password_visible ? 'text' : 'password'"
-                      name="input-10-2"
                       label="Password*"
                       hint="At least 8 characters"
                       value
+                      name="password"
                       v-model="fields.password"
                       class="input-group--focused"
                       @click:append="password_visible = !password_visible"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
-                    <v-text-field label="Phone Number(optional)" v-model="fields.ph_no"></v-text-field>
+                    <v-text-field
+                      address="ph_no"
+                      label="Phone Number(optional)"
+                      :error="errors.ph_no"
+                      :error-messages="errors.ph_no"
+                      v-model="fields.ph_no"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-textarea
+                      :error="errors.address"
+                      :error-messages="errors.address"
                       label="Address(optional)"
+                      name="address"
                       v-model="fields.address"
                       auto-grow
                       outlined
@@ -46,15 +76,15 @@
                   <v-btn @click="reset" outlined color="error">reset</v-btn>
                 </v-row>
               </v-container>
-            </v-form>
-            <small>*indicates required field</small>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="close">Close</v-btn>
-            <v-btn color="blue darken-1" text @click.prevent="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
+              <small>*indicates required field</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+              <v-btn color="blue darken-1" text @click.prevent="save" type="submit">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </v-dialog>
     </v-row>
     <v-card>
@@ -138,8 +168,9 @@
 
 <script>
 import InputMixin from "../../js/RecordInputmixin";
+import lastRecordMixin from "../../js/lastRecordmixin";
 export default {
-  mixins: [InputMixin],
+  mixins: [InputMixin, lastRecordMixin],
   data() {
     return {
       search: "",
@@ -179,7 +210,15 @@ export default {
       this.reset();
     },
     save() {
+      if (
+        !this.fields.name ||
+        !this.fields.email ||
+        !this.fields.password
+      ) {
+        return;
+      }
       this.addNew_Dialog = false;
+
       this.submit();
     }
   }

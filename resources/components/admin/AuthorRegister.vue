@@ -1,12 +1,12 @@
-<template>    
+<template>
     <v-form class="ma-10" @submit.prevent="submit" enctype="multipart/form-data">
-        <h2>Author Register</h2>             
+        <h2>Author Register</h2>
         <v-row justify="center" class="ma-10">
             <v-col
                 cols="12"
                 md="8"
             >
-                <v-text-field :error=errors.name :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>                
+                <v-text-field :error=errors.name :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>
                 <v-textarea :error=errors.bio :error-messages=errors.bio v-model="fields.bio" name="bio" label="Bio" outlined></v-textarea>
                 <v-file-input :error=errors.image :error-messages=errors.image @change="selectFile" v-model="image_file" name="image" label="Upload Image" outlined></v-file-input>
                 <v-btn @click="toggleShow">Upload Image</v-btn>
@@ -19,7 +19,7 @@
                     v-model="show"
                     :width="300"
                     :height="300"
-                    url=""                    
+                    url=""
                     img-format="png"></my-upload>
                 <v-btn type="submit" outlined="">Submit</v-btn>
             </v-col>
@@ -27,7 +27,7 @@
             <v-card width="200px" height="250px">
                 <v-img
                     class="white--text align-end"
-                    height="200px"                
+                    height="200px"
                     :src="image_url"
                 >
                 </v-img>
@@ -40,9 +40,9 @@
 <script>
 import myUpload from 'vue-image-crop-upload';
 import InputMixin from '../../js/RecordInputmixin';
-export default {    
+export default {
     data() {
-        return {            
+        return {
             act: "/admin/authors/register",
             image_file: null,
             image_url: " ",
@@ -55,7 +55,7 @@ export default {
         'my-upload': myUpload
     },
     mixins: [InputMixin],
-    methods: {        
+    methods: {
         toggleShow() {
 				this.show = !this.show;
             },
@@ -63,15 +63,15 @@ export default {
             this.fields.image = event.files[0];
             console.log(this.fields.image);
         },
-            
-        
+
+
         /**
          * crop success
          *
          * [param] imgDataUrl
          * [param] field
          */
-        cropSuccess(imgDataUrl, field){                        
+        cropSuccess(imgDataUrl, field){
 
             // This ready to use cropper only provide dataurl!!
             // A function to change dataurl to file. I don't know how it works!! ( T_T )
@@ -83,8 +83,8 @@ export default {
                 }
                 return new File([u8arr], filename, {type:mime});
             }
-            this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');            
-            this.image_url = imgDataUrl;       
+            this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
+            this.image_url = imgDataUrl;
 
             console.log('-------- crop success --------');
         },

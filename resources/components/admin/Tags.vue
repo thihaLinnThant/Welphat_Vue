@@ -1,27 +1,22 @@
 <template>
 <div>
-  <v-alert
-    v-model="alert"
-    border="left"
-    close-text="Close Alert"
-    color="deep-purple accent-4"
-    dark
-    transition="scroll-y-transition"
-    dismissible
-  >Tag registered</v-alert>
+      <v-snackbar v-model="alert" color="success">
+      Tag <b> {{lastRecord}} </b> registered!
+      <v-btn color="error" text @click="alert = false">Close</v-btn>
+    </v-snackbar>
     <div>
       <v-card>
         <v-card-title>
           Tags
           <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit" >            
+          <v-form class="d-flex" @submit.prevent="submit" >
             <v-text-field
               append-icon="mdi-plus"
               label="Add new"
-              single-line          
-              hide-details    
+              single-line
+              hide-details
               :error=goterror
-              :error-messages=errors.name              
+              :error-messages=errors.name
               color="#4054b5"
               v-model="fields.name"
               name="name"
@@ -36,7 +31,7 @@
             single-line
             hide-details
           ></v-text-field>
-          
+
         </v-card-title>
         <v-data-table :headers="headers" :items="tags" :search="search">
           <template v-slot:body="{ items }">
@@ -44,7 +39,7 @@
               <tr>
                 <td>{{tag.id}}</td>
                 <td>{{tag.name}}</td>
-                <td>{{tag.count}}</td>                
+                <td>{{tag.count}}</td>
                 <td class="d-flex flex-row">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -74,8 +69,9 @@
 
 <script>
 import InputMixin from '../../js/RecordInputmixin';
+import LastRecordMixin from '../../js/lastRecordmixin';
 export default {
-  mixins: [InputMixin],
+  mixins: [InputMixin,LastRecordMixin],
   data() {
     return {
       search: "",

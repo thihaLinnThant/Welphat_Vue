@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/authors', 'AuthorController@get_authors_web');
     Route::post('/admin/authors/register', 'AuthorController@create');
+    Route::get('/admin/authors/register', 'AuthorController@create');
 
     Route::get('/admin/categories', 'CategoryController@get_categories_web');
     Route::post('/admin/categories/addcategory', 'CategoryController@create');

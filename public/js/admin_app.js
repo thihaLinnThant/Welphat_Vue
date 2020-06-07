@@ -2543,6 +2543,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
 /* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
 /* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
 //
 //
 //
@@ -2689,17 +2690,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
       csrf_token: window.csrf_token,
@@ -2830,11 +2826,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
-//
-//
-//
-//
-//
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
 //
 //
 //
@@ -2905,8 +2897,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       search: "",
@@ -2947,6 +2940,37 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3086,8 +3110,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       search: "",
@@ -3139,6 +3164,10 @@ __webpack_require__.r(__webpack_exports__);
       this.reset();
     },
     save: function save() {
+      if (!this.fields.name || !this.fields.email || !this.fields.password) {
+        return;
+      }
+
       this.addNew_Dialog = false;
       this.submit();
     }
@@ -42764,16 +42793,9 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-alert",
+        "v-snackbar",
         {
-          attrs: {
-            border: "left",
-            "close-text": "Close Alert",
-            color: "deep-purple accent-4",
-            dark: "",
-            transition: "scroll-y-transition",
-            dismissible: ""
-          },
+          attrs: { color: "success" },
           model: {
             value: _vm.alert,
             callback: function($$v) {
@@ -42782,7 +42804,24 @@ var render = function() {
             expression: "alert"
           }
         },
-        [_vm._v("\n    Category registered\n  ")]
+        [
+          _vm._v("\n      Category "),
+          _c("b", [_vm._v(" " + _vm._s(_vm.lastRecord) + " ")]),
+          _vm._v("  registered!\n      "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "error", text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -42871,7 +42910,9 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(category.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(category.count))]),
+                            category.count
+                              ? _c("td", [_vm._v(_vm._s(category.count))])
+                              : _c("td", [_vm._v("0")]),
                             _vm._v(" "),
                             _c(
                               "td",
@@ -43239,16 +43280,9 @@ var render = function() {
     "div",
     [
       _c(
-        "v-alert",
+        "v-snackbar",
         {
-          attrs: {
-            border: "left",
-            "close-text": "Close Alert",
-            color: "deep-purple accent-4",
-            dark: "",
-            transition: "scroll-y-transition",
-            dismissible: ""
-          },
+          attrs: { color: "success" },
           model: {
             value: _vm.alert,
             callback: function($$v) {
@@ -43257,7 +43291,24 @@ var render = function() {
             expression: "alert"
           }
         },
-        [_vm._v("Tag registered")]
+        [
+          _vm._v("\n      Tag "),
+          _c("b", [_vm._v(" " + _vm._s(_vm.lastRecord) + " ")]),
+          _vm._v(" registered!\n      "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "error", text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -43486,6 +43537,38 @@ var render = function() {
     "div",
     [
       _c(
+        "v-snackbar",
+        {
+          attrs: { color: "success" },
+          model: {
+            value: _vm.alert,
+            callback: function($$v) {
+              _vm.alert = $$v
+            },
+            expression: "alert"
+          }
+        },
+        [
+          _vm._v("\n    User\n    "),
+          _c("b", [_vm._v(_vm._s(_vm.lastRecord))]),
+          _vm._v(" registered!\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "error", text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-row",
         { attrs: { justify: "center" } },
         [
@@ -43503,27 +43586,27 @@ var render = function() {
             },
             [
               _c(
-                "v-card",
+                "v-form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.submit($event)
+                    }
+                  }
+                },
                 [
-                  _c("v-card-title", [
-                    _c("span", { staticClass: "headline" }, [
-                      _vm._v("Add User")
-                    ])
-                  ]),
-                  _vm._v(" "),
                   _c(
-                    "v-card-text",
+                    "v-card",
                     [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "headline" }, [
+                          _vm._v("Add User")
+                        ])
+                      ]),
+                      _vm._v(" "),
                       _c(
-                        "v-form",
-                        {
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              return _vm.submit($event)
-                            }
-                          }
-                        },
+                        "v-card-text",
                         [
                           _c(
                             "v-container",
@@ -43536,7 +43619,13 @@ var render = function() {
                                     { attrs: { cols: "12" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Name*", required: "" },
+                                        attrs: {
+                                          label: "Name*",
+                                          error: _vm.errors.name,
+                                          "error-messages": _vm.errors.name,
+                                          required: "",
+                                          name: "name"
+                                        },
                                         model: {
                                           value: _vm.fields.name,
                                           callback: function($$v) {
@@ -43555,7 +43644,10 @@ var render = function() {
                                     [
                                       _c("v-text-field", {
                                         attrs: {
+                                          name: "email",
                                           label: "Email*",
+                                          error: _vm.errors.email,
+                                          "error-messages": _vm.errors.email,
                                           required: ""
                                         },
                                         model: {
@@ -43577,6 +43669,8 @@ var render = function() {
                                       _c("v-text-field", {
                                         staticClass: "input-group--focused",
                                         attrs: {
+                                          error: _vm.errors.password,
+                                          "error-messages": _vm.errors.password,
                                           rules: [_vm.rules.required],
                                           "append-icon": _vm.password_visible
                                             ? "mdi-eye"
@@ -43584,10 +43678,10 @@ var render = function() {
                                           type: _vm.password_visible
                                             ? "text"
                                             : "password",
-                                          name: "input-10-2",
                                           label: "Password*",
                                           hint: "At least 8 characters",
-                                          value: ""
+                                          value: "",
+                                          name: "password"
                                         },
                                         on: {
                                           "click:append": function($event) {
@@ -43616,7 +43710,10 @@ var render = function() {
                                     [
                                       _c("v-text-field", {
                                         attrs: {
-                                          label: "Phone Number(optional)"
+                                          address: "ph_no",
+                                          label: "Phone Number(optional)",
+                                          error: _vm.errors.ph_no,
+                                          "error-messages": _vm.errors.ph_no
                                         },
                                         model: {
                                           value: _vm.fields.ph_no,
@@ -43636,7 +43733,10 @@ var render = function() {
                                     [
                                       _c("v-textarea", {
                                         attrs: {
+                                          error: _vm.errors.address,
+                                          "error-messages": _vm.errors.address,
                                           label: "Address(optional)",
+                                          name: "address",
                                           "auto-grow": "",
                                           outlined: "",
                                           rows: "3",
@@ -43667,42 +43767,46 @@ var render = function() {
                               )
                             ],
                             1
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("small", [_vm._v("*indicates required field")])
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _c("small", [_vm._v("*indicates required field")])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
                       _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "blue darken-1", text: "" },
-                          on: { click: _vm.close }
-                        },
-                        [_vm._v("Close")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "blue darken-1", text: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.save($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Save")]
+                        "v-card-actions",
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "blue darken-1", text: "" },
+                              on: { click: _vm.close }
+                            },
+                            [_vm._v("Close")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "blue darken-1",
+                                text: "",
+                                type: "submit"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.save($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Save")]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
@@ -103760,6 +103864,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      lastRecord: null
+    };
+  },
   methods: {
     // Get latest data from database to state
     lastrecord: function lastrecord(statename) {
@@ -103772,6 +103881,8 @@ __webpack_require__.r(__webpack_exports__);
           route: statename,
           data: data
         });
+
+        _this.lastRecord = data.name;
       });
     }
   }

@@ -63,17 +63,10 @@
     </v-card>
   </v-dialog>
 
-  <v-alert
-    v-model="alert"
-    border="left"
-    close-text="Close Alert"
-    color="deep-purple accent-4"
-    dark
-    transition="scroll-y-transition"
-    dismissible
-  >
-    Category registered
-  </v-alert>
+    <v-snackbar v-model="alert" color="success">
+      Category <b> {{lastRecord}} </b>  registered!
+      <v-btn color="error" text @click="alert = false">Close</v-btn>
+    </v-snackbar>
 
     <div>
       <v-card>
@@ -109,7 +102,8 @@
               <tr>
                 <td>{{category.id}}</td>
                 <td>{{category.name}}</td>
-                <td>{{category.count}}</td>
+                <td v-if="category.count">{{category.count}}</td>
+                <td v-else>0</td>
                 <td class="d-flex flex-row">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -154,8 +148,9 @@
 import InputMixin from '../../js/RecordInputmixin';
 import EditMixin from '../../js/editFrom';
 import DeleteMixin from '../../js/deleteForm';
+import lastRecordMixin from '../../js/lastRecordmixin';
 export default {
-  mixins: [InputMixin,EditMixin, DeleteMixin],
+  mixins: [InputMixin,EditMixin, DeleteMixin,lastRecordMixin],
   data() {
     return {
       csrf_token: window.csrf_token,
