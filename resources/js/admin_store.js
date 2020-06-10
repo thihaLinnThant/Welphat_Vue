@@ -11,14 +11,14 @@ axios.defaults.headers.common = {
 
 export default new Vuex.Store({
     state: {
-        admins : [],
+        admins: [],
         books: [],
         authors: [],
         categories: [],
         tags: [],
         publishers: [],
-        comments : [],
-        users : [],
+        comments: [],
+        users: [],
         orders: []
     },
     getters: {
@@ -34,12 +34,29 @@ export default new Vuex.Store({
             var index = state[route].findIndex(route => route.id == id)
             state[route].splice(index, 1)
         },
-        replaceOneRecord(state, { route, data, id}) {
+        replaceOneRecord(state, { route, data, id }) {
+
             var index = state[route].findIndex(route => route.id == id)
-            state[route][index] = data;            
+
+            state[route][index].name = data.name;
+            if (route == 'users') {
+                state[route][index].email = data.email;
+                state[route][index].ph_no = data.ph_no;
+                state[route][index].address = data.address;
+            }
+            if (route == 'admins') {
+                if (data.super_admin) {
+                    state[route][index].super_admin = data.super_admin;
+                }
+                state[route][index].email = data.email;
+                if (data.password) {
+                    state[route][index].password = data.password;
+                }
+            }
+
         },
         addData(state, { route, data }) {
-            state[route] = data[route];            
+            state[route] = data[route];
         }
     }
 });

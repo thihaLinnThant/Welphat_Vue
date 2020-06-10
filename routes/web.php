@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/authors', 'AuthorController@get_authors_web');
     Route::post('/admin/authors/register', 'AuthorController@create');
+    Route::get('/admin/authors/register', 'AuthorController@create');
 
     Route::get('/admin/categories', 'CategoryController@get_categories_web');
     Route::post('/admin/categories/addcategory', 'CategoryController@create');
@@ -45,8 +46,15 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/comments/delete/{id}','CommentController@destroy');
 
     Route::get('/admin/admins','AdminController@get_admins_web');
+    Route::post('/admin/admins/addadmin','AdminController@create');
+    Route::post('/admin/admins/adminSuper/update/{id}','AdminController@updateSuperAdmin');
+    Route::post('/admin/admins/delete/{id}','AdminController@destroy');
+    Route::post('/admin/admins/update/{id}','AdminController@update');
 
     Route::get('/admin/users','UserController@get_users_web');
+    Route::post('/admin/users/adduser','UserController@create');
+    Route::post('/admin/users/delete/{id}','UserController@destroy');
+    Route::post('/admin/users/update/{id}','UserController@update');
 
     Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
     Route::post('/admin/publishers/addpublisher', 'PublisherController@create');
@@ -62,7 +70,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/orders/addorder', 'OrderController@create');
     Route::post('/admin/orders/update/{id}', 'OrderController@update');
     Route::post('/admin/orders/delete/{id}','OrderController@destroy');
-    
+
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');
 

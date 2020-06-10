@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-dialog
+    <v-dialog
     v-model="editDialog"
     max-width="350"
     persistent
@@ -21,13 +21,13 @@
         <v-spacer></v-spacer>
         <v-btn
           text
-          @click="editDialog = false; target_item = ''; target_item_value = ''"
+          @click="editDialog = false; target_item = '';"
         >
           Cancel
         </v-btn>
         <v-btn
           text
-          @click="submitEdit(target_item, fields)"
+          @click="submitEdit(target_item.id, fields)"
         >
           Edit
         </v-btn>
@@ -55,7 +55,7 @@
 
         <v-btn
           text
-          @click="deleteDialog = false; submitDelete(target_item);"
+          @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);"
         >
           Yes
         </v-btn>
@@ -63,29 +63,21 @@
     </v-card>
   </v-dialog>
 
-  <v-alert
-    v-model="alert"
-    border="left"
-    close-text="Close Alert"
-    color="deep-purple accent-4"
-    dark
-    transition="scroll-y-transition"
-    dismissible
-  >
-    Tag registered
-  </v-alert>
-
+      <v-snackbar v-model="alert" color="success">
+      {{alertMessage}}
+      <v-btn text @click="alert = false">Close</v-btn>
+    </v-snackbar>
     <div>
       <v-card>
         <v-card-title>
           Tags
           <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit">            
+          <v-form class="d-flex" @submit.prevent="submit">
             <v-text-field
               append-icon="mdi-plus"
               label="Add new"
               single-line
-              hide-details              
+              hide-details
               :error-messages=errors.name
               color="#4054b5"
               v-model="fields.name"
@@ -101,7 +93,7 @@
             single-line
             hide-details
           ></v-text-field>
-          
+
         </v-card-title>
         <v-data-table :headers="headers" :items="tags" :search="search">
           <template v-slot:body="{ items }">
@@ -130,7 +122,7 @@
                       </v-btn>
                     </template>
                     <span>view books</span>
-                  </v-tooltip>                  
+                  </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn @click="deleteDialog = true; target_item = tag" class="mt-1" text icon v-on="on">
@@ -153,8 +145,10 @@
 import InputMixin from '../../js/RecordInputmixin';
 import EditMixin from '../../js/editFrom';
 import DeleteMixin from '../../js/deleteForm';
+import LastRecordMixin from '../../js/lastRecordmixin';
+
 export default {
-  mixins: [InputMixin,EditMixin, DeleteMixin],
+  mixins: [InputMixin,EditMixin, DeleteMixin,LastRecordMixin],
   data() {
     return {
       csrf_token: window.csrf_token,
@@ -175,11 +169,11 @@ export default {
       deleteDialog: false,
       target_item: '',
       target_item_value: '',
-      cascade: null,      
+      cascade: null,
     }
   },
   computed: {
-    tags() {      
+    tags() {
       return this.$store.state.tags;
     }
   }

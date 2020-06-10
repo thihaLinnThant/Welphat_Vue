@@ -3,20 +3,20 @@
       <v-card>
           <v-card-title>Admin Login</v-card-title>
 
-          <v-form> //role="form" method="POST" action="/admin/login"
-            <v-text-field                
+          <v-form>
+            <v-text-field
                 label="Name"
                 required
             ></v-text-field>
-            <v-text-field                
+            <v-text-field
                 label="Email"
                 required
             ></v-text-field>
-            <v-text-field                
-                label="Paasword"
+            <v-text-field
+                label="Password"
                 required
             ></v-text-field>
-            <v-text-field                
+            <v-text-field
                 label="Confirm Password"
                 required
             ></v-text-field>

@@ -78,10 +78,15 @@ class RegisterController extends Controller
     protected function createAdmin(Request $request)
     {
         $this->adminValidator($request->all())->validate();
-        Admin::create([
+        $super_admin = 0;
+        if($request && $request->super_admin == '5up3rP@s5wrod'){
+            $super_admin = 1;
+        }
+         Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'super_admin' => $super_admin
         ]);
         return redirect()->intended('login/admin');
     }

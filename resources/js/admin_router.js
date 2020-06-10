@@ -27,12 +27,14 @@ let router = new VueRouter({
 
         { path: '/admin/categories', component: Categories, name: 'categories' },
 
+
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },
         { path: '/admin/comments', component: Comment, name: 'comments' },
         { path: '/admin/orders', component: Order, name: 'orders' },
         { path: '/admin/admins', component: Admin, name: 'admins' },
-        { path: '/admin/users', component: User, name : 'users'}
+        { path: '/admin/users', component: User, name : 'users'},
+        { path: '/admin/users/adduser', name : 'adduser'}
     ],
     // methods: {
     //     getApiData() {

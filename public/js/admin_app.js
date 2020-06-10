@@ -1908,6 +1908,10 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
+/* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
 //
 //
 //
@@ -1963,11 +1967,241 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       search: "",
+      isSuper_admin: 0,
+      admin_id: window.admin_id,
+      admin_name: window.admin_name,
+      super_admin: window.super_admin,
       headers: [{
+        text: "Role",
+        value: "super_admin"
+      }, {
         text: "Id",
         align: "start",
         value: "id"
@@ -1984,8 +2218,42 @@ __webpack_require__.r(__webpack_exports__);
         text: "Actions",
         value: "actions"
       }],
-      admins: this.$store.state.admins
+      addNew_Dialog: false,
+      deleteDialog: false,
+      password_visible: false,
+      editDialog: false,
+      updateDialog: false,
+      act: "/admin/admins/addadmin",
+      statename: "admins",
+      rules: {
+        required: function required(value) {
+          return !!value || "Required.";
+        }
+      }
     };
+  },
+  computed: {
+    admins: function admins() {
+      return this.$store.state.admins;
+    }
+  },
+  methods: {
+    reset: function reset() {
+      this.fields = {};
+    },
+    close: function close() {
+      this.addNew_Dialog = false;
+      this.updateDialog = false;
+      this.reset();
+    },
+    save: function save() {
+      if (!this.fields.name || !this.fields.email || !this.fields.password) {
+        return;
+      }
+
+      this.addNew_Dialog = false;
+      this.submit();
+    }
   }
 });
 
@@ -2543,6 +2811,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
 /* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
 /* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
 //
 //
 //
@@ -2665,40 +2934,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
       csrf_token: window.csrf_token,
@@ -2721,7 +2962,7 @@ __webpack_require__.r(__webpack_exports__);
       statename: "categories",
       editDialog: false,
       deleteDialog: false,
-      target_item: '',
+      target_item: "",
       cascade: null
     };
   },
@@ -3035,6 +3276,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
 /* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
 /* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
 //
 //
 //
@@ -3178,19 +3420,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
       csrf_token: window.csrf_token,
@@ -3236,6 +3471,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
+/* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
 //
 //
 //
@@ -3349,7 +3588,172 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       search: "",
@@ -3376,13 +3780,44 @@ __webpack_require__.r(__webpack_exports__);
         text: "Actions",
         value: "actions"
       }],
-      users: this.$store.state.users,
+      act: "/admin/users/adduser",
+      statename: "users",
+      addNew_Dialog: false,
+      deleteDialog: false,
+      editDialog: false,
+      password_visible: false,
       wishList_dialog: false,
-      target_item_id: '',
-      target_item_wish_list: ''
+      target_item: "",
+      target_item_value: "",
+      target_item_wish_list: "",
+      rules: {
+        required: function required(value) {
+          return !!value || "Required.";
+        }
+      }
     };
   },
+  computed: {
+    users: function users() {
+      return this.$store.state.users;
+    }
+  },
   methods: {
+    reset: function reset() {
+      this.fields = {};
+    },
+    close: function close() {
+      this.addNew_Dialog = false;
+      this.reset();
+    },
+    save: function save() {
+      if (!this.fields.name || !this.fields.email || !this.fields.password) {
+        return;
+      }
+
+      this.addNew_Dialog = false;
+      this.submit();
+    },
     showWishList: function showWishList(list) {
       this.wishList_dialog = true;
       this.target_item_wish_list = list;
@@ -41918,12 +42353,640 @@ var render = function() {
     "div",
     [
       _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "380", persistent: "" },
+          model: {
+            value: _vm.deleteDialog,
+            callback: function($$v) {
+              _vm.deleteDialog = $$v
+            },
+            expression: "deleteDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _vm.isSuper_admin != 1
+                ? _c("v-card-text", [
+                    _vm._v("Do you want to delete this admin?")
+                  ])
+                : _c("v-card-title", [
+                    _vm._v("Sorry, you can't delete Super Admin")
+                  ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _vm.isSuper_admin != 1
+                    ? _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteDialog = false
+                              _vm.target_item = ""
+                            }
+                          }
+                        },
+                        [_vm._v("No")]
+                      )
+                    : _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteDialog = false
+                              _vm.target_item = ""
+                            }
+                          }
+                        },
+                        [_vm._v("close")]
+                      ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isSuper_admin != 1,
+                          expression: "isSuper_admin != 1"
+                        }
+                      ],
+                      attrs: { text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteDialog = false
+                          _vm.submitDelete(
+                            _vm.target_item.id,
+                            _vm.target_item.name
+                          )
+                        }
+                      }
+                    },
+                    [_vm._v("Yes")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "430", persistent: "" },
+          model: {
+            value: _vm.updateDialog,
+            callback: function($$v) {
+              _vm.updateDialog = $$v
+            },
+            expression: "updateDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v("Upgrade to Super Admin")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Super Admin Code", outlined: "" },
+                        model: {
+                          value: _vm.fields.super_admin,
+                          callback: function($$v) {
+                            _vm.$set(_vm.fields, "super_admin", $$v)
+                          },
+                          expression: "fields.super_admin"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("small", [
+                        _vm._v("please fill the super admin code to update")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: { click: _vm.close }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "blue darken-1",
+                        text: "",
+                        type: "submit"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.statename = "admins/adminSuper"
+                          _vm.submitEdit(_vm.target_item.id, _vm.fields)
+                          _vm.updateDialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("Upgrade")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "650", persistent: "" },
+          model: {
+            value: _vm.editDialog,
+            callback: function($$v) {
+              _vm.editDialog = $$v
+            },
+            expression: "editDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [_vm._v("Edit Admin")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    [
+                      _vm._v(
+                        "\n            " + _vm._s(_vm.fields) + "\n          "
+                      ),
+                      _vm.isSuper_admin != 1
+                        ? _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Name*",
+                                      "error-messages": _vm.errors.name,
+                                      required: "",
+                                      name: "name"
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_name,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.fields, "edit_name", $$v)
+                                      },
+                                      expression: "fields.edit_name"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      name: "email",
+                                      label: "Email*",
+                                      "error-messages": _vm.errors.email,
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_email,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.fields, "edit_email", $$v)
+                                      },
+                                      expression: "fields.edit_email"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12" } },
+                                [
+                                  _c("v-text-field", {
+                                    staticClass: "input-group--focused",
+                                    attrs: {
+                                      name: "password",
+                                      label: "Password",
+                                      "error-messages": _vm.errors.password,
+                                      "append-icon": _vm.password_visible
+                                        ? "mdi-eye"
+                                        : "mdi-eye-off",
+                                      type: _vm.password_visible
+                                        ? "text"
+                                        : "password"
+                                    },
+                                    on: {
+                                      "click:append": function($event) {
+                                        _vm.password_visible = !_vm.password_visible
+                                      }
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_password,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_password",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_password"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("small", [
+                                _vm._v("*indicates required field")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { outlined: "", color: "error" },
+                                  on: { click: _vm.reset }
+                                },
+                                [_vm._v("reset")]
+                              )
+                            ],
+                            1
+                          )
+                        : _c("h2", [_vm._v("Haha, no way bro!")])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.editDialog = false
+                          _vm.target_item = ""
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isSuper_admin != 1,
+                          expression: "isSuper_admin != 1"
+                        }
+                      ],
+                      attrs: {
+                        color: "blue darken-1",
+                        text: "",
+                        type: "submit"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.submitEdit(_vm.target_item.id, _vm.fields)
+                        }
+                      }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: "success" },
+          model: {
+            value: _vm.alert,
+            callback: function($$v) {
+              _vm.alert = $$v
+            },
+            expression: "alert"
+          }
+        },
+        [
+          _vm._v("\n    " + _vm._s(_vm.alertMessage) + "\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { attrs: { justify: "center" } },
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "600px" },
+              model: {
+                value: _vm.addNew_Dialog,
+                callback: function($$v) {
+                  _vm.addNew_Dialog = $$v
+                },
+                expression: "addNew_Dialog"
+              }
+            },
+            [
+              _c(
+                "v-form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.submit($event)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "headline" }, [
+                          _vm._v("Add New Admin")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-container",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Name*",
+                                          error: _vm.errors.name,
+                                          "error-messages": _vm.errors.name,
+                                          required: "",
+                                          name: "name"
+                                        },
+                                        model: {
+                                          value: _vm.fields.name,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "name", $$v)
+                                          },
+                                          expression: "fields.name"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          name: "email",
+                                          label: "Email*",
+                                          error: _vm.errors.email,
+                                          "error-messages": _vm.errors.email,
+                                          required: ""
+                                        },
+                                        model: {
+                                          value: _vm.fields.email,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "email", $$v)
+                                          },
+                                          expression: "fields.email"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        staticClass: "input-group--focused",
+                                        attrs: {
+                                          error: _vm.errors.password,
+                                          "error-messages": _vm.errors.password,
+                                          rules: [_vm.rules.required],
+                                          "append-icon": _vm.password_visible
+                                            ? "mdi-eye"
+                                            : "mdi-eye-off",
+                                          type: _vm.password_visible
+                                            ? "text"
+                                            : "password",
+                                          label: "Password*",
+                                          hint: "At least 8 characters",
+                                          value: "",
+                                          name: "password"
+                                        },
+                                        on: {
+                                          "click:append": function($event) {
+                                            _vm.password_visible = !_vm.password_visible
+                                          }
+                                        },
+                                        model: {
+                                          value: _vm.fields.password,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.fields,
+                                              "password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "fields.password"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(_vm.fields) +
+                                      "\n                "
+                                  ),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { outlined: "", color: "error" },
+                                      on: { click: _vm.reset }
+                                    },
+                                    [_vm._v("reset")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("small", [_vm._v("*indicates required field")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "blue darken-1", text: "" },
+                              on: { click: _vm.close }
+                            },
+                            [_vm._v("Close")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "blue darken-1",
+                                text: "",
+                                type: "submit"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.save($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Save")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-card",
         [
           _c(
             "v-card-title",
             [
               _vm._v("\n      Admins\n      "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { outlined: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.addNew_Dialog = true
+                    }
+                  }
+                },
+                [_vm._v("Create New +")]
+              ),
+              _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
               _c("v-text-field", {
@@ -41959,6 +43022,23 @@ var render = function() {
                   return _vm._l(items, function(admin, index) {
                     return _c("tbody", { key: index }, [
                       _c("tr", [
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "v-icon",
+                              {
+                                attrs: {
+                                  color:
+                                    admin.super_admin == 1 ? "yellow" : "grey"
+                                }
+                              },
+                              [_vm._v("mdi-star")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(admin.id))]),
                         _vm._v(" "),
                         admin.profile_image
@@ -41996,55 +43076,271 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(admin.email))]),
                         _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            { attrs: { href: "mailto:" + admin.email } },
-                            [
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "row",
+                              {
+                                staticClass: "d-flex",
+                                attrs: { justify: "space-between" }
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticStyle: { "text-decoration": "none" },
+                                    attrs: { href: "mailto:" + admin.email }
+                                  },
+                                  [
+                                    _c(
+                                      "v-tooltip",
                                       {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          return [
-                                            _c(
-                                              "v-btn",
-                                              _vm._g(
+                                        attrs: { bottom: "" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "activator",
+                                              fn: function(ref) {
+                                                var on = ref.on
+                                                return [
+                                                  _c(
+                                                    "v-btn",
+                                                    _vm._g(
+                                                      {
+                                                        staticClass: "mt-1",
+                                                        attrs: {
+                                                          text: "",
+                                                          icon: ""
+                                                        }
+                                                      },
+                                                      on
+                                                    ),
+                                                    [
+                                                      _c("v-icon", [
+                                                        _vm._v("mdi-email")
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      },
+                                      [
+                                        _vm._v(" "),
+                                        _c("span", [_vm._v("send email")])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm.super_admin == 1
+                                  ? _c("span", [
+                                      _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { bottom: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function(ref) {
+                                                      var on = ref.on
+                                                      return [
+                                                        _c(
+                                                          "v-btn",
+                                                          _vm._g(
+                                                            {
+                                                              staticClass:
+                                                                "mt-1",
+                                                              attrs: {
+                                                                text: "",
+                                                                icon: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.editDialog = true
+                                                                  _vm.target_item = admin
+                                                                  _vm.fields.edit_name =
+                                                                    admin.name
+                                                                  _vm.fields.edit_email =
+                                                                    admin.email
+                                                                  _vm.fields.edit_password =
+                                                                    ""
+                                                                  _vm.isSuper_admin =
+                                                                    admin.super_admin
+                                                                }
+                                                              }
+                                                            },
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", [
+                                                              _vm._v(
+                                                                "mdi-pencil"
+                                                              )
+                                                            ])
+                                                          ],
+                                                          1
+                                                        )
+                                                      ]
+                                                    }
+                                                  }
+                                                ],
+                                                null,
+                                                true
+                                              )
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("edit")])
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { bottom: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function(ref) {
+                                                      var on = ref.on
+                                                      return [
+                                                        _c(
+                                                          "v-btn",
+                                                          _vm._g(
+                                                            {
+                                                              staticClass:
+                                                                "mt-1",
+                                                              attrs: {
+                                                                text: "",
+                                                                icon: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  _vm.deleteDialog = true
+                                                                  _vm.target_item = admin
+                                                                  _vm.isSuper_admin =
+                                                                    admin.super_admin
+                                                                }
+                                                              }
+                                                            },
+                                                            on
+                                                          ),
+                                                          [
+                                                            _c("v-icon", [
+                                                              _vm._v(
+                                                                "mdi-delete"
+                                                              )
+                                                            ])
+                                                          ],
+                                                          1
+                                                        )
+                                                      ]
+                                                    }
+                                                  }
+                                                ],
+                                                null,
+                                                true
+                                              )
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [
+                                                _vm._v(
+                                                  "Delete " + _vm._s(admin.name)
+                                                )
+                                              ])
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          admin.super_admin != 1
+                                            ? _c(
+                                                "v-tooltip",
                                                 {
-                                                  staticClass: "mt-1",
-                                                  attrs: { text: "", icon: "" }
+                                                  attrs: { bottom: "" },
+                                                  scopedSlots: _vm._u(
+                                                    [
+                                                      {
+                                                        key: "activator",
+                                                        fn: function(ref) {
+                                                          var on = ref.on
+                                                          return [
+                                                            _c(
+                                                              "v-btn",
+                                                              _vm._g(
+                                                                {
+                                                                  staticClass:
+                                                                    "mt-1",
+                                                                  attrs: {
+                                                                    text: "",
+                                                                    icon: ""
+                                                                  },
+                                                                  on: {
+                                                                    click: function(
+                                                                      $event
+                                                                    ) {
+                                                                      _vm.updateDialog = true
+                                                                      _vm.target_item = admin
+                                                                    }
+                                                                  }
+                                                                },
+                                                                on
+                                                              ),
+                                                              [
+                                                                _c("v-icon", [
+                                                                  _vm._v(
+                                                                    "mdi-arrow-up-bold-circle"
+                                                                  )
+                                                                ])
+                                                              ],
+                                                              1
+                                                            )
+                                                          ]
+                                                        }
+                                                      }
+                                                    ],
+                                                    null,
+                                                    true
+                                                  )
                                                 },
-                                                on
-                                              ),
-                                              [
-                                                _c("v-icon", [
-                                                  _vm._v("mdi-email")
-                                                ])
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("send email")])
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ])
+                                                [
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(
+                                                      "Upgrade " +
+                                                        _vm._s(admin.name) +
+                                                        " to super admin"
+                                                    )
+                                                  ])
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ],
+                                        1
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]
+                            )
+                          ],
+                          1
+                        )
                       ])
                     ])
                   })
@@ -42966,7 +44262,7 @@ var render = function() {
             "v-card",
             [
               _c("v-card-title", { attrs: { "primary-title": "" } }, [
-                _vm._v("\n        Edit Category title\n      ")
+                _vm._v("Edit Category title")
               ]),
               _vm._v(" "),
               _c(
@@ -43006,7 +44302,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n          Cancel\n        ")]
+                    [_vm._v("Cancel")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -43019,7 +44315,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n          Edit\n        ")]
+                    [_vm._v("Edit")]
                   )
                 ],
                 1
@@ -43048,7 +44344,7 @@ var render = function() {
             "v-card",
             [
               _c("v-card-text", [
-                _vm._v("\n        Do you want to delete this category?\n      ")
+                _vm._v("Do you want to delete this category?")
               ]),
               _vm._v(" "),
               _c(
@@ -43063,11 +44359,11 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.deleteDialog = false
-                          _vm.target_item_id = ""
+                          _vm.target_item = ""
                         }
                       }
                     },
-                    [_vm._v("\n          No\n        ")]
+                    [_vm._v("No")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -43077,11 +44373,14 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.deleteDialog = false
-                          _vm.submitDelete(_vm.target_item.id)
+                          _vm.submitDelete(
+                            _vm.target_item.id,
+                            _vm.target_item.name
+                          )
                         }
                       }
                     },
-                    [_vm._v("\n          Yes\n        ")]
+                    [_vm._v("Yes")]
                   )
                 ],
                 1
@@ -43094,16 +44393,9 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-alert",
+        "v-snackbar",
         {
-          attrs: {
-            border: "left",
-            "close-text": "Close Alert",
-            color: "deep-purple accent-4",
-            dark: "",
-            transition: "scroll-y-transition",
-            dismissible: ""
-          },
+          attrs: { color: "success" },
           model: {
             value: _vm.alert,
             callback: function($$v) {
@@ -43112,7 +44404,22 @@ var render = function() {
             expression: "alert"
           }
         },
-        [_vm._v("\n    Category registered\n  ")]
+        [
+          _vm._v("\n    " + _vm._s(_vm.alertMessage) + "\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -43124,7 +44431,7 @@ var render = function() {
               _c(
                 "v-card-title",
                 [
-                  _vm._v("\n          Categories\n          "),
+                  _vm._v("\n        Categories\n        "),
                   _c("v-spacer"),
                   _vm._v(" "),
                   _c(
@@ -43201,7 +44508,9 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(category.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(category.count))]),
+                            category.count
+                              ? _c("td", [_vm._v(_vm._s(category.count))])
+                              : _c("td", [_vm._v("0")]),
                             _vm._v(" "),
                             _c(
                               "td",
@@ -44031,7 +45340,6 @@ var render = function() {
                         click: function($event) {
                           _vm.editDialog = false
                           _vm.target_item = ""
-                          _vm.target_item_value = ""
                         }
                       }
                     },
@@ -44044,7 +45352,7 @@ var render = function() {
                       attrs: { text: "" },
                       on: {
                         click: function($event) {
-                          return _vm.submitEdit(_vm.target_item, _vm.fields)
+                          return _vm.submitEdit(_vm.target_item.id, _vm.fields)
                         }
                       }
                     },
@@ -44106,7 +45414,10 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.deleteDialog = false
-                          _vm.submitDelete(_vm.target_item)
+                          _vm.submitDelete(
+                            _vm.target_item.id,
+                            _vm.target_item.name
+                          )
                         }
                       }
                     },
@@ -44123,16 +45434,9 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-alert",
+        "v-snackbar",
         {
-          attrs: {
-            border: "left",
-            "close-text": "Close Alert",
-            color: "deep-purple accent-4",
-            dark: "",
-            transition: "scroll-y-transition",
-            dismissible: ""
-          },
+          attrs: { color: "success" },
           model: {
             value: _vm.alert,
             callback: function($$v) {
@@ -44141,7 +45445,22 @@ var render = function() {
             expression: "alert"
           }
         },
-        [_vm._v("\n    Tag registered\n  ")]
+        [
+          _vm._v("\n      " + _vm._s(_vm.alertMessage) + "\n      "),
+          _c(
+            "v-btn",
+            {
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -44426,6 +45745,196 @@ var render = function() {
       _c(
         "v-dialog",
         {
+          attrs: { "max-width": "650", persistent: "" },
+          model: {
+            value: _vm.editDialog,
+            callback: function($$v) {
+              _vm.editDialog = $$v
+            },
+            expression: "editDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [_vm._v("Edit User")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Name*",
+                                  "error-messages": _vm.errors.name,
+                                  required: "",
+                                  name: "name"
+                                },
+                                model: {
+                                  value: _vm.fields.edit_name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_name", $$v)
+                                  },
+                                  expression: "fields.edit_name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  name: "email",
+                                  label: "Email*",
+                                  "error-messages": _vm.errors.email,
+                                  required: ""
+                                },
+                                model: {
+                                  value: _vm.fields.edit_email,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_email", $$v)
+                                  },
+                                  expression: "fields.edit_email"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "6" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  address: "ph_no",
+                                  label: "Phone Number(optional)",
+                                  error: _vm.errors.ph_no,
+                                  "error-messages": _vm.errors.ph_no
+                                },
+                                model: {
+                                  value: _vm.fields.edit_ph_no,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_ph_no", $$v)
+                                  },
+                                  expression: "fields.edit_ph_no"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "6" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  error: _vm.errors.address,
+                                  "error-messages": _vm.errors.address,
+                                  label: "Address(optional)",
+                                  name: "address",
+                                  "auto-grow": "",
+                                  outlined: "",
+                                  rows: "3",
+                                  "row-height": "15"
+                                },
+                                model: {
+                                  value: _vm.fields.edit_address,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_address", $$v)
+                                  },
+                                  expression: "fields.edit_address"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { outlined: "", color: "error" },
+                              on: { click: _vm.reset }
+                            },
+                            [_vm._v("reset")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("small", [_vm._v("*indicates required field")])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.editDialog = false
+                          _vm.target_item = ""
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "blue darken-1",
+                        text: "",
+                        type: "submit"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.submitEdit(_vm.target_item.id, _vm.fields)
+                        }
+                      }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
           attrs: { "max-width": "350" },
           model: {
             value: _vm.wishList_dialog,
@@ -44452,11 +45961,7 @@ var render = function() {
                       { key: i, attrs: { inactive: "" } },
                       [
                         _c("v-list-item-title", [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(item.book_name) +
-                              "\n            "
-                          )
+                          _vm._v(_vm._s(item.book_name))
                         ])
                       ],
                       1
@@ -44473,12 +45978,373 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "350", persistent: "" },
+          model: {
+            value: _vm.deleteDialog,
+            callback: function($$v) {
+              _vm.deleteDialog = $$v
+            },
+            expression: "deleteDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-text", [_vm._v("Do you want to delete this user?")]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteDialog = false
+                          _vm.target_item = ""
+                        }
+                      }
+                    },
+                    [_vm._v("No")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteDialog = false
+                          _vm.submitDelete(
+                            _vm.target_item.id,
+                            _vm.target_item.name
+                          )
+                        }
+                      }
+                    },
+                    [_vm._v("Yes")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: "success" },
+          model: {
+            value: _vm.alert,
+            callback: function($$v) {
+              _vm.alert = $$v
+            },
+            expression: "alert"
+          }
+        },
+        [
+          _vm._v("\n    " + _vm._s(_vm.alertMessage) + "\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { attrs: { justify: "center" } },
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "600px" },
+              model: {
+                value: _vm.addNew_Dialog,
+                callback: function($$v) {
+                  _vm.addNew_Dialog = $$v
+                },
+                expression: "addNew_Dialog"
+              }
+            },
+            [
+              _c(
+                "v-form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.submit($event)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "headline" }, [
+                          _vm._v("Add User")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-container",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Name*",
+                                          error: _vm.errors.name,
+                                          "error-messages": _vm.errors.name,
+                                          required: "",
+                                          name: "name"
+                                        },
+                                        model: {
+                                          value: _vm.fields.name,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "name", $$v)
+                                          },
+                                          expression: "fields.name"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          name: "email",
+                                          label: "Email*",
+                                          error: _vm.errors.email,
+                                          "error-messages": _vm.errors.email,
+                                          required: ""
+                                        },
+                                        model: {
+                                          value: _vm.fields.email,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "email", $$v)
+                                          },
+                                          expression: "fields.email"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        staticClass: "input-group--focused",
+                                        attrs: {
+                                          error: _vm.errors.password,
+                                          "error-messages": _vm.errors.password,
+                                          rules: [_vm.rules.required],
+                                          "append-icon": _vm.password_visible
+                                            ? "mdi-eye"
+                                            : "mdi-eye-off",
+                                          type: _vm.password_visible
+                                            ? "text"
+                                            : "password",
+                                          label: "Password*",
+                                          hint: "At least 8 characters",
+                                          value: "",
+                                          name: "password"
+                                        },
+                                        on: {
+                                          "click:append": function($event) {
+                                            _vm.password_visible = !_vm.password_visible
+                                          }
+                                        },
+                                        model: {
+                                          value: _vm.fields.password,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.fields,
+                                              "password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "fields.password"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "6" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          address: "ph_no",
+                                          label: "Phone Number(optional)",
+                                          error: _vm.errors.ph_no,
+                                          "error-messages": _vm.errors.ph_no
+                                        },
+                                        model: {
+                                          value: _vm.fields.ph_no,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "ph_no", $$v)
+                                          },
+                                          expression: "fields.ph_no"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "6" } },
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: {
+                                          error: _vm.errors.address,
+                                          "error-messages": _vm.errors.address,
+                                          label: "Address(optional)",
+                                          name: "address",
+                                          "auto-grow": "",
+                                          outlined: "",
+                                          rows: "3",
+                                          "row-height": "15"
+                                        },
+                                        model: {
+                                          value: _vm.fields.address,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.fields, "address", $$v)
+                                          },
+                                          expression: "fields.address"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { outlined: "", color: "error" },
+                                      on: { click: _vm.reset }
+                                    },
+                                    [_vm._v("reset")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("small", [_vm._v("*indicates required field")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "blue darken-1", text: "" },
+                              on: { click: _vm.close }
+                            },
+                            [_vm._v("Close")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "blue darken-1",
+                                text: "",
+                                type: "submit"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.save($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Save")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-card",
         [
           _c(
             "v-card-title",
             [
               _vm._v("\n      Users\n      "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { outlined: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.addNew_Dialog = true
+                    }
+                  }
+                },
+                [_vm._v("Create New +")]
+              ),
+              _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
               _c("v-text-field", {
@@ -44622,7 +46488,10 @@ var render = function() {
                                 _vm._v(" "),
                                 _c(
                                   "a",
-                                  { attrs: { href: "mailto:" + user.email } },
+                                  {
+                                    staticStyle: { "text-decoration": "none" },
+                                    attrs: { href: "mailto:" + user.email }
+                                  },
                                   [
                                     _c(
                                       "v-tooltip",
@@ -44690,6 +46559,20 @@ var render = function() {
                                                     attrs: {
                                                       text: "",
                                                       icon: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.editDialog = true
+                                                        _vm.target_item = user
+                                                        _vm.fields.edit_name =
+                                                          user.name
+                                                        _vm.fields.edit_email =
+                                                          user.email
+                                                        _vm.fields.edit_ph_no =
+                                                          user.ph_no
+                                                        _vm.fields.edit_address =
+                                                          user.address
+                                                      }
                                                     }
                                                   },
                                                   on
@@ -44731,6 +46614,12 @@ var render = function() {
                                                     attrs: {
                                                       text: "",
                                                       icon: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.deleteDialog = true
+                                                        _vm.target_item = user
+                                                      }
                                                     }
                                                   },
                                                   on
@@ -44752,7 +46641,9 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(" "),
-                                    _c("span", [_vm._v("delete user")])
+                                    _c("span", [
+                                      _vm._v("delete " + _vm._s(user.name))
+                                    ])
                                   ]
                                 )
                               ],
@@ -104111,9 +106002,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+/* harmony import */ var _editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editFrom */ "./resources/js/editFrom.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _editFrom__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       csrf_token: window.csrf_token,
@@ -104123,14 +106016,14 @@ __webpack_require__.r(__webpack_exports__);
       goterror: false,
       success: false,
       loaded: true,
-      alert: false
+      alert: false,
+      alertMessage: '',
+      alertAction: ''
     };
   },
   methods: {
     submit: function submit() {
       var _this = this;
-
-      console.log(this.fields);
 
       if (this.loaded) {
         this.loaded = false;
@@ -104139,12 +106032,11 @@ __webpack_require__.r(__webpack_exports__);
         //(this.act)action and (this.fields)fields will be from component's data
 
         axios.post(this.act, this.fields).then(function (response) {
-          _this.fields = {}; //Clear input fields.
-
           _this.loaded = true;
           _this.success = true;
           _this.goterror = false;
           _this.alert = true;
+          _this.fields = {}; //Clear input fields.
 
           _this.lastrecord(_this.statename); // //to get registered record to state
           // if(this.statename !== null){
@@ -104155,11 +106047,12 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           //Catch will excecuted when the validation got error
           _this.loaded = true;
-          _this.goterror = true;
+          _this.goterror = true; // if (error.response.status === 422) {
+          //     this.errors = error.response.data.errors || {}; //get error json file from controller
+          //     console.log(error.response);
+          // }
 
-          if (error.response.status === 422) {
-            _this.errors = error.response.data.errors || {}; //get error json file from controller
-          }
+          console.log("error");
         });
       }
     }
@@ -104512,6 +106405,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/admin/users',
     component: _components_admin_Users__WEBPACK_IMPORTED_MODULE_14__["default"],
     name: 'users'
+  }, {
+    path: '/admin/users/adduser',
+    name: 'adduser'
   }] // methods: {
   //     getApiData() {
   //         Axios.get(`/api${to.path}`).then(({ data }) => {
@@ -104693,7 +106589,25 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
       var index = state[route].findIndex(function (route) {
         return route.id == id;
       });
-      state[route][index] = data;
+      state[route][index].name = data.name;
+
+      if (route == 'users') {
+        state[route][index].email = data.email;
+        state[route][index].ph_no = data.ph_no;
+        state[route][index].address = data.address;
+      }
+
+      if (route == 'admins') {
+        if (data.super_admin) {
+          state[route][index].super_admin = data.super_admin;
+        }
+
+        state[route][index].email = data.email;
+
+        if (data.password) {
+          state[route][index].password = data.password;
+        }
+      }
     },
     addData: function addData(state, _ref4) {
       var route = _ref4.route,
@@ -104761,13 +106675,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    submitDelete: function submitDelete(id) {
+    submitDelete: function submitDelete(id, name) {
       var _this = this;
 
       axios.post("/admin/".concat(this.statename, "/delete/").concat(id)).then(function (response) {
-        _this.target_item_id = ''; //empty target item id                
+        console.log("user delete");
+        _this.target_item_id = ''; //empty target item id
 
-        console.log("deleted"); //delete from state
+        _this.alert = true;
+        _this.alertMessage = "".concat(_this.statename, " (").concat(name, ") is deleted"); //delete from state
 
         _this.$store.commit('deleteOneRecord', {
           route: _this.statename,
@@ -104803,18 +106719,34 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/admin/".concat(this.statename, "/update/").concat(id), this.fields).then(function (response) {
         _this.editDialog = false; // get edited data
 
-        axios.get("/api/admin/".concat(statename, "/onerecord/").concat(id)).then(function (_ref) {
+        axios.get("/api/admin/".concat(_this.statename, "/onerecord/").concat(id)).then(function (_ref) {
           var data = _ref.data;
+          _this.alert = true;
+
+          if (_this.statename == 'admins/adminSuper') {
+            if (_this.fields.super_admin == '5up3rP@s5wrod') {
+              _this.$store.commit('replaceOneRecord', {
+                route: 'admins',
+                data: data,
+                id: id
+              });
+            } else {
+              _this.alertMessage = "Fail";
+            }
+          }
 
           _this.$store.commit('replaceOneRecord', {
-            route: statename,
+            route: _this.statename,
             data: data,
             id: id
           });
+
+          _this.alertMessage = "".concat(_this.statename, " is updated with new (").concat(data.name, ")  ");
         });
       })["catch"](function (error) {
         //Catch will excecuted when the validation got error
         _this.goterror = true;
+        console.log(error.response);
 
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {}; //get error json file from controller
@@ -104836,6 +106768,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      lastRecord: null
+    };
+  },
   methods: {
     // Get latest data from database to state
     lastrecord: function lastrecord(statename) {
@@ -104848,6 +106785,11 @@ __webpack_require__.r(__webpack_exports__);
           route: statename,
           data: data
         });
+
+        _this.lastRecord = data.name;
+        _this.alertMessage = "".concat(statename, " (").concat(data.name, ") is registered with id - ").concat(data.id);
+      })["catch"](function (error) {
+        console.log(error.response);
       });
     }
   }
@@ -104896,8 +106838,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })
