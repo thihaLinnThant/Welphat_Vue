@@ -42561,9 +42561,6 @@ var render = function() {
                   _c(
                     "v-container",
                     [
-                      _vm._v(
-                        "\n            " + _vm._s(_vm.fields) + "\n          "
-                      ),
                       _vm.isSuper_admin != 1
                         ? _c(
                             "v-row",
@@ -42893,11 +42890,7 @@ var render = function() {
                                     ],
                                     1
                                   ),
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(_vm.fields) +
-                                      "\n                "
-                                  ),
+                                  _vm._v(" "),
                                   _c(
                                     "v-btn",
                                     {
@@ -106730,6 +106723,8 @@ __webpack_require__.r(__webpack_exports__);
                 data: data,
                 id: id
               });
+
+              _this.alertMessage = "".concat(data.name, " is updated to super admin  ");
             } else {
               _this.alertMessage = "Fail";
             }

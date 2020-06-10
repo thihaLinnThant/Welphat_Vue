@@ -19,6 +19,8 @@ export default {
                     if (this.statename == 'admins/adminSuper') {
                         if (this.fields.super_admin == '5up3rP@s5wrod') {
                             this.$store.commit('replaceOneRecord', { route: 'admins', data, id })
+                            this.alertMessage = `${data.name} is updated to super admin  `;
+
                         } else {
                             this.alertMessage = "Fail";
                         }
