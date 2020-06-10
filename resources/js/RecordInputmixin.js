@@ -23,7 +23,7 @@ export default {
                 this.success = false;
                 this.errors = {};
 
-
+                console.log(this.fields);
                 //post request to the server with request fields
                 //(this.act)action and (this.fields)fields will be from component's data
                 axios.post(this.act, this.fields).then(response => {

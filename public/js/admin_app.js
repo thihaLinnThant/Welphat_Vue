@@ -42561,9 +42561,6 @@ var render = function() {
                   _c(
                     "v-container",
                     [
-                      _vm._v(
-                        "\n            " + _vm._s(_vm.fields) + "\n          "
-                      ),
                       _vm.isSuper_admin != 1
                         ? _c(
                             "v-row",
@@ -42893,11 +42890,7 @@ var render = function() {
                                     ],
                                     1
                                   ),
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(_vm.fields) +
-                                      "\n                "
-                                  ),
+                                  _vm._v(" "),
                                   _c(
                                     "v-btn",
                                     {
@@ -106028,7 +106021,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.loaded) {
         this.loaded = false;
         this.success = false;
-        this.errors = {}; //post request to the server with request fields
+        this.errors = {};
+        console.log(this.fields); //post request to the server with request fields
         //(this.act)action and (this.fields)fields will be from component's data
 
         axios.post(this.act, this.fields).then(function (response) {

@@ -47,7 +47,7 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-              {{fields}}
+
             <v-row v-if="isSuper_admin != 1">
               <v-col cols="12">
                 <v-text-field
@@ -148,7 +148,7 @@
                       @click:append="password_visible = !password_visible"
                     ></v-text-field>
                   </v-col>
-                  {{fields}}
+
                   <v-btn @click="reset" outlined color="error">reset</v-btn>
                 </v-row>
               </v-container>
