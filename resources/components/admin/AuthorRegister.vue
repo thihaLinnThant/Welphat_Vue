@@ -8,7 +8,6 @@
             >
                 <v-text-field :error=errors.name :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>
                 <v-textarea :error=errors.bio :error-messages=errors.bio v-model="fields.bio" name="bio" label="Bio" outlined></v-textarea>
-                <input type="file" v-on:change="selectFile" class="form-control">
                 <v-btn @click="toggleShow">Upload Image</v-btn>
                 <small class="text-danger">{{ errors.image }}</small>
                 <my-upload field="img"
@@ -28,7 +27,7 @@
                 <v-img
                     class="white--text align-end"
                     height="200px"
-                    :src="image_url"
+                    :src="fields.image"
                 >
                 </v-img>
                 <v-card-text>{{ fields.name }}</v-card-text>
@@ -75,6 +74,7 @@ export default {
 
                 };
                 reader.readAsDataURL(file);
+                console.log(vm.fields.image);
             },
 
 
@@ -86,18 +86,19 @@ export default {
          */
         cropSuccess(imgDataUrl, field){
 
-            // This ready to use cropper only provide dataurl!!
-            // A function to change dataurl to file. I don't know how it works!! ( T_T )
-            function dataURLtoFile(dataurl, filename) {
-                var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-                while(n--){
-                    u8arr[n] = bstr.charCodeAt(n);
-                }
-                return new File([u8arr], filename, {type:mime});
-            }
-            this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
-            this.image_url = imgDataUrl;
+            // // This ready to use cropper only provide dataurl!!
+            // // A function to change dataurl to file. I don't know how it works!! ( T_T )
+            // function dataURLtoFile(dataurl, filename) {
+            //     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            //     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            //     while(n--){
+            //         u8arr[n] = bstr.charCodeAt(n);
+            //     }
+            //     return new File([u8arr], filename, {type:mime});
+            // }
+            // this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
+            // this.image_url = imgDataUrl;
+            this.fields.image = imgDataUrl;
 
             console.log('-------- crop success --------');
         },

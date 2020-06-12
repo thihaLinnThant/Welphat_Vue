@@ -66,9 +66,12 @@ class AuthorController extends Controller
             'name' => 'required',
             'bio'  => 'required',
             'image' => 'required'
+        ]);        
+
+        Author::create([
+            'name' => $request->name,
+            'bio'  => $request->bio
         ]);
-
-
 
         $lastid = Author::latest()->first('id')->id;
 
@@ -76,15 +79,9 @@ class AuthorController extends Controller
         $path = '/images/authors/' . $lastid . "/image_1.png";
         Storage::disk('public')->put($path , $file);
 
-
         // $thumb_file = file_get_contents($request->image);
         // $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
         // Storage::disk('public')->put($thumb_path , $thumb_file);
-
-        Author::create([
-            'name' => $request->name,
-            'bio'  => $request->bio
-        ]);
 
         return response()->json(null,200);
     }

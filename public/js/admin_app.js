@@ -2445,7 +2445,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2481,6 +2480,7 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       reader.readAsDataURL(file);
+      console.log(vm.fields.image);
     },
 
     /**
@@ -2490,26 +2490,19 @@ __webpack_require__.r(__webpack_exports__);
      * [param] field
      */
     cropSuccess: function cropSuccess(imgDataUrl, field) {
-      // This ready to use cropper only provide dataurl!!
-      // A function to change dataurl to file. I don't know how it works!! ( T_T )
-      function dataURLtoFile(dataurl, filename) {
-        var arr = dataurl.split(','),
-            mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]),
-            n = bstr.length,
-            u8arr = new Uint8Array(n);
-
-        while (n--) {
-          u8arr[n] = bstr.charCodeAt(n);
-        }
-
-        return new File([u8arr], filename, {
-          type: mime
-        });
-      }
-
-      this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
-      this.image_url = imgDataUrl;
+      // // This ready to use cropper only provide dataurl!!
+      // // A function to change dataurl to file. I don't know how it works!! ( T_T )
+      // function dataURLtoFile(dataurl, filename) {
+      //     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      //     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+      //     while(n--){
+      //         u8arr[n] = bstr.charCodeAt(n);
+      //     }
+      //     return new File([u8arr], filename, {type:mime});
+      // }
+      // this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
+      // this.image_url = imgDataUrl;
+      this.fields.image = imgDataUrl;
       console.log('-------- crop success --------');
     },
 
@@ -8467,7 +8460,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -43616,12 +43609,6 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "file" },
-                on: { change: _vm.selectFile }
-              }),
-              _vm._v(" "),
               _c("v-btn", { on: { click: _vm.toggleShow } }, [
                 _vm._v("Upload Image")
               ]),
@@ -43666,7 +43653,7 @@ var render = function() {
             [
               _c("v-img", {
                 staticClass: "white--text align-end",
-                attrs: { height: "200px", src: _vm.image_url }
+                attrs: { height: "200px", src: _vm.fields.image }
               }),
               _vm._v(" "),
               _c("v-card-text", [_vm._v(_vm._s(_vm.fields.name))])
@@ -103873,7 +103860,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -106821,8 +106808,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })
