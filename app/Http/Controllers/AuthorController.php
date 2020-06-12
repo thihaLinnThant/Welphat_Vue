@@ -16,10 +16,10 @@ class AuthorController extends Controller
         $collection = Author::all([ 'id', 'name' ]);
         $authors = collect();
         foreach($collection as $author) {
-            $author->thumb = asset('storage/images/books/'. $author->id . '/thumb_nail.png');
+            $author->thumb = asset('storage/images/authors/'. $author->id . '/image_1.png');
             $author->count = $author->books()->count();
             $authors->push($author);
-        }        
+        }
         return collect(['authors' => $authors]);
     }
 
@@ -30,7 +30,7 @@ class AuthorController extends Controller
 
     public function get_lastAuthor_api() {
         $data = Author::latest()->first();
-        $data->thumb = asset('storage/images/books/'. $data->id . '/thumb_nail.png');
+        $data->thumb = asset('storage/images/authors/'. $data->id . '/image_1.png');
         $data->count = $data->books()->count();
         return response()->json($data);
     }
@@ -61,27 +61,30 @@ class AuthorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {        
+    {
         $request->validate([
             'name' => 'required',
             'bio'  => 'required',
-            'image' => 'required|image'
-        ]);        
+            'image' => 'required'
+        ]);
 
-        Author::create([
-                    'name' => $request->name,
-                    'bio'  => $request->bio,
-                ]);
 
-        $lastid = Author::latest()->first(['id']);
+
+        $lastid = Author::latest()->first('id')->id;
+
         $file = file_get_contents($request->image);
         $path = '/images/authors/' . $lastid . "/image_1.png";
         Storage::disk('public')->put($path , $file);
 
-        $thumb_file = file_get_contents($request->image);
-        $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
-        Storage::disk('public')->put($thumb_path , $thumb_file);
 
+        // $thumb_file = file_get_contents($request->image);
+        // $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
+        // Storage::disk('public')->put($thumb_path , $thumb_file);
+
+        Author::create([
+            'name' => $request->name,
+            'bio'  => $request->bio
+        ]);
 
         return response()->json(null,200);
     }

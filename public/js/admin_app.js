@@ -2467,9 +2467,20 @@ __webpack_require__.r(__webpack_exports__);
     toggleShow: function toggleShow() {
       this.show = !this.show;
     },
-    selectFile: function selectFile(event) {
-      this.fields.image = event.files[0];
-      console.log(this.fields.image);
+    selectFile: function selectFile(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (e) {
+        vm.fields.image = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
     },
 
     /**
@@ -2539,10 +2550,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -8460,7 +8467,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -43609,22 +43616,10 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("v-file-input", {
-                attrs: {
-                  error: _vm.errors.image,
-                  "error-messages": _vm.errors.image,
-                  name: "image",
-                  label: "Upload Image",
-                  outlined: ""
-                },
-                on: { change: _vm.selectFile },
-                model: {
-                  value: _vm.image_file,
-                  callback: function($$v) {
-                    _vm.image_file = $$v
-                  },
-                  expression: "image_file"
-                }
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file" },
+                on: { change: _vm.selectFile }
               }),
               _vm._v(" "),
               _c("v-btn", { on: { click: _vm.toggleShow } }, [
@@ -43756,11 +43751,7 @@ var render = function() {
                                 "v-img",
                                 {
                                   staticClass: "white--text align-end",
-                                  attrs: {
-                                    height: "200px",
-                                    src:
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTdYld5Epk_WrYgf19A-dAlQCZRoGyfVRPJwbMjkDwpFwK5rP9H&usqp=CAU"
-                                  }
+                                  attrs: { height: "200px", src: author.thumb }
                                 },
                                 [
                                   _c("v-expand-transition", [
@@ -43794,7 +43785,7 @@ var render = function() {
                   _c("v-card-title", [_vm._v(_vm._s(author.name))]),
                   _vm._v(" "),
                   _c("v-card-subtitle", [
-                    _vm._v("books: " + _vm._s(author.count))
+                    _vm._v("books: " + _vm._s(author.thumb))
                   ]),
                   _vm._v(" "),
                   _c(
@@ -44097,11 +44088,7 @@ var render = function() {
                         "v-img",
                         {
                           staticClass: "white--text align-end",
-                          attrs: {
-                            height: "200px",
-                            src:
-                              "https://i.pinimg.com/originals/ef/c3/35/efc335ff7f03fc4ba2603b9178918c2d.jpg"
-                          }
+                          attrs: { height: "200px", src: book.thumb }
                         },
                         [
                           _c(
@@ -103886,7 +103873,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -106021,7 +106008,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.loaded) {
         this.loaded = false;
         this.success = false;
-        this.errors = {}; //post request to the server with request fields
+        this.errors = {};
+        console.log(this.fields); //post request to the server with request fields
         //(this.act)action and (this.fields)fields will be from component's data
 
         axios.post(this.act, this.fields).then(function (response) {
@@ -106045,7 +106033,7 @@ __webpack_require__.r(__webpack_exports__);
           //     console.log(error.response);
           // }
 
-          console.log("error");
+          console.log(error.response);
         });
       }
     }

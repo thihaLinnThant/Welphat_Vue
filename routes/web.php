@@ -30,6 +30,8 @@ Route::post('/login/admin', 'Auth\LoginController@loginAdmin')->name('login.admi
 Route::post('/register/admin', 'Auth\RegisterController@createAdmin')->name('register.admin');
 
 Route::group(['middleware' => 'auth:admin'], function () {
+
+
     Route::get('/admin/books', 'BookController@get_books_web');
     Route::get('/admin/books/register', 'BookController@register_web');
 

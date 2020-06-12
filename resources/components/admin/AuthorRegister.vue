@@ -8,7 +8,7 @@
             >
                 <v-text-field :error=errors.name :error-messages=errors.name v-model="fields.name" name="name" outlined label="Name"></v-text-field>
                 <v-textarea :error=errors.bio :error-messages=errors.bio v-model="fields.bio" name="bio" label="Bio" outlined></v-textarea>
-                <v-file-input :error=errors.image :error-messages=errors.image @change="selectFile" v-model="image_file" name="image" label="Upload Image" outlined></v-file-input>
+                <input type="file" v-on:change="selectFile" class="form-control">
                 <v-btn @click="toggleShow">Upload Image</v-btn>
                 <small class="text-danger">{{ errors.image }}</small>
                 <my-upload field="img"
@@ -59,10 +59,23 @@ export default {
         toggleShow() {
 				this.show = !this.show;
             },
-        selectFile(event) {
-            this.fields.image = event.files[0];
-            console.log(this.fields.image);
+        selectFile(e) {
+
+            let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);
+
         },
+        createImage(file) {
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.fields.image = e.target.result;
+
+                };
+                reader.readAsDataURL(file);
+            },
 
 
         /**

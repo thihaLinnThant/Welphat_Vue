@@ -11,11 +11,7 @@
       <v-col cols="12" md="3" v-for="author in authors" :key="author.id">
         <v-card max-width="344" class="mx-auto">
           <v-hover v-slot:default="{ hover }">
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTdYld5Epk_WrYgf19A-dAlQCZRoGyfVRPJwbMjkDwpFwK5rP9H&usqp=CAU"
-            >
+            <v-img class="white--text align-end" height="200px" :src="author.thumb">
               <v-expand-transition>
                 <div
                   v-if="hover"
@@ -28,7 +24,7 @@
 
           <!-- image is temporary. you can change it later like ":src="author.thumb"" -->
           <v-card-title>{{ author.name }}</v-card-title>
-          <v-card-subtitle>books: {{author.count}}</v-card-subtitle>
+          <v-card-subtitle>books: {{author.thumb}}</v-card-subtitle>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn>Edit</v-btn>
