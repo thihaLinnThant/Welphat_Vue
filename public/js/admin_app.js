@@ -2324,8 +2324,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 // url_str = window.location.pathname;
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2336,50 +2334,51 @@ __webpack_require__.r(__webpack_exports__);
       drawer: null,
       csrf_token: window.csrf_token,
       admin_name: window.admin_name,
+      super_admin: window.super_admin,
       items: [{
-        text: 'Books',
-        icon: 'mdi-bookshelf',
-        link: 'books',
+        text: "Books",
+        icon: "mdi-bookshelf",
+        link: "books",
         inactive: false
       }, {
-        text: 'Admins',
-        icon: 'mdi-shield-account',
-        link: 'admins',
+        text: "Admins",
+        icon: "mdi-shield-account",
+        link: "admins",
         inactive: false
       }, {
-        text: 'Users',
-        icon: 'mdi-account',
-        link: 'users',
+        text: "Users",
+        icon: "mdi-account",
+        link: "users",
         inactive: false
       }, {
-        text: 'Authors',
-        icon: 'mdi-lead-pencil',
-        link: 'authors',
+        text: "Authors",
+        icon: "mdi-lead-pencil",
+        link: "authors",
         inactive: false
       }, {
-        text: 'Categories',
-        icon: 'mdi-menu',
-        link: 'categories',
+        text: "Categories",
+        icon: "mdi-menu",
+        link: "categories",
         inactive: false
       }, {
-        text: 'Tags',
-        icon: 'mdi-tag',
-        link: 'tags',
+        text: "Tags",
+        icon: "mdi-tag",
+        link: "tags",
         inactive: false
       }, {
-        text: 'Comments',
-        icon: 'mdi-message-text',
-        link: 'comments',
+        text: "Comments",
+        icon: "mdi-message-text",
+        link: "comments",
         inactive: false
       }, {
-        text: 'Publishers',
-        icon: 'mdi-office-building',
-        link: 'publishers',
+        text: "Publishers",
+        icon: "mdi-office-building",
+        link: "publishers",
         inactive: false
       }, {
-        text: 'Orders',
-        icon: 'mdi-receipt',
-        link: 'orders',
+        text: "Orders",
+        icon: "mdi-receipt",
+        link: "orders",
         inactive: false
       }]
     };
@@ -2389,7 +2388,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout: function logout() {
-      document.getElementById('logout_form').submit();
+      document.getElementById("logout_form").submit();
     }
   }
 });
@@ -2445,6 +2444,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2459,28 +2469,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     // I got the cropper from here "https://vuejsexamples.com/a-beautiful-vue-component-for-image-cropping-and-uploading/"
-    'my-upload': vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_0__["default"]
+    "my-upload": vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
     toggleShow: function toggleShow() {
       this.show = !this.show;
-    },
-    selectFile: function selectFile(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-    createImage: function createImage(file) {
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = function (e) {
-        vm.fields.image = e.target.result;
-      };
-
-      reader.readAsDataURL(file);
-      console.log(vm.fields.image);
     },
 
     /**
@@ -2503,7 +2497,7 @@ __webpack_require__.r(__webpack_exports__);
       // this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
       // this.image_url = imgDataUrl;
       this.fields.image = imgDataUrl;
-      console.log('-------- crop success --------');
+      console.log("-------- crop success --------");
     },
 
     /**
@@ -2513,9 +2507,9 @@ __webpack_require__.r(__webpack_exports__);
      * [param] field
      */
     cropUploadSuccess: function cropUploadSuccess(jsonData, field) {
-      console.log('-------- upload success --------');
+      console.log("-------- upload success --------");
       console.log(jsonData);
-      console.log('field: ' + field);
+      console.log("field: " + field);
     },
 
     /**
@@ -2525,9 +2519,9 @@ __webpack_require__.r(__webpack_exports__);
      * [param] field
      */
     cropUploadFail: function cropUploadFail(status, field) {
-      console.log('-------- upload fail --------');
+      console.log("-------- upload fail --------");
       console.log(status);
-      console.log('field: ' + field);
+      console.log("field: " + field);
     }
   }
 });
@@ -2543,6 +2537,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
+/* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+/* harmony import */ var vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-image-crop-upload */ "./node_modules/vue-image-crop-upload/upload-2.vue");
 //
 //
 //
@@ -2581,7 +2580,164 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    // I got the cropper from here "https://vuejsexamples.com/a-beautiful-vue-component-for-image-cropping-and-uploading/"
+    "my-upload": vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  data: function data() {
+    return {
+      addNew_Dialog: false,
+      act: "/admin/authors/register",
+      image_file: null,
+      image_url: " ",
+      show: false,
+      statename: "authors"
+    };
+  },
+  methods: {
+    toggleShow: function toggleShow() {
+      this.show = !this.show;
+    },
+
+    /**
+     * crop success
+     *
+     * [param] imgDataUrl
+     * [param] field
+     */
+    cropSuccess: function cropSuccess(imgDataUrl, field) {
+      // // This ready to use cropper only provide dataurl!!
+      // // A function to change dataurl to file. I don't know how it works!! ( T_T )
+      // function dataURLtoFile(dataurl, filename) {
+      //     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      //     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+      //     while(n--){
+      //         u8arr[n] = bstr.charCodeAt(n);
+      //     }
+      //     return new File([u8arr], filename, {type:mime});
+      // }
+      // this.image_file = dataURLtoFile(imgDataUrl, 'upload.png');
+      // this.image_url = imgDataUrl;
+      this.fields.image = imgDataUrl;
+      console.log("-------- crop success --------");
+    },
+
+    /**
+     * upload success
+     *
+     * [param] jsonData  server api return data, already json encode
+     * [param] field
+     */
+    cropUploadSuccess: function cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+    },
+
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+    cropUploadFail: function cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
+    },
+    reset: function reset() {
+      this.fields = {};
+    },
+    close: function close() {
+      this.addNew_Dialog = false;
+      this.reset();
+    },
+    save: function save() {
+      if (!this.fields.name) {
+        return;
+      }
+
+      this.addNew_Dialog = false;
+      this.submit();
+    }
+  },
   computed: {
     authors: function authors() {
       return this.$store.state.authors;
@@ -8510,7 +8666,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.nav-list a {\n    text-decoration: none;\n}\n.nav-list hr {\n    height: 0px;\n    border: 1px solid dimgray;\n    width: 90%;\n    margin: auto;\n}\n", ""]);
+exports.push([module.i, "\n.nav-list a {\n  text-decoration: none;\n}\n.nav-list hr {\n  height: 0px;\n  border: 1px solid dimgray;\n  width: 90%;\n  margin: auto;\n}\n", ""]);
 
 // exports
 
@@ -42728,7 +42884,7 @@ var render = function() {
       _c(
         "v-snackbar",
         {
-          attrs: { color: "success" },
+          attrs: { color: _vm.alertType },
           model: {
             value: _vm.alert,
             callback: function($$v) {
@@ -43413,7 +43569,24 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v(_vm._s(_vm.admin_name))])],
+                    [
+                      _c(
+                        "v-list-item-title",
+                        [
+                          _vm._v(_vm._s(_vm.admin_name) + "  "),
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: {
+                                color: _vm.super_admin == 1 ? "yellow" : "grey"
+                              }
+                            },
+                            [_vm._v("mdi-star")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
                     1
                   )
                 ],
@@ -43553,110 +43726,116 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-form",
-    {
-      staticClass: "ma-10",
-      attrs: { enctype: "multipart/form-data" },
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.submit($event)
-        }
-      }
-    },
+    "div",
     [
-      _c("h2", [_vm._v("Author Register")]),
-      _vm._v(" "),
       _c(
-        "v-row",
-        { staticClass: "ma-10", attrs: { justify: "center" } },
+        "v-form",
+        {
+          staticClass: "ma-10",
+          attrs: { enctype: "multipart/form-data" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submit($event)
+            }
+          }
+        },
         [
-          _c(
-            "v-col",
-            { attrs: { cols: "12", md: "8" } },
-            [
-              _c("v-text-field", {
-                attrs: {
-                  error: _vm.errors.name,
-                  "error-messages": _vm.errors.name,
-                  name: "name",
-                  outlined: "",
-                  label: "Name"
-                },
-                model: {
-                  value: _vm.fields.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.fields, "name", $$v)
-                  },
-                  expression: "fields.name"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-textarea", {
-                attrs: {
-                  error: _vm.errors.bio,
-                  "error-messages": _vm.errors.bio,
-                  name: "bio",
-                  label: "Bio",
-                  outlined: ""
-                },
-                model: {
-                  value: _vm.fields.bio,
-                  callback: function($$v) {
-                    _vm.$set(_vm.fields, "bio", $$v)
-                  },
-                  expression: "fields.bio"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-btn", { on: { click: _vm.toggleShow } }, [
-                _vm._v("Upload Image")
-              ]),
-              _vm._v(" "),
-              _c("small", { staticClass: "text-danger" }, [
-                _vm._v(_vm._s(_vm.errors.image))
-              ]),
-              _vm._v(" "),
-              _c("my-upload", {
-                attrs: {
-                  field: "img",
-                  langType: "en",
-                  width: 300,
-                  height: 300,
-                  url: "",
-                  "img-format": "png"
-                },
-                on: {
-                  "crop-success": _vm.cropSuccess,
-                  "crop-upload-success": _vm.cropUploadSuccess,
-                  "crop-upload-fail": _vm.cropUploadFail
-                },
-                model: {
-                  value: _vm.show,
-                  callback: function($$v) {
-                    _vm.show = $$v
-                  },
-                  expression: "show"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-btn", { attrs: { type: "submit", outlined: "" } }, [
-                _vm._v("Submit")
-              ])
-            ],
-            1
-          ),
+          _c("h2", [_vm._v("Author Register")]),
           _vm._v(" "),
           _c(
-            "v-card",
-            { attrs: { width: "200px", height: "250px" } },
+            "v-row",
+            { staticClass: "ma-10", attrs: { justify: "center" } },
             [
-              _c("v-img", {
-                staticClass: "white--text align-end",
-                attrs: { height: "200px", src: _vm.fields.image }
-              }),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", md: "8" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      error: _vm.errors.name,
+                      "error-messages": _vm.errors.name,
+                      name: "name",
+                      outlined: "",
+                      label: "Name"
+                    },
+                    model: {
+                      value: _vm.fields.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.fields, "name", $$v)
+                      },
+                      expression: "fields.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-textarea", {
+                    attrs: {
+                      error: _vm.errors.bio,
+                      "error-messages": _vm.errors.bio,
+                      name: "bio",
+                      label: "Bio",
+                      outlined: ""
+                    },
+                    model: {
+                      value: _vm.fields.bio,
+                      callback: function($$v) {
+                        _vm.$set(_vm.fields, "bio", $$v)
+                      },
+                      expression: "fields.bio"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-btn", { on: { click: _vm.toggleShow } }, [
+                    _vm._v("Upload Image")
+                  ]),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.image))
+                  ]),
+                  _vm._v(" "),
+                  _c("my-upload", {
+                    attrs: {
+                      field: "img",
+                      langType: "en",
+                      width: 300,
+                      height: 300,
+                      url: "",
+                      "img-format": "png"
+                    },
+                    on: {
+                      "crop-success": _vm.cropSuccess,
+                      "crop-upload-success": _vm.cropUploadSuccess,
+                      "crop-upload-fail": _vm.cropUploadFail
+                    },
+                    model: {
+                      value: _vm.show,
+                      callback: function($$v) {
+                        _vm.show = $$v
+                      },
+                      expression: "show"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-btn", { attrs: { type: "submit", outlined: "" } }, [
+                    _vm._v("Submit")
+                  ])
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("v-card-text", [_vm._v(_vm._s(_vm.fields.name))])
+              _c(
+                "v-card",
+                { attrs: { width: "200px", height: "250px" } },
+                [
+                  _c("v-img", {
+                    staticClass: "white--text align-end",
+                    attrs: { height: "200px", src: _vm.fields.image }
+                  }),
+                  _vm._v(" "),
+                  _c("v-card-text", [_vm._v(_vm._s(_vm.fields.name))])
+                ],
+                1
+              )
             ],
             1
           )
@@ -43702,14 +43881,17 @@ var render = function() {
           _c("v-spacer"),
           _vm._v(" "),
           _c(
-            "router-link",
-            { attrs: { tag: "p", to: "authors/register" } },
-            [
-              _c("v-btn", { staticClass: "ml-5", attrs: { outlined: "" } }, [
-                _vm._v("Create New +")
-              ])
-            ],
-            1
+            "v-btn",
+            {
+              staticClass: "ml-5",
+              attrs: { outlined: "" },
+              on: {
+                click: function($event) {
+                  _vm.addNew_Dialog = true
+                }
+              }
+            },
+            [_vm._v("Create New +")]
           )
         ],
         1
@@ -43717,72 +43899,242 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-row",
-        _vm._l(_vm.authors, function(author) {
-          return _c(
-            "v-col",
-            { key: author.id, attrs: { cols: "12", md: "3" } },
+        [
+          _c(
+            "v-row",
+            { attrs: { justify: "center" } },
             [
               _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "344" } },
+                "v-dialog",
+                {
+                  attrs: { persistent: "", "max-width": "600px" },
+                  model: {
+                    value: _vm.addNew_Dialog,
+                    callback: function($$v) {
+                      _vm.addNew_Dialog = $$v
+                    },
+                    expression: "addNew_Dialog"
+                  }
+                },
                 [
-                  _c("v-hover", {
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(ref) {
-                            var hover = ref.hover
-                            return [
+                  _c(
+                    "v-form",
+                    {
+                      attrs: { enctype: "multipart/form-data" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.submit($event)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", [
+                            _c("span", { staticClass: "headline" }, [
+                              _vm._v("Add Author")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
                               _c(
-                                "v-img",
-                                {
-                                  staticClass: "white--text align-end",
-                                  attrs: { height: "200px", src: author.thumb }
-                                },
+                                "v-container",
                                 [
-                                  _c("v-expand-transition", [
-                                    hover
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text",
-                                            staticStyle: {
-                                              height: "100%",
-                                              cursor: "pointer"
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              error: _vm.errors.name,
+                                              "error-messages": _vm.errors.name,
+                                              name: "name",
+                                              outlined: "",
+                                              label: "Name"
+                                            },
+                                            model: {
+                                              value: _vm.fields.name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.fields,
+                                                  "name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "fields.name"
                                             }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-textarea", {
+                                            attrs: {
+                                              error: _vm.errors.bio,
+                                              "error-messages": _vm.errors.bio,
+                                              name: "bio",
+                                              label: "Bio",
+                                              outlined: ""
+                                            },
+                                            model: {
+                                              value: _vm.fields.bio,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.fields, "bio", $$v)
+                                              },
+                                              expression: "fields.bio"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "6", sm: "6" } },
+                                        [
+                                          _c(
+                                            "v-btn",
+                                            { on: { click: _vm.toggleShow } },
+                                            [_vm._v("Upload Image")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "6", sm: "6" } },
+                                        [
+                                          _c(
+                                            "v-card",
+                                            {
+                                              attrs: {
+                                                width: "200px",
+                                                height: "250px"
+                                              }
+                                            },
+                                            [
+                                              _c("v-img", {
+                                                staticClass:
+                                                  "white--text align-end",
+                                                attrs: {
+                                                  height: "200px",
+                                                  src: _vm.fields.image
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("v-card-text", [
+                                                _vm._v(_vm._s(_vm.fields.name))
+                                              ])
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "small",
+                                            { staticClass: "text-danger" },
+                                            [_vm._v(_vm._s(_vm.errors.image))]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("my-upload", {
+                                            attrs: {
+                                              field: "img",
+                                              langType: "en",
+                                              width: 300,
+                                              height: 300,
+                                              url: "",
+                                              "img-format": "png"
+                                            },
+                                            on: {
+                                              "crop-success": _vm.cropSuccess,
+                                              "crop-upload-success":
+                                                _vm.cropUploadSuccess,
+                                              "crop-upload-fail":
+                                                _vm.cropUploadFail
+                                            },
+                                            model: {
+                                              value: _vm.show,
+                                              callback: function($$v) {
+                                                _vm.show = $$v
+                                              },
+                                              expression: "show"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            outlined: "",
+                                            color: "error"
                                           },
-                                          [_vm._v("View")]
-                                        )
-                                      : _vm._e()
-                                  ])
+                                          on: { click: _vm.reset }
+                                        },
+                                        [_vm._v("reset")]
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
+                              ),
+                              _vm._v(" "),
+                              _c("small", [_vm._v("*indicates required field")])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "blue darken-1", text: "" },
+                                  on: { click: _vm.close }
+                                },
+                                [_vm._v("Close")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "blue darken-1",
+                                    text: "",
+                                    type: "submit"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.save($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Save")]
                               )
-                            ]
-                          }
-                        }
-                      ],
-                      null,
-                      true
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c("v-card-title", [_vm._v(_vm._s(author.name))]),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", [
-                    _vm._v("books: " + _vm._s(author.thumb))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c("v-btn", [_vm._v("Edit")]),
-                      _vm._v(" "),
-                      _c("v-btn", [_vm._v("Delete")])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
@@ -43791,8 +44143,118 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.authors, function(author) {
+            return _c(
+              "v-col",
+              { key: author.id, attrs: { cols: "12", md: "3" } },
+              [
+                _c(
+                  "v-card",
+                  { staticClass: "mx-auto", attrs: { "max-width": "344" } },
+                  [
+                    _c("v-hover", {
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var hover = ref.hover
+                              return [
+                                _c(
+                                  "v-img",
+                                  {
+                                    staticClass: "white--text align-end",
+                                    attrs: {
+                                      height: "200px",
+                                      src: author.thumb
+                                    }
+                                  },
+                                  [
+                                    _c("v-expand-transition", [
+                                      hover
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text",
+                                              staticStyle: {
+                                                height: "100%",
+                                                cursor: "pointer"
+                                              }
+                                            },
+                                            [_vm._v("View")]
+                                          )
+                                        : _vm._e()
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("v-card-title", [_vm._v(_vm._s(author.name))]),
+                    _vm._v(" "),
+                    _c("v-card-subtitle", [
+                      _vm._v("books: " + _vm._s(author.count))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-btn", [_vm._v("Edit")]),
+                        _vm._v(" "),
+                        _c("v-btn", [_vm._v("Delete")])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: "success" },
+          model: {
+            value: _vm.alert,
+            callback: function($$v) {
+              _vm.alert = $$v
+            },
+            expression: "alert"
+          }
+        },
+        [
+          _vm._v("\n    " + _vm._s(_vm.alertMessage) + "\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
           )
-        }),
+        ],
         1
       )
     ],
@@ -105985,7 +106447,7 @@ __webpack_require__.r(__webpack_exports__);
       loaded: true,
       alert: false,
       alertMessage: '',
-      alertAction: ''
+      alertType: ''
     };
   },
   methods: {
@@ -106004,23 +106466,14 @@ __webpack_require__.r(__webpack_exports__);
           _this.success = true;
           _this.goterror = false;
           _this.alert = true;
+          _this.alertType = "success";
           _this.fields = {}; //Clear input fields.
 
-          _this.lastrecord(_this.statename); // //to get registered record to state
-          // if(this.statename !== null){
-          //     //(this.statename) will be from component's data. Default is null
-          //     this.lastrecord(this.statename);
-          // }
-
+          _this.lastrecord(_this.statename);
         })["catch"](function (error) {
           //Catch will excecuted when the validation got error
           _this.loaded = true;
-          _this.goterror = true; // if (error.response.status === 422) {
-          //     this.errors = error.response.data.errors || {}; //get error json file from controller
-          //     console.log(error.response);
-          // }
-
-          console.log(error.response);
+          _this.goterror = true;
         });
       }
     }
@@ -106700,8 +107153,10 @@ __webpack_require__.r(__webpack_exports__);
               });
 
               _this.alertMessage = "".concat(data.name, " is updated to super admin  ");
+              _this.alertType = "success";
             } else {
-              _this.alertMessage = "Fail";
+              _this.alertMessage = "Check your code and try again!";
+              _this.alertType = "error";
             }
           }
 
@@ -106759,6 +107214,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.lastRecord = data.name;
         _this.alertMessage = "".concat(statename, " (").concat(data.name, ") is registered with id - ").concat(data.id);
       })["catch"](function (error) {
+        _this.alertMessage = "Something went wrong!";
         console.log(error.response);
       });
     }
@@ -106808,8 +107264,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

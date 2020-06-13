@@ -13,7 +13,7 @@ class AuthorController extends Controller
     }
 
     private function get_authors() {
-        $collection = Author::all([ 'id', 'name' ]);
+        $collection = Author::all();
         $authors = collect();
         foreach($collection as $author) {
             $author->thumb = asset('storage/images/authors/'. $author->id . '/image_1.png');
@@ -24,8 +24,10 @@ class AuthorController extends Controller
     }
 
     public function get_authors_api() {
-        $data = $this->get_authors();
-        return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
+        $data = $this->get_authors()->toArray();
+        return response()->json($data);
+
+        // return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
     }
 
     public function get_lastAuthor_api() {
@@ -66,7 +68,7 @@ class AuthorController extends Controller
             'name' => 'required',
             'bio'  => 'required',
             'image' => 'required'
-        ]);        
+        ]);
 
         Author::create([
             'name' => $request->name,

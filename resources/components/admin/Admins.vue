@@ -98,7 +98,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="alert" color="success">
+    <v-snackbar v-model="alert" :color="alertType">
       {{alertMessage}}
       <v-btn text @click="alert = false">Close</v-btn>
     </v-snackbar>
