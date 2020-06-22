@@ -55,8 +55,14 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="editDialog = false; target_item = '';">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="submitEdit(target_item.id, fields)" type="submit">Save</v-btn>
+          <v-btn text @click="editDialog = false; target_item = '';">Close</v-btn>
+          <v-btn
+            color="primary"
+            outlined
+            text
+            @click="submitEdit(target_item.id, fields)"
+            type="submit"
+          >Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -72,10 +78,11 @@
     </v-dialog>
     <v-dialog v-model="deleteDialog" max-width="350" persistent>
       <v-card>
+        <v-card-title>Delete User</v-card-title>
         <v-card-text>Do you want to delete this user?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="deleteDialog = false; target_item = '';">No</v-btn>
+          <v-btn text @click="deleteDialog = false; target_item = '';" outlined color="primary">No</v-btn>
 
           <v-btn
             text

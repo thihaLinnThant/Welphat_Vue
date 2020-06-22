@@ -19,7 +19,8 @@ export default new Vuex.Store({
         publishers: [],
         comments: [],
         users: [],
-        orders: []
+        orders: [],
+        authorview : []
     },
     getters: {
         getCategories(state) {
@@ -56,7 +57,13 @@ export default new Vuex.Store({
 
         },
         addData(state, { route, data }) {
-            state[route] = data[route];
+            if(route === 'authorview'){
+                state[route] = data;
+            }else{
+                state[route] = data[route];
+
+            }
+
         }
     }
 });
