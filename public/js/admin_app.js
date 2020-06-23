@@ -2449,6 +2449,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     author: function author() {
@@ -2722,6 +2724,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2749,6 +2752,9 @@ __webpack_require__.r(__webpack_exports__);
         align: "start",
         value: "id"
       }, {
+        text: "Profile",
+        value: "profile_image"
+      }, {
         text: "Author Name",
         value: "name"
       }, {
@@ -2761,6 +2767,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    sliceWord: function sliceWord(text, length, clamp) {
+      clamp = clamp || "...";
+      var node = document.createElement("div");
+      node.innerHTML = text;
+      var content = node.textContent;
+      return content.length > length ? content.slice(0, length) + clamp : content;
+    },
     toggleShow: function toggleShow() {
       this.show = !this.show;
     },
@@ -43783,7 +43796,8 @@ var render = function() {
                   staticClass: "mx-auto",
                   attrs: { size: "110", color: "primary" }
                 },
-                [_vm._v("AUTHOR")]
+                [_c("v-img", { attrs: { src: _vm.author.thumb } })],
+                1
               )
             ],
             1
@@ -44427,7 +44441,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.submitEdit(_vm.target_item.id, _vm.fields)
+                          return _vm.submitEdit(_vm.target_item.id)
                         }
                       }
                     },
@@ -44532,6 +44546,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(author.name))]),
                         _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.sliceWord(author.bio, 300, "...")))
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "td",
                           [
@@ -44570,6 +44588,8 @@ var render = function() {
                                                           author.name
                                                         _vm.fields.edit_bio =
                                                           author.bio
+                                                        _vm.fields.edit_image =
+                                                          author.thumb
                                                       }
                                                     }
                                                   },
@@ -106955,8 +106975,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.loaded) {
         this.loaded = false;
         this.success = false;
-        this.errors = {};
-        console.log(this.fields); //post request to the server with request fields
+        this.errors = {}; //post request to the server with request fields
         //(this.act)action and (this.fields)fields will be from component's data
 
         axios.post(this.act, this.fields).then(function (response) {
@@ -107510,6 +107529,7 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
       var route = _ref3.route,
           data = _ref3.data,
           id = _ref3.id;
+      console.log(data);
       var index = state[route].findIndex(function (route) {
         return route.id == id;
       });
@@ -107531,6 +107551,11 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
         if (data.password) {
           state[route][index].password = data.password;
         }
+      }
+
+      if (route === 'authors') {
+        state[route][index].bio = data.bio;
+        state[route][index].thumb = data.thumb;
       }
     },
     addData: function addData(state, _ref4) {
@@ -107715,6 +107740,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/admin/".concat(statename, "/lastrecord")).then(function (_ref) {
         var data = _ref.data;
+        console.log(data);
 
         _this.$store.commit('addOneRecord', {
           route: statename,

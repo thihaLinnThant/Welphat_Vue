@@ -52,6 +52,7 @@ class AuthorController extends Controller
     public function get_oneRecord_api($id)
     {
         $data = Author::with('books')->find($id);
+        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
         return response()->json($data);
     }
 
@@ -158,6 +159,9 @@ class AuthorController extends Controller
         $author = Author::find($id);
         $author->name = $request->edit_name;
         $author->bio = $request->edit_bio;
+        $file = file_get_contents($request->edit_image);
+        $path = '/images/authors/' . $id . "/image_1.png";
+        Storage::disk('public')->put($path, $file);
 
         $author->save();
         return response()->json(null, 200);

@@ -2,7 +2,9 @@
   <div>
     <v-row class="mx-auto">
       <v-col cols="5" md="2">
-        <v-avatar size="110" color="primary" class="mx-auto">AUTHOR</v-avatar>
+        <v-avatar size="110" color="primary" class="mx-auto">
+            <v-img :src="author.thumb"></v-img>
+        </v-avatar>
       </v-col>
       <v-col cols="7" md="10">
         <h2>{{author.name}}</h2>

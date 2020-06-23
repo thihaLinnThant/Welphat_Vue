@@ -146,7 +146,7 @@
           <v-btn
             color="primary"
             text
-            @click="submitEdit(target_item.id, fields)"
+            @click="submitEdit(target_item.id)"
             type="submit"
             outlined
           >Save</v-btn>
@@ -187,6 +187,7 @@
                 </v-avatar>
               </td>
               <td>{{author.name}}</td>
+              <td>{{sliceWord(author.bio,300,'...')}}</td>
               <td>
                 <row class="d-flex" justify="space-between">
                   <v-tooltip bottom>
@@ -197,7 +198,7 @@
                         icon
                         v-on="on"
                         @click="editDialog = true; target_item = author; fields.edit_name = author.name;
-                      fields.edit_bio = author.bio"
+                      fields.edit_bio = author.bio;fields.edit_image = author.thumb"
                       >
                         <v-icon>mdi-pencil</v-icon>
                       </v-btn>
@@ -274,6 +275,7 @@ export default {
           align: "start",
           value: "id"
         },
+        { text: "Profile", value: "profile_image" },
         { text: "Author Name", value: "name" },
         { text: "Bio", value: "bio" },
         { text: "Actions", value: "actions" }
@@ -282,6 +284,15 @@ export default {
   },
 
   methods: {
+    sliceWord(text, length, clamp) {
+      clamp = clamp || "...";
+      var node = document.createElement("div");
+      node.innerHTML = text;
+      var content = node.textContent;
+      return content.length > length
+        ? content.slice(0, length) + clamp
+        : content;
+    },
     toggleShow() {
       this.show = !this.show;
     },

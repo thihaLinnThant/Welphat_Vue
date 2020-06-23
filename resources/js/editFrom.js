@@ -7,8 +7,9 @@ export default {
     },
     methods: {
         submitEdit(id) {
+
             axios.post(`/admin/${this.statename}/update/${id}`, this.fields).then(response => {
-                this.editDialog = false;
+            this.editDialog = false;
                 // get edited data
 
                 axios.get(`/api/admin/${this.statename}/onerecord/${id}`).then(({ data }) => {
@@ -28,6 +29,7 @@ export default {
 
                         }
                     }
+
 
                     this.$store.commit('replaceOneRecord', { route: this.statename, data, id })
                     this.alertMessage = `${this.statename} is updated with new (${data.name})  `;

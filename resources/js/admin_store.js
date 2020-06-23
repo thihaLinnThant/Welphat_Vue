@@ -29,6 +29,7 @@ export default new Vuex.Store({
     },
     mutations: {
         addOneRecord(state, { route, data }) {
+
             state[route].push(data);
         },
         deleteOneRecord(state, { route, id }) {
@@ -36,7 +37,7 @@ export default new Vuex.Store({
             state[route].splice(index, 1)
         },
         replaceOneRecord(state, { route, data, id }) {
-
+            console.log(data);
             var index = state[route].findIndex(route => route.id == id)
 
             state[route][index].name = data.name;
@@ -53,6 +54,10 @@ export default new Vuex.Store({
                 if (data.password) {
                     state[route][index].password = data.password;
                 }
+            }
+            if (route === 'authors') {
+                state[route][index].bio = data.bio;
+                state[route][index].thumb = data.thumb;
             }
 
         },
