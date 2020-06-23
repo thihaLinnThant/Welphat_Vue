@@ -24,6 +24,9 @@ Route::get('/admin/books', 'BookController@get_books_api');
 
 Route::get('/admin/authors', 'AuthorController@get_authors_api');
 Route::get('/admin/authors/lastrecord','AuthorController@get_lastAuthor_api');
+Route::get('/admin/authors/onerecord/{id}','AuthorController@get_oneRecord_api');
+Route::get('/admin/authors/{id}','AuthorController@get_oneRecord_api');
+
 
 Route::get('/admin/admins','AdminController@get_admins_api');
 Route::get('/admin/admins/lastrecord','AdminController@get_lastAdmin_api');

@@ -2,12 +2,13 @@
   <div>
     <v-dialog v-model="deleteDialog" max-width="380" persistent>
       <v-card>
+          <v-card-title>Delete Admin</v-card-title>
         <v-card-text v-if="isSuper_admin != 1">Do you want to delete this admin?</v-card-text>
-        <v-card-title v-else>Sorry, you can't delete Super Admin</v-card-title>
+        <v-card-text v-else>Sorry, you can't delete Super Admin</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="deleteDialog = false; target_item = '';" v-if="isSuper_admin != 1">No</v-btn>
-          <v-btn text @click="deleteDialog = false; target_item = '';" v-else>close</v-btn>
+          <v-btn text @click="deleteDialog = false; target_item = '';" v-if="isSuper_admin != 1" outlined color="primary">No</v-btn>
+          <v-btn text @click="deleteDialog = false; target_item = '';" v-else outlined color="primary">OK</v-btn>
 
           <v-btn
             text
@@ -87,13 +88,15 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="editDialog = false; target_item = '';">Close</v-btn>
+          <v-btn text @click="editDialog = false; target_item = '';">Close</v-btn>
           <v-btn
-            color="blue darken-1"
+            color="primary"
             v-show="isSuper_admin != 1"
             text
             @click="submitEdit(target_item.id, fields)"
             type="submit"
+            outlined
+
           >Save</v-btn>
         </v-card-actions>
       </v-card>

@@ -8,37 +8,59 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthorController extends Controller
 {
-    private function add_meta_data($request) {
+    private function add_meta_data($request)
+    {
         return collect(['path' => $request->getPathInfo()]);
     }
 
-    private function get_authors() {
-        $collection = Author::all();
+    private function get_authors()
+    {
+        $collection = Author::with('books')->get();
         $authors = collect();
-        foreach($collection as $author) {
-            $author->thumb = asset('storage/images/authors/'. $author->id . '/image_1.png');
+        foreach ($collection as $author) {
+            $author->thumb = asset('storage/images/authors/' . $author->id . '/image_1.png');
             $author->count = $author->books()->count();
+            $author->books = $author->books();
             $authors->push($author);
         }
         return collect(['authors' => $authors]);
     }
 
-    public function get_authors_api() {
+    public function get_authors_api()
+    {
         $data = $this->get_authors()->toArray();
         return response()->json($data);
 
         // return response()->json($data, 200, array(), JSON_PRETTY_PRINT);
     }
 
-    public function get_lastAuthor_api() {
+    public function get_lastAuthor_api()
+    {
         $data = Author::latest()->first();
-        $data->thumb = asset('storage/images/authors/'. $data->id . '/image_1.png');
+        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
         $data->count = $data->books()->count();
         return response()->json($data);
     }
 
-    public function get_authors_web(Request $request) {
+    public function get_authors_web(Request $request)
+    {
         $data = $this->add_meta_data($request);
+
+        return view('admin.app', ['data' => $data]);
+    }
+
+    public function get_oneRecord_api($id)
+    {
+        $data = Author::with('books')->find($id);
+        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
+        return response()->json($data);
+    }
+
+
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+
         return view('admin.app', ['data' => $data]);
     }
 
@@ -79,13 +101,13 @@ class AuthorController extends Controller
 
         $file = file_get_contents($request->image);
         $path = '/images/authors/' . $lastid . "/image_1.png";
-        Storage::disk('public')->put($path , $file);
+        Storage::disk('public')->put($path, $file);
 
         // $thumb_file = file_get_contents($request->image);
         // $thumb_path = '/images/books/' . $lastid . '/thumb_nail.png';
         // Storage::disk('public')->put($thumb_path , $thumb_file);
 
-        return response()->json(null,200);
+        return response()->json(null, 200);
     }
 
     /**
@@ -128,9 +150,21 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Author $author)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'edit_name' => 'required',
+            'edit_bio' => 'required'
+        ]);
+        $author = Author::find($id);
+        $author->name = $request->edit_name;
+        $author->bio = $request->edit_bio;
+        $file = file_get_contents($request->edit_image);
+        $path = '/images/authors/' . $id . "/image_1.png";
+        Storage::disk('public')->put($path, $file);
+
+        $author->save();
+        return response()->json(null, 200);
     }
 
     /**
@@ -139,8 +173,9 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Author $author)
+    public function destroy($id)
     {
-        //
+        Author::destroy($id);
+        return response()->json(null, 200);
     }
 }

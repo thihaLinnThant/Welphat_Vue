@@ -14,6 +14,7 @@
           <v-btn
             text
             @click="deleteDialog = false; target_item_id = '';"
+            color="primary" outlined
           >
             No
           </v-btn>

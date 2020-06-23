@@ -14,17 +14,18 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="editDialog = false; target_item = ''">Cancel</v-btn>
-          <v-btn text @click="submitEdit(target_item.id, fields)">Edit</v-btn>
+          <v-btn text @click="submitEdit(target_item.id, fields)" color="primary" outlined>Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="deleteDialog" max-width="350" persistent>
       <v-card>
+          <v-card-title>Delete Category</v-card-title>
         <v-card-text>Do you want to delete this category?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="deleteDialog = false; target_item = '';">No</v-btn>
+          <v-btn text @click="deleteDialog = false; target_item = '';" color="primary" outlined>No</v-btn>
 
           <v-btn text @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);">Yes</v-btn>
         </v-card-actions>

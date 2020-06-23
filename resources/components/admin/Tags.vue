@@ -28,8 +28,9 @@
         <v-btn
           text
           @click="submitEdit(target_item.id, fields)"
+          color="primary" outlined
         >
-          Edit
+          Save
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -49,6 +50,7 @@
         <v-btn
           text
           @click="deleteDialog = false; target_item = '';"
+          color="primary" outlined
         >
           No
         </v-btn>
