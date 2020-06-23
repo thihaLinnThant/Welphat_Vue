@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/orders/addorder', 'OrderController@create');
     Route::post('/admin/orders/update/{id}', 'OrderController@update');
     Route::post('/admin/orders/delete/{id}','OrderController@destroy');
+    Route::post('/admin/orders/updateStatus/{id}', 'OrderController@updateStatus');
+    Route::get('/admin/orders/updateStatus/{id}', 'OrderController@updateStatus');
 
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');

@@ -13,12 +13,15 @@ class OrderController extends Controller
         $orders = collect();
         foreach($collection as $order){
             $order->total_price = $order->totalPrice();
+            $order->count = $order->count();
             $count = 0;
             foreach($order->book_orders as $book){
-                if($order->books->find($book->book_id)){
+                if($book->book_id){
                     $order->book_orders[$count]->deleted = false;
-                }else {
+                    $order->book_orders[$count]->thumb = asset('storage/images/books/'. $book->book_id . '/thumb_nail.png');
+                }else{
                     $order->book_orders[$count]->deleted = true;
+                    $order->book_orders[$count]->thumb = null;
                 }
                 $count++;
             }
@@ -49,6 +52,13 @@ class OrderController extends Controller
     public function get_oneRecord_api($id){
         $data = Order::find($id);
         return response()->json($data);
+    }
+
+    public function updateStatus($id, Request $request){
+        $order = Order::find($id);
+        $order->status = $request->code;
+        $order->save();
+        return response()->json(null, 200);
     }
     /**
      * Display a listing of the resource.
@@ -121,8 +131,9 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        Order::destroy($id);
+        return response()->json(null, 200);
     }
 }
