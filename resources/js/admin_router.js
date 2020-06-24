@@ -7,7 +7,6 @@ Vue.use(VueRouter);
 import Books from '../components/admin/Books.vue';
 import BookRegister from '../components/admin/BookRegister.vue';
 import Authors from '../components/admin/Authors.vue';
-import AuthorRegister from '../components/admin/AuthorRegister.vue'
 import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
 import Publishers from '../components/admin/publishers.vue';
@@ -15,6 +14,7 @@ import Comment from '../components/admin/Comments.vue'
 import Order from '../components/admin/Orders.vue'
 import Admin from '../components/admin/Admins'
 import User from '../components/admin/Users';
+import AuthorView from '../components/admin/AuthorView';
 
 let router = new VueRouter({
     mode: 'history',
@@ -23,7 +23,6 @@ let router = new VueRouter({
         { path: '/admin/books/register', component: BookRegister, name: 'book_register' },
 
         { path: '/admin/authors', component: Authors, name: 'authors' },
-        { path: '/admin/authors/register', component: AuthorRegister, name: 'author_register' },
 
         { path: '/admin/categories', component: Categories, name: 'categories' },
 
@@ -34,7 +33,7 @@ let router = new VueRouter({
         { path: '/admin/orders', component: Order, name: 'orders' },
         { path: '/admin/admins', component: Admin, name: 'admins' },
         { path: '/admin/users', component: User, name : 'users'},
-        { path: '/admin/users/adduser', name : 'adduser'}
+        { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'}
     ],
     // methods: {
     //     getApiData() {
@@ -51,6 +50,7 @@ router.beforeEach((to, from, next) => {
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
+            console.log(data);
             Store.commit('addData', { route: name, data })
             next();
         });
@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
     else if (to.path === '/admin/publishers') { if (Store.state.publishers.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/comments') { if (Store.state.comments.length > 0) { next() } else { getApiData(to.path, to.name) } }
-    
+
     else if (to.path === '/admin/orders') { if (Store.state.orders.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/admins') { if (Store.state.admins.length > 0) { next() } else { getApiData(to.path, to.name) } }
@@ -76,6 +76,9 @@ router.beforeEach((to, from, next) => {
         if (Store.state.users.length > 0) { next() } else {
             getApiData(to.path, to.name)
         }
+    }
+    else if( to.path === `/admin/authors/${to.params.id}`){
+        if (Store.state.authorview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
 
     else if (to.path === '/admin') { next(); }

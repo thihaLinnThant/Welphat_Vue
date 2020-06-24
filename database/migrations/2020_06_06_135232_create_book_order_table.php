@@ -18,6 +18,7 @@ class CreateBookOrderTable extends Migration
             $table->foreignId('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreignId('book_id')->nullable()->references('id')->on('books')->onDelete('set null');
             $table->string('book_name');
+            $table->integer('qty');
             $table->double('book_price');
             $table->timestamps();
         });

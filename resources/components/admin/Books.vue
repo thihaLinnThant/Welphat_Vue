@@ -14,7 +14,7 @@
             <v-img
               class="white--text align-end"
               height="200px"
-              src="https://i.pinimg.com/originals/ef/c3/35/efc335ff7f03fc4ba2603b9178918c2d.jpg"
+              :src="book.thumb"
             >
               <v-card-title class="justify-center">{{ book.name }}</v-card-title>
             </v-img>

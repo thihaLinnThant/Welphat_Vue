@@ -19,7 +19,8 @@ export default new Vuex.Store({
         publishers: [],
         comments: [],
         users: [],
-        orders: []
+        orders: [],
+        authorview : []
     },
     getters: {
         getCategories(state) {
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     },
     mutations: {
         addOneRecord(state, { route, data }) {
+
             state[route].push(data);
         },
         deleteOneRecord(state, { route, id }) {
@@ -35,7 +37,7 @@ export default new Vuex.Store({
             state[route].splice(index, 1)
         },
         replaceOneRecord(state, { route, data, id }) {
-
+            console.log(data);
             var index = state[route].findIndex(route => route.id == id)
 
             state[route][index].name = data.name;
@@ -53,10 +55,20 @@ export default new Vuex.Store({
                     state[route][index].password = data.password;
                 }
             }
+            if (route === 'authors') {
+                state[route][index].bio = data.bio;
+                state[route][index].thumb = data.thumb;
+            }
 
         },
         addData(state, { route, data }) {
-            state[route] = data[route];
+            if(route === 'authorview'){
+                state[route] = data;
+            }else{
+                state[route] = data[route];
+
+            }
+
         }
     }
 });

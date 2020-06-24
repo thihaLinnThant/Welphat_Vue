@@ -10,20 +10,15 @@ class OrderController extends Controller
 
     private function get_orders() {
         $collection = Order::with('user')->with('book_orders')->get();
+
         $orders = collect();
         foreach($collection as $order){
             $order->total_price = $order->totalPrice();
-            $count = 0;
-            foreach($order->book_orders as $book){
-                if($order->books->find($book->book_id)){
-                    $order->book_orders[$count]->deleted = false;
-                }else {
-                    $order->book_orders[$count]->deleted = true;
-                }
-                $count++;
-            }
+            $order->count = $order->count();
+
             $orders->push($order);
         }
+
         return collect(['orders' => $orders]);
     }
 
@@ -42,13 +37,20 @@ class OrderController extends Controller
     }
 
     public function get_lastorder_api() {
-        $data = Order::latest()->first();        
+        $data = Order::latest()->first();
         return response()->json($data);
     }
 
     public function get_oneRecord_api($id){
         $data = Order::find($id);
         return response()->json($data);
+    }
+
+    public function updateStatus($id, Request $request){
+        $order = Order::find($id);
+        $order->status = $request->code;
+        $order->save();
+        return response()->json(null, 200);
     }
     /**
      * Display a listing of the resource.
@@ -110,9 +112,19 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update($id,Request $request)
     {
-        //
+
+        $order = Order::with('book_orders')->find($id);
+
+
+        $order->user_name = $request->edit_name;
+        $order->address = $request->edit_address;
+        $order->phone_no = $request->edit_ph_no;
+        $order->save();
+
+        return response()->json(null, 200);
+
     }
 
     /**
@@ -121,8 +133,9 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        Order::destroy($id);
+        return response()->json(null, 200);
     }
 }

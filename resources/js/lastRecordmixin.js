@@ -1,17 +1,21 @@
 export default {
-    data () {
+    data() {
         return {
-            lastRecord : null
+            lastRecord: null
         }
     },
     methods: {
         // Get latest data from database to state
         lastrecord(statename) {
             axios.get(`/api/admin/${statename}/lastrecord`).then(({ data }) => {
+                console.log(data);
                 this.$store.commit('addOneRecord', { route: statename, data })
                 this.lastRecord = data.name;
+
                 this.alertMessage = `${statename} (${data.name}) is registered with id - ${data.id}`;
             }).catch(error => {
+                this.alertMessage = "Something went wrong!";
+
                 console.log(error.response);
             })
         }

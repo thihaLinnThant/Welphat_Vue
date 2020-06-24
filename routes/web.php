@@ -30,12 +30,21 @@ Route::post('/login/admin', 'Auth\LoginController@loginAdmin')->name('login.admi
 Route::post('/register/admin', 'Auth\RegisterController@createAdmin')->name('register.admin');
 
 Route::group(['middleware' => 'auth:admin'], function () {
+
+
     Route::get('/admin/books', 'BookController@get_books_web');
     Route::get('/admin/books/register', 'BookController@register_web');
 
     Route::get('/admin/authors', 'AuthorController@get_authors_web');
     Route::post('/admin/authors/register', 'AuthorController@create');
     Route::get('/admin/authors/register', 'AuthorController@create');
+    Route::post('/admin/authors/delete/{id}','AuthorController@destroy');
+    Route::get('/admin/authors/delete/{id}','AuthorController@destroy');
+    Route::post('/admin/authors/update/{id}','AuthorController@update');
+
+    Route::get('/admin/authors/{id}','AuthorController@singleView');
+    Route::post('/admin/authors/{id}','AuthorController@singleView');
+
 
     Route::get('/admin/categories', 'CategoryController@get_categories_web');
     Route::post('/admin/categories/addcategory', 'CategoryController@create');
@@ -68,8 +77,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/orders', 'OrderController@get_orders_web');
     Route::post('/admin/orders/addorder', 'OrderController@create');
+    Route::get('/admin/orders/update/{id}','OrderController@update');
     Route::post('/admin/orders/update/{id}', 'OrderController@update');
     Route::post('/admin/orders/delete/{id}','OrderController@destroy');
+    Route::post('/admin/orders/updateStatus/{id}', 'OrderController@updateStatus');
+    Route::get('/admin/orders/updateStatus/{id}', 'OrderController@updateStatus');
 
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');

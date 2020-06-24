@@ -21,9 +21,9 @@ class BooksTableSeeder extends Seeder
         $tags = Tag::all();
         $authors = Author::all();
         $categories = Category::all();
-        for ($i=1; $i <= 10; $i++) {            
+        for ($i=1; $i <= 10; $i++) {
             $book = Book::create([
-                'name' => $faker->name,                
+                'name' => $faker->name,
                 'published_date' => $faker->date('Y-m-d', 'now'),
                 'description' => $faker->paragraph(3, true),
                 'price' => 1000,
