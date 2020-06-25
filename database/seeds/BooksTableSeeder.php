@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Book;
 use App\Category;
 use App\Tag;
+use App\Supplier;
 use App\Author;
 use App\Publisher;
 
@@ -19,6 +20,7 @@ class BooksTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
         $tags = Tag::all();
+        $suppliers = Supplier::all();
         $authors = Author::all();
         $categories = Category::all();
         for ($i=1; $i <= 10; $i++) {
@@ -38,6 +40,7 @@ class BooksTableSeeder extends Seeder
             // Storage::disk('public')->put($thumb_path , $thumb_file);
 
             $book->tags()->sync($tags->random(3));
+            $book->suppliers()->sync($suppliers->random(3));
             $book->authors()->sync($authors->random(2));
             $book->categories()->sync($categories->random(2));
         }

@@ -17,6 +17,7 @@ export default new Vuex.Store({
         categories: [],
         tags: [],
         publishers: [],
+        suppliers: [],
         comments: [],
         users: [],
         orders: [],

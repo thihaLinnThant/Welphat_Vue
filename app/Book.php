@@ -24,6 +24,10 @@ class Book extends Model
         return $this->belongsTo('App\Publisher');
     }
 
+    public function suppliers() {
+        return $this->belongsToMany('App\Supplier', 'book_supplier');
+    }
+
     public function comments(){
         return $this->hasMany('App\Comment');
     }

@@ -2379,6 +2379,11 @@ __webpack_require__.r(__webpack_exports__);
         link: "publishers",
         inactive: false
       }, {
+        text: "Suppliers",
+        icon: "mdi-truck",
+        link: "suppliers",
+        inactive: false
+      }, {
         text: "Orders",
         icon: "mdi-receipt",
         link: "orders",
@@ -3605,6 +3610,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3658,8 +3675,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    openEditForm: function openEditForm() {
+    openEditForm: function openEditForm(item) {
       this.editDialog = true;
+      this.target_item = item;
+      this.fields.edit_name = item.user_name;
+      this.fields.edit_ph_no = item.phone_no;
+      this.fields.edit_books = item.book_orders;
+      this.fields.edit_address = item.address;
     },
     colorStatus: function colorStatus(status) {
       switch (status) {
@@ -3715,6 +3737,206 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Suppliers.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/Suppliers.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
+/* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_1__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  data: function data() {
+    return {
+      csrf_token: window.csrf_token,
+      search: "",
+      headers: [{
+        text: "Id",
+        align: "start",
+        value: "id"
+      }, {
+        text: "Name",
+        value: "name"
+      }, {
+        text: "Book Count",
+        value: "count"
+      }, {
+        text: "Actions",
+        value: "actions"
+      }],
+      act: "/admin/suppliers/addsupplier",
+      statename: "suppliers",
+      editDialog: false,
+      deleteDialog: false,
+      target_item: '',
+      target_item_value: '',
+      cascade: null
+    };
+  },
+  computed: {
+    suppliers: function suppliers() {
+      return this.$store.state.suppliers;
     }
   }
 });
@@ -8897,7 +9119,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -46251,105 +46473,174 @@ var render = function() {
                               "v-col",
                               { key: index, attrs: { cols: "12" } },
                               [
-                                _c(
-                                  "v-row",
-                                  [
-                                    _c("v-col", { attrs: { cols: "7" } }, [
-                                      _c("div", [
-                                        _vm._v(
-                                          "\n                    " +
-                                            _vm._s(edit_book.book_name) +
-                                            "\n                  "
-                                        )
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-col",
-                                      { attrs: { cols: "1" } },
+                                edit_book.removed
+                                  ? _c(
+                                      "v-row",
                                       [
-                                        _c("v-text-field", {
-                                          attrs: { label: "Qty" },
-                                          model: {
-                                            value: edit_book.qty,
-                                            callback: function($$v) {
-                                              _vm.$set(edit_book, "qty", $$v)
-                                            },
-                                            expression: "edit_book.qty"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-col",
-                                      { attrs: { cols: "4" } },
-                                      [
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              text: "",
-                                              icon: "",
-                                              color: "success"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                edit_book.qty++
-                                              }
-                                            }
-                                          },
-                                          [_c("v-icon", [_vm._v("mdi-plus")])],
-                                          1
-                                        ),
+                                        _c("v-col", { attrs: { cols: "7" } }, [
+                                          _c(
+                                            "div",
+                                            { staticStyle: { color: "red" } },
+                                            [
+                                              _c("s", [
+                                                _vm._v(
+                                                  _vm._s(edit_book.book_name)
+                                                )
+                                              ])
+                                            ]
+                                          )
+                                        ]),
                                         _vm._v(" "),
                                         _c(
-                                          "v-btn",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: edit_book.qty > 0,
-                                                expression: "edit_book.qty > 0"
-                                              }
-                                            ],
-                                            attrs: {
-                                              text: "",
-                                              icon: "",
-                                              color: "error"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                edit_book.qty--
-                                              }
-                                            }
-                                          },
-                                          [_c("v-icon", [_vm._v("mdi-minus")])],
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              color: "error",
-                                              text: "",
-                                              icon: ""
-                                            }
-                                          },
+                                          "v-col",
+                                          { attrs: { cols: "1" } },
                                           [
-                                            _c("v-icon", [_vm._v("mdi-delete")])
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  text: "",
+                                                  icon: "",
+                                                  color: "success"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    edit_book.removed = false
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-recycle")
+                                                ])
+                                              ],
+                                              1
+                                            )
                                           ],
                                           1
                                         )
                                       ],
                                       1
                                     )
-                                  ],
-                                  1
-                                ),
+                                  : _c(
+                                      "v-row",
+                                      [
+                                        _c("v-col", { attrs: { cols: "7" } }, [
+                                          _c("div", [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(edit_book.book_name) +
+                                                "\n                  "
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-col",
+                                          { attrs: { cols: "1" } },
+                                          [
+                                            _c("v-text-field", {
+                                              attrs: { label: "Qty" },
+                                              model: {
+                                                value: edit_book.qty,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    edit_book,
+                                                    "qty",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression: "edit_book.qty"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-col",
+                                          { attrs: { cols: "4" } },
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  text: "",
+                                                  icon: "",
+                                                  color: "success"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    edit_book.qty++
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-plus")
+                                                ])
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value: edit_book.qty > 0,
+                                                    expression:
+                                                      "edit_book.qty > 0"
+                                                  }
+                                                ],
+                                                attrs: {
+                                                  text: "",
+                                                  icon: "",
+                                                  color: "error"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    edit_book.qty--
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-minus")
+                                                ])
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  color: "error",
+                                                  text: "",
+                                                  icon: ""
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    edit_book.removed = true
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-delete")
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    ),
                                 _vm._v(" "),
                                 _c("v-divider")
                               ],
@@ -46908,16 +47199,9 @@ var render = function() {
                                                 attrs: { text: "", icon: "" },
                                                 on: {
                                                   click: function($event) {
-                                                    _vm.openEditForm()
-                                                    _vm.target_item = item
-                                                    _vm.fields.edit_name =
-                                                      item.user_name
-                                                    _vm.fields.edit_ph_no =
-                                                      item.phone_no
-                                                    _vm.fields.edit_address =
-                                                      item.address
-                                                    _vm.fields.edit_books =
-                                                      item.book_orders
+                                                    return _vm.openEditForm(
+                                                      item
+                                                    )
                                                   }
                                                 }
                                               },
@@ -47083,6 +47367,462 @@ var render = function() {
                           1
                         )
                       ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Suppliers.vue?vue&type=template&id=721c1f06&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/Suppliers.vue?vue&type=template&id=721c1f06& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "350", persistent: "" },
+          model: {
+            value: _vm.editDialog,
+            callback: function($$v) {
+              _vm.editDialog = $$v
+            },
+            expression: "editDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { attrs: { "primary-title": "" } }, [
+                _vm._v("\n        Edit Supplier title\n      ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.edit_name,
+                      name: "edit_name",
+                      label: "supplier name"
+                    },
+                    model: {
+                      value: _vm.fields.edit_name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.fields, "edit_name", $$v)
+                      },
+                      expression: "fields.edit_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.editDialog = false
+                          _vm.target_item = ""
+                        }
+                      }
+                    },
+                    [_vm._v("\n          Cancel\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", color: "primary", outlined: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.submitEdit(_vm.target_item.id, _vm.fields)
+                        }
+                      }
+                    },
+                    [_vm._v("\n          Save\n        ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "350", persistent: "" },
+          model: {
+            value: _vm.deleteDialog,
+            callback: function($$v) {
+              _vm.deleteDialog = $$v
+            },
+            expression: "deleteDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-text", [
+                _vm._v("\n        Do you want to delete this supplier?\n      ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", color: "primary", outlined: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteDialog = false
+                          _vm.target_item = ""
+                        }
+                      }
+                    },
+                    [_vm._v("\n          No\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteDialog = false
+                          _vm.submitDelete(
+                            _vm.target_item.id,
+                            _vm.target_item.name
+                          )
+                        }
+                      }
+                    },
+                    [_vm._v("\n          Yes\n        ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: "success" },
+          model: {
+            value: _vm.alert,
+            callback: function($$v) {
+              _vm.alert = $$v
+            },
+            expression: "alert"
+          }
+        },
+        [
+          _vm._v("\n      " + _vm._s(_vm.alertMessage) + "\n      "),
+          _c(
+            "v-btn",
+            {
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
+              }
+            },
+            [_vm._v("Close")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                [
+                  _vm._v("\n          Suppliers\n          "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-form",
+                    {
+                      staticClass: "d-flex",
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.submit($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          "append-icon": "mdi-plus",
+                          label: "Add new",
+                          "single-line": "",
+                          "hide-details": "",
+                          "error-messages": _vm.errors.name,
+                          color: "#4054b5",
+                          name: "name",
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.fields.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.fields, "name", $$v)
+                          },
+                          expression: "fields.name"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "append-icon": "mdi-magnify",
+                      label: "Search",
+                      "single-line": "",
+                      "hide-details": ""
+                    },
+                    model: {
+                      value: _vm.search,
+                      callback: function($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.suppliers,
+                  search: _vm.search
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "body",
+                    fn: function(ref) {
+                      var items = ref.items
+                      return _vm._l(items, function(supplier, index) {
+                        return _c("tbody", { key: index }, [
+                          _c("tr", [
+                            _c("td", [_vm._v(_vm._s(supplier.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(supplier.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(supplier.count))]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticClass: "d-flex flex-row" },
+                              [
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            return [
+                                              _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    staticClass: "mt-1",
+                                                    attrs: {
+                                                      text: "",
+                                                      icon: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.editDialog = true
+                                                        _vm.target_item = supplier
+                                                        _vm.fields.edit_name =
+                                                          supplier.name
+                                                      }
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c("v-icon", [
+                                                    _vm._v("mdi-pencil")
+                                                  ])
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [_vm._v(" "), _c("span", [_vm._v("edit")])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            return [
+                                              _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    staticClass: "mt-1",
+                                                    attrs: {
+                                                      text: "",
+                                                      icon: ""
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c("v-icon", [
+                                                    _vm._v("mdi-eye")
+                                                  ])
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("view books")])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            return [
+                                              _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    staticClass: "mt-1",
+                                                    attrs: {
+                                                      text: "",
+                                                      icon: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.deleteDialog = true
+                                                        _vm.target_item = supplier
+                                                      }
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c("v-icon", [
+                                                    _vm._v("mdi-delete")
+                                                  ])
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("delete supplier")])
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ])
+                      })
                     }
                   }
                 ])
@@ -105743,7 +106483,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -107653,6 +108393,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/components/admin/Suppliers.vue":
+/*!**************************************************!*\
+  !*** ./resources/components/admin/Suppliers.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Suppliers_vue_vue_type_template_id_721c1f06___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Suppliers.vue?vue&type=template&id=721c1f06& */ "./resources/components/admin/Suppliers.vue?vue&type=template&id=721c1f06&");
+/* harmony import */ var _Suppliers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Suppliers.vue?vue&type=script&lang=js& */ "./resources/components/admin/Suppliers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Suppliers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Suppliers_vue_vue_type_template_id_721c1f06___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Suppliers_vue_vue_type_template_id_721c1f06___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/components/admin/Suppliers.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/components/admin/Suppliers.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/components/admin/Suppliers.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Suppliers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Suppliers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Suppliers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Suppliers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/components/admin/Suppliers.vue?vue&type=template&id=721c1f06&":
+/*!*********************************************************************************!*\
+  !*** ./resources/components/admin/Suppliers.vue?vue&type=template&id=721c1f06& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Suppliers_vue_vue_type_template_id_721c1f06___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Suppliers.vue?vue&type=template&id=721c1f06& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/Suppliers.vue?vue&type=template&id=721c1f06&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Suppliers_vue_vue_type_template_id_721c1f06___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Suppliers_vue_vue_type_template_id_721c1f06___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/components/admin/Tags.vue":
 /*!*********************************************!*\
   !*** ./resources/components/admin/Tags.vue ***!
@@ -108196,17 +109005,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_Authors_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/admin/Authors.vue */ "./resources/components/admin/Authors.vue");
 /* harmony import */ var _components_admin_Categories_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/admin/Categories.vue */ "./resources/components/admin/Categories.vue");
 /* harmony import */ var _components_admin_Tags_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/admin/Tags.vue */ "./resources/components/admin/Tags.vue");
-/* harmony import */ var _components_admin_publishers_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/admin/publishers.vue */ "./resources/components/admin/publishers.vue");
-/* harmony import */ var _components_admin_Comments_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/admin/Comments.vue */ "./resources/components/admin/Comments.vue");
-/* harmony import */ var _components_admin_Orders_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/admin/Orders.vue */ "./resources/components/admin/Orders.vue");
-/* harmony import */ var _components_admin_Admins__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/admin/Admins */ "./resources/components/admin/Admins.vue");
-/* harmony import */ var _components_admin_Users__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/admin/Users */ "./resources/components/admin/Users.vue");
-/* harmony import */ var _components_admin_AuthorView__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/admin/AuthorView */ "./resources/components/admin/AuthorView.vue");
+/* harmony import */ var _components_admin_Suppliers_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/admin/Suppliers.vue */ "./resources/components/admin/Suppliers.vue");
+/* harmony import */ var _components_admin_publishers_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/admin/publishers.vue */ "./resources/components/admin/publishers.vue");
+/* harmony import */ var _components_admin_Comments_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/admin/Comments.vue */ "./resources/components/admin/Comments.vue");
+/* harmony import */ var _components_admin_Orders_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/admin/Orders.vue */ "./resources/components/admin/Orders.vue");
+/* harmony import */ var _components_admin_Admins__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/admin/Admins */ "./resources/components/admin/Admins.vue");
+/* harmony import */ var _components_admin_Users__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/admin/Users */ "./resources/components/admin/Users.vue");
+/* harmony import */ var _components_admin_AuthorView__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/admin/AuthorView */ "./resources/components/admin/AuthorView.vue");
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -108242,27 +109053,31 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'tags'
   }, {
     path: '/admin/publishers',
-    component: _components_admin_publishers_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    component: _components_admin_publishers_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     name: 'publishers'
   }, {
+    path: '/admin/suppliers',
+    component: _components_admin_Suppliers_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    name: 'suppliers'
+  }, {
     path: '/admin/comments',
-    component: _components_admin_Comments_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    component: _components_admin_Comments_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     name: 'comments'
   }, {
     path: '/admin/orders',
-    component: _components_admin_Orders_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    component: _components_admin_Orders_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
     name: 'orders'
   }, {
     path: '/admin/admins',
-    component: _components_admin_Admins__WEBPACK_IMPORTED_MODULE_12__["default"],
+    component: _components_admin_Admins__WEBPACK_IMPORTED_MODULE_13__["default"],
     name: 'admins'
   }, {
     path: '/admin/users',
-    component: _components_admin_Users__WEBPACK_IMPORTED_MODULE_13__["default"],
+    component: _components_admin_Users__WEBPACK_IMPORTED_MODULE_14__["default"],
     name: 'users'
   }, {
     path: '/admin/authors/:id',
-    component: _components_admin_AuthorView__WEBPACK_IMPORTED_MODULE_14__["default"],
+    component: _components_admin_AuthorView__WEBPACK_IMPORTED_MODULE_15__["default"],
     name: 'authorview'
   }] // methods: {
   //     getApiData() {
@@ -108321,6 +109136,12 @@ router.beforeEach(function (to, from, next) {
     } else {
       getApiData(to.path, to.name);
     }
+  } else if (to.path === '/admin/suppliers') {
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.suppliers.length > 0) {
+      next();
+    } else {
+      getApiData(to.path, to.name);
+    }
   } else if (to.path === '/admin/comments') {
     if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.comments.length > 0) {
       next();
@@ -108366,12 +109187,16 @@ router.beforeEach(function (to, from, next) {
       getApiData('/admin/publishers', 'publishers');
     }
 
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.suppliers.length <= 0) {
+      getApiData('/admin/suppliers', 'suppliers');
+    }
+
     if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.authors.length <= 0) {
       getApiData('/admin/authors', 'authors');
     }
 
-    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.tags.length <= 0) {
-      getApiData('/admin/tags', 'tags');
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.comments.length <= 0) {
+      getApiData('/admin/comments', 'comments');
     } // if(Store.state.categories.length <= 0){
     //     getApiData('/admin/categories', 'categories');
     // }
@@ -108422,6 +109247,7 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
     categories: [],
     tags: [],
     publishers: [],
+    suppliers: [],
     comments: [],
     users: [],
     orders: [],
@@ -108583,7 +109409,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
+  watch: function watch() {
     return {
       fields: {},
       errors: {}
@@ -108721,8 +109547,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/min/minthudeveloper/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

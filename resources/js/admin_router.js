@@ -9,6 +9,7 @@ import BookRegister from '../components/admin/BookRegister.vue';
 import Authors from '../components/admin/Authors.vue';
 import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
+import Suppliers from '../components/admin/Suppliers.vue';
 import Publishers from '../components/admin/publishers.vue';
 import Comment from '../components/admin/Comments.vue'
 import Order from '../components/admin/Orders.vue'
@@ -29,6 +30,7 @@ let router = new VueRouter({
 
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },
+        { path: '/admin/suppliers', component: Suppliers, name: 'suppliers' },
         { path: '/admin/comments', component: Comment, name: 'comments' },
         { path: '/admin/orders', component: Order, name: 'orders' },
         { path: '/admin/admins', component: Admin, name: 'admins' },
@@ -66,6 +68,8 @@ router.beforeEach((to, from, next) => {
 
     else if (to.path === '/admin/publishers') { if (Store.state.publishers.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
+    else if (to.path === '/admin/suppliers') { if (Store.state.suppliers.length > 0) { next() } else { getApiData(to.path, to.name) } }
+
     else if (to.path === '/admin/comments') { if (Store.state.comments.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/orders') { if (Store.state.orders.length > 0) { next() } else { getApiData(to.path, to.name) } }
@@ -94,11 +98,16 @@ router.beforeEach((to, from, next) => {
         if (Store.state.publishers.length <= 0) {
             getApiData('/admin/publishers', 'publishers');
         }
+
+        if (Store.state.suppliers.length <= 0) {
+            getApiData('/admin/suppliers', 'suppliers');
+        }
+
         if (Store.state.authors.length <= 0) {
             getApiData('/admin/authors', 'authors');
         }
-        if (Store.state.tags.length <= 0) {
-            getApiData('/admin/tags', 'tags')
+        if (Store.state.comments.length <= 0) {
+            getApiData('/admin/comments', 'comments')
         }
         // if(Store.state.categories.length <= 0){
         //     getApiData('/admin/categories', 'categories');

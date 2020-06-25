@@ -2,47 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
+use App\Supplier;
 use Illuminate\Http\Request;
-use SebastianBergmann\Environment\Console;
 
-class TagController extends Controller
+class SupplierController extends Controller
 {
-
-    private function get_tags() {
-        $collection = Tag::all([ 'id', 'name' ]);
-        $tags = collect();
-        foreach($collection as $tag) {
-            $tag->count = $tag->books()->count();
-            $tags->push($tag);
+    private function get_suppliers() {
+        $collection = Supplier::all([ 'id', 'name' ]);
+        $suppliers = collect();
+        foreach($collection as $supplier) {
+            $supplier->count = $supplier->books()->count();
+            $suppliers->push($supplier);
         }
-        return collect(['tags' => $tags]);
+        return collect(['suppliers' => $suppliers]);
     }
 
     private function add_meta_data($request) {
         return collect(['path' => $request->getPathInfo()]);
     }
 
-    public function get_tags_api() {
-        $data = $this->get_tags();
+    public function get_suppliers_api() {
+        $data = $this->get_suppliers();
         return response()->json($data);
     }
 
-    public function get_tags_web(Request $request) {
+    public function get_suppliers_web(Request $request) {
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
 
-    public function get_lastTag_api() {
-        $data = Tag::latest()->first();        
+    public function get_lastSupplier_api() {
+        $data = Supplier::latest()->first();        
         return response()->json($data);
     }
 
     public function get_oneRecord_api($id){
-        $data = Tag::find($id);
+        $data = Supplier::find($id);
         return response()->json($data);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -64,7 +61,7 @@ class TagController extends Controller
             'name' => 'required'
         ]);
         
-        Tag::create([ 'name' => $request->name ]);
+        Supplier::create([ 'name' => $request->name ]);
 
         return response()->json(null,200);
     }
@@ -83,10 +80,10 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(Supplier $supplier)
     {
         //
     }
@@ -94,10 +91,10 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tag $tag)
+    public function edit(Supplier $supplier)
     {
         //
     }
@@ -106,7 +103,7 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tag  $tag
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
     public function update($id,Request $request)
@@ -115,7 +112,7 @@ class TagController extends Controller
             'edit_name' => 'required'
         ]);
         
-        $category = Tag::find($id);
+        $category = Supplier::find($id);
         $category->name = $request->edit_name;
         $category->save();
 
@@ -125,12 +122,12 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Tag::destroy($id);
+        Supplier::destroy($id);
         return response()->json(null, 200);
     }
 }

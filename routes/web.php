@@ -75,6 +75,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/tags/update/{id}', 'TagController@update');
     Route::post('/admin/tags/delete/{id}','TagController@destroy');
 
+    Route::get('/admin/suppliers', 'SupplierController@get_suppliers_web');
+    Route::post('/admin/suppliers/addsupplier', 'SupplierController@create');
+    Route::post('/admin/suppliers/update/{id}', 'SupplierController@update');
+    Route::post('/admin/suppliers/delete/{id}','SupplierController@destroy');
+
     Route::get('/admin/orders', 'OrderController@get_orders_web');
     Route::post('/admin/orders/addorder', 'OrderController@create');
     Route::get('/admin/orders/update/{id}','OrderController@update');

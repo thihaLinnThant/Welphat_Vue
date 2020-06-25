@@ -21,7 +21,19 @@
           <v-container>
             <v-row>
               <v-col cols="12" v-for="(edit_book,index) in fields.edit_books" :key="index">
-                <v-row>
+                <v-row v-if="edit_book.removed">
+                  <v-col cols="7">
+                    <div style="color:red">
+                      <s>{{edit_book.book_name}}</s>
+                    </div>
+                  </v-col>
+                  <v-col cols="1">
+                    <v-btn text icon color="success" @click="edit_book.removed = false">
+                      <v-icon>mdi-recycle</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row >
+                <v-row v-else>
                   <v-col cols="7">
                     <div >
                       {{edit_book.book_name}}
@@ -38,7 +50,7 @@
                     <v-btn text icon color="error" v-show="edit_book.qty > 0" @click="edit_book.qty--">
                       <v-icon>mdi-minus</v-icon>
                     </v-btn>
-                    <v-btn color="error" text icon>
+                    <v-btn color="error" text icon @click="edit_book.removed = true">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </v-col>
@@ -212,7 +224,7 @@
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    @click="openEditForm(); target_item = item; fields.edit_name = item.user_name; fields.edit_ph_no = item.phone_no; fields.edit_address = item.address; fields.edit_books = item.book_orders"
+                    @click="openEditForm(item);"
                     class="mt-1"
                     text
                     icon
@@ -312,8 +324,13 @@ export default {
     }
   },
   methods: {
-    openEditForm() {
+    openEditForm(item) {
       this.editDialog = true;
+      this.target_item = item;
+      this.fields.edit_name = item.user_name;
+      this.fields.edit_ph_no = item.phone_no;
+      this.fields.edit_books = item.book_orders;
+      this.fields.edit_address = item.address;
     },
     colorStatus(status) {
       switch (status) {

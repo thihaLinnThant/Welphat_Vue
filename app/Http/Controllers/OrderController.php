@@ -117,6 +117,15 @@ class OrderController extends Controller
 
         $order = Order::with('book_orders')->find($id);
 
+        foreach($request->edit_books as $book){
+            $orderBook = $order->book_orders->where('book_id', $book['book_id'])->first();
+            if(isset($book['removed']) && $book['removed']){
+                $orderBook->delete();
+            }else {
+                $orderBook->qty = $book['qty'];
+                $orderBook->save();
+            }
+        }
 
         $order->user_name = $request->edit_name;
         $order->address = $request->edit_address;

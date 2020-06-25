@@ -50,6 +50,10 @@ Route::get('/admin/publishers', 'PublisherController@get_publishers_api');
 Route::get('/admin/publishers/lastrecord','PublisherController@get_lastPublisher_api');
 Route::get('/admin/publishers/onerecord/{id}', 'PublisherController@get_oneRecord_api');
 
+Route::get('/admin/suppliers', 'SupplierController@get_suppliers_api');
+Route::get('/admin/suppliers/lastrecord','SupplierController@get_lastSupplier_api');
+Route::get('/admin/suppliers/onerecord/{id}', 'SupplierController@get_oneRecord_api');
+
 Route::get('/admin/orders', 'OrderController@get_orders_api');
 Route::get('/admin/orders/lastrecord','OrderController@get_lastorder_api');
 Route::get('/admin/orders/onerecord/{id}', 'OrderController@get_oneRecord_api');

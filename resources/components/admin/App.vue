@@ -87,7 +87,12 @@ export default {
         link: "categories",
         inactive: false
       },
-      { text: "Tags", icon: "mdi-tag", link: "tags", inactive: false },
+      {
+        text: "Tags",
+        icon: "mdi-tag",
+        link: "tags",
+        inactive: false
+      },
       {
         text: "Comments",
         icon: "mdi-message-text",
@@ -100,7 +105,18 @@ export default {
         link: "publishers",
         inactive: false
       },
-      { text: "Orders", icon: "mdi-receipt", link: "orders", inactive: false }
+      {
+        text: "Suppliers",
+        icon: "mdi-truck",
+        link: "suppliers",
+        inactive: false
+      },
+      {
+        text: "Orders",
+        icon: "mdi-receipt",
+        link: "orders",
+        inactive: false
+      }
     ]
   }),
   created() {
