@@ -3029,10 +3029,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     books: function books() {
       return this.$store.state.books;
+    },
+    total_pages: function total_pages() {
+      return this.$store.state.pagination_length;
+    },
+    current_page: function current_page() {
+      return this.$store.state.pagination_current;
+    }
+  },
+  methods: {
+    change_page: function change_page(value) {
+      var _this = this;
+
+      axios.get("/api/admin/books/?page=".concat(value)).then(function (_ref) {
+        var data = _ref.data;
+        console.log(data);
+
+        _this.$store.commit('addData', {
+          route: 'books',
+          data: data
+        });
+      });
     }
   }
 });
@@ -9137,7 +9160,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -45546,12 +45569,24 @@ var render = function() {
         [
           _c("v-pagination", {
             attrs: {
-              circle: "true",
-              length: "20",
+              color: "#4054b5",
+              circle: "",
+              length: _vm.total_pages,
               "next-icon": "mdi-chevron-right",
               "prev-icon": "mdi-chevron-left",
-              page: "1",
               "total-visible": "10"
+            },
+            on: {
+              input: function($event) {
+                return _vm.change_page($event)
+              }
+            },
+            model: {
+              value: _vm.current_page,
+              callback: function($$v) {
+                _vm.current_page = $$v
+              },
+              expression: "current_page"
             }
           })
         ],
@@ -106523,7 +106558,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -109145,11 +109180,7 @@ router.beforeEach(function (to, from, next) {
   }
 
   if (to.path === '/admin/books') {
-    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.books.length > 0) {
-      next();
-    } else {
-      getApiData(to.path, to.name);
-    }
+    getApiData(to.path, to.name);
   }
 
   if (to.path === '/admin/authors') {
@@ -109291,7 +109322,9 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
     comments: [],
     users: [],
     orders: [],
-    authorview: []
+    authorview: [],
+    pagination_length: 0,
+    pagination_current: 0
   },
   getters: {
     getCategories: function getCategories(state) {
@@ -109353,6 +109386,8 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
         state[route] = data;
       } else {
         state[route] = data[route];
+        state['pagination_length'] = data['total_pages'];
+        state['pagination_current'] = data['current_page'];
       }
     }
   }

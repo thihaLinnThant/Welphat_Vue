@@ -9,12 +9,14 @@
     </v-row>
     <v-row align="center" justify="end">
       <v-pagination
-        circle=true
-        length=20
+        v-model="current_page"
+        color="#4054b5"
+        circle
+        :length=total_pages
         next-icon="mdi-chevron-right"
         prev-icon="mdi-chevron-left"
-        page=1
         total-visible=10
+        @input="change_page($event)"
       ></v-pagination>
     </v-row>
     <v-row>
@@ -89,6 +91,20 @@ export default {
   computed: {
     books() {
       return this.$store.state.books;
+    },
+    total_pages() {
+      return this.$store.state.pagination_length;
+    },
+    current_page() {
+      return this.$store.state.pagination_current;
+    }
+  },
+  methods: {
+    change_page(value) {
+      axios.get(`/api/admin/books/?page=${value}`).then(({data}) => {
+        console.log(data);
+        this.$store.commit('addData', { route: 'books', data})
+      });
     }
   }
 };

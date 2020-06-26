@@ -13,19 +13,24 @@ class BookController extends Controller
     }
 
     private function get_book_list() {
-        $collection = Book::with('authors')->with('categories')->with('tags')->paginate(5);
+        $collection = Book::with('authors')->with('categories')->with('tags')->paginate(3);
         $books = collect();
         foreach($collection as $book) {
             $book->rates = $book->averageRating();
             $book->thumb = asset('storage/images/books/'. $book->id . '/thumb_nail.png');
             $books->push($book);
         }
-        return collect(['books' => $books]);
+        return collect([
+            'books' => $books,
+            'total_pages' => $collection->lastPage(),
+            'current_page' => $collection->currentPage()
+            ]);
     }
 
     public function get_books_api(){
         $data = $this->get_book_list()->toArray();
         return response()->json($data);
+        // return Book::with('authors')->with('categories')->with('tags')->paginate(5);
     }
 
     public function get_books_web(Request $request) {

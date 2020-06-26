@@ -21,7 +21,9 @@ export default new Vuex.Store({
         comments: [],
         users: [],
         orders: [],
-        authorview : []
+        authorview : [],
+        pagination_length : 0,
+        pagination_current: 0
     },
     getters: {
         getCategories(state) {
@@ -67,7 +69,8 @@ export default new Vuex.Store({
                 state[route] = data;
             }else{
                 state[route] = data[route];
-
+                state['pagination_length'] = data['total_pages'];
+                state['pagination_current'] = data['current_page'];
             }
 
         }
