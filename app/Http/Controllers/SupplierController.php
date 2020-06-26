@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class SupplierController extends Controller
 {
     private function get_suppliers() {
-        $collection = Supplier::all([ 'id', 'name' ]);
+        $collection = Supplier::all([ 'id', 'name', 'phno', 'address' ]);
         $suppliers = collect();
         foreach($collection as $supplier) {
             $supplier->count = $supplier->books()->count();

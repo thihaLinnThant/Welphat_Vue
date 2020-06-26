@@ -104,6 +104,8 @@
                 <td>{{supplier.id}}</td>
                 <td>{{supplier.name}}</td>
                 <td>{{supplier.count}}</td>
+                <td>{{supplier.phno}}</td>
+                <td>{{supplier.address}}</td>
                 <td class="d-flex flex-row">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -163,6 +165,8 @@ export default {
         },
         { text: "Name", value: "name" },
         { text: "Book Count", value: "count" },
+        { text: "Phone no.", value: "phno" },
+        { text: "Address", value: "address" },
         { text: "Actions", value: "actions" }
       ],
       act: "/admin/suppliers/addsupplier",

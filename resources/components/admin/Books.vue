@@ -7,6 +7,16 @@
         <v-btn class="ml-5" outlined style="text-decoration:none !important">Create New +</v-btn>
       </router-link>
     </v-row>
+    <v-row align="center" justify="end">
+      <v-pagination
+        circle=true
+        length=20
+        next-icon="mdi-chevron-right"
+        prev-icon="mdi-chevron-left"
+        page=1
+        total-visible=10
+      ></v-pagination>
+    </v-row>
     <v-row>
       <v-col cols="12" md="4" v-for="(book,index) in books" :key="index">
         <v-card max-width="344" class="mx-auto">

@@ -15,7 +15,9 @@ class SuppliersTableSeeder extends Seeder
         $faker = Faker\Factory::create();
         for ($i=0; $i < 10; $i++) { 
             Supplier::create([
-                "name"  => $faker->word
+                "name"  => $faker->word,
+                "phno"  => $faker->phoneNumber,
+                "address"  => $faker->address
             ]);
         }
     }

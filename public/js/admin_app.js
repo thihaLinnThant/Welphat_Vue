@@ -3019,6 +3019,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     books: function books() {
@@ -3901,6 +3911,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3921,6 +3933,12 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Book Count",
         value: "count"
+      }, {
+        text: "Phone no.",
+        value: "phno"
+      }, {
+        text: "Address",
+        value: "address"
       }, {
         text: "Actions",
         value: "actions"
@@ -45524,6 +45542,24 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-row",
+        { attrs: { align: "center", justify: "end" } },
+        [
+          _c("v-pagination", {
+            attrs: {
+              circle: "true",
+              length: "20",
+              "next-icon": "mdi-chevron-right",
+              "prev-icon": "mdi-chevron-left",
+              page: "1",
+              "total-visible": "10"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
         _vm._l(_vm.books, function(book, index) {
           return _c(
             "v-col",
@@ -47670,6 +47706,10 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(supplier.name))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(supplier.count))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(supplier.phno))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(supplier.address))]),
                             _vm._v(" "),
                             _c(
                               "td",
