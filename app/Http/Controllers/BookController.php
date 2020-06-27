@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,27 @@ class BookController extends Controller
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
+    public function get_oneRecord_api($id){
+        $data = Book::with('authors')->with('comments')->find($id);
+        $data->rates = $data->averageRating();
+
+
+        foreach($data->comments as $key=>$comment){
+            $data->comments[$key]->user_info = User::where('id', $comment['user_id'])->first();
+        }
+
+        for($i= 0 ;$i< count($data->authors);$i++){
+            $data->authors[$i]->thumb = asset('storage/images/authors/' . $data->authors[$i]->id . '/image_1.png');  
+        }
+        $data->thumb = asset('storage/images/books/' . $data->id . '/image_1.png');
+        return response()->json($data);
+    }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+
     /**
      * Display a listing of the resource.
      *

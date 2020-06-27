@@ -16,7 +16,7 @@ import Order from '../components/admin/Orders.vue'
 import Admin from '../components/admin/Admins'
 import User from '../components/admin/Users';
 import AuthorView from '../components/admin/AuthorView';
-
+import BookView from '../components/admin/BookView';
 let router = new VueRouter({
     mode: 'history',
     routes: [
@@ -35,16 +35,9 @@ let router = new VueRouter({
         { path: '/admin/orders', component: Order, name: 'orders' },
         { path: '/admin/admins', component: Admin, name: 'admins' },
         { path: '/admin/users', component: User, name : 'users'},
-        { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'}
-    ],
-    // methods: {
-    //     getApiData() {
-    //         Axios.get(`/api${to.path}`).then(({ data }) => {
-    //             Store.commit('addData', { route: to.name, data })
-    //             next();
-    //         });
-    //     }
-    // }
+        { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'},
+        { path: '/admin/books/:id',component: BookView, name: 'bookview'}
+    ]
 });
 
 router.beforeEach((to, from, next) => {
@@ -52,7 +45,7 @@ router.beforeEach((to, from, next) => {
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
-            console.log(data);
+          
             Store.commit('addData', { route: name, data })
             next();
         });
@@ -84,7 +77,9 @@ router.beforeEach((to, from, next) => {
     else if( to.path === `/admin/authors/${to.params.id}`){
         if (Store.state.authorview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
-
+    else if( to.path === `/admin/books/${to.params.id}`){
+        if (Store.state.bookview.length > 0) { next() } else { getApiData(to.path, to.name) }
+    }
     else if (to.path === '/admin') { next(); }
 
 
@@ -109,9 +104,7 @@ router.beforeEach((to, from, next) => {
         if (Store.state.comments.length <= 0) {
             getApiData('/admin/comments', 'comments')
         }
-        // if(Store.state.categories.length <= 0){
-        //     getApiData('/admin/categories', 'categories');
-        // }
+
         next();
     }
     else {

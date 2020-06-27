@@ -20,22 +20,14 @@
             </v-img>
           </span>
 
-          <!-- <span v-else>
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="https://i.pinimg.com/originals/ef/c3/35/efc335ff7f03fc4ba2603b9178918c2d.jpg"
-            >
-              <v-card-title class="justify-center">{{ book.name }}</v-card-title>
-            </v-img>
-          </span>-->
-
           <div v-for="(author,index) in book.authors" :key="index" class="justify-center">
             <p class="mb-0" style="color: grey;text-align:center">{{ author.name }}</p>
           </div>
 
           <v-card-actions class="justify-center">
+            <router-link :to="'/admin/books/'+book.id" style="text-decoration:none">
             <v-btn>View</v-btn>
+            </router-link>
             <v-btn>Edit</v-btn>
             <v-btn>Delete</v-btn>
           </v-card-actions>

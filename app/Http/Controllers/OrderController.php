@@ -42,7 +42,7 @@ class OrderController extends Controller
     }
 
     public function get_oneRecord_api($id){
-        $data = Order::find($id);
+        $data = Order::with('book_orders')->find($id);
         return response()->json($data);
     }
 

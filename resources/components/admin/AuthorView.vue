@@ -8,7 +8,7 @@
       </v-col>
       <v-col cols="7" md="10">
         <h2>{{author.name}}</h2>
-        <p>{{author.thumb}}</p>
+        <p>{{author.bio}}</p>
       </v-col>
     </v-row>
     <v-row class="mx-auto">
@@ -18,9 +18,9 @@
         <div v-for="(books,index) in author.books" :key="index">
           <v-card>
             <v-row>
-              <v-col cols="12" md="3" style="padding:0px">
+              <v-col cols="12" md="3">
                 <img
-                  src="https://www.canva.com/learn/wp-content/uploads/2020/06/Black-and-White-Minimalist-Memoir_Inspirational-Book-Cover.jpg"
+                  :src="books.thumb"
                   style="width: 100%;height: 250px;"
                 />
               </v-col>
@@ -48,9 +48,6 @@ export default {
     author() {
       return this.$store.state.authorview;
     }
-  },
-  created() {
-    console.log(this.$store.state);
   }
 };
 </script>

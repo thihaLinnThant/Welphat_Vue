@@ -14,7 +14,7 @@ export default {
                 // get edited data
 
                 axios.get(`/api/admin/${this.statename}/onerecord/${id}`).then(({ data }) => {
-
+                    
                     this.alert = true;
 
 
