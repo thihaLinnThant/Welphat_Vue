@@ -21,6 +21,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" v-for="(edit_book,index) in fields.edit_books" :key="index">
+                <p>{{edit_book}}</p>
                 <v-row v-if="edit_book.removed">
                   <v-col cols="7">
                     <div style="color:red">
@@ -301,7 +302,6 @@ export default {
           value: "id"
         },
         { text: "Status", value: "status" },
-
         { text: "User name", value: "user_name" },
         { text: "Book Count", value: "count" },
         { text: "Total Price", value: "total_price" },
@@ -367,7 +367,6 @@ export default {
           break;
       }
       this.fields.code = status;
-
       axios
         .post(`/admin/orders/updateStatus/${item.id}`, this.fields)
         .then(response => {

@@ -3,9 +3,23 @@
     <v-row class="d-flex">
       <h2>Books</h2>
       <v-spacer></v-spacer>
+      <v-text-field v-model="search" placeholder="Search by Book Name"></v-text-field>
+      <v-spacer></v-spacer>
       <router-link tag="p" to="books/register">
         <v-btn class="ml-5" outlined style="text-decoration:none !important">Create New +</v-btn>
       </router-link>
+    </v-row>
+    <v-row align="center" justify="end">
+      <v-pagination
+        v-model="current_page"
+        color="#4054b5"
+        circle
+        :length=total_pages
+        next-icon="mdi-chevron-right"
+        prev-icon="mdi-chevron-left"
+        total-visible=10
+        @input="change_page($event)"
+      ></v-pagination>
     </v-row>
     <v-row>
       <v-col cols="12" md="4" v-for="(book,index) in books" :key="index">
@@ -68,9 +82,29 @@
 
 <script>
 export default {
+  data(){
+    return {
+      search : ''
+    }
+  },
   computed: {
     books() {
-      return this.$store.state.books;
+      return this.$store.state.books.filter(element => {
+        return element.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    },
+    total_pages() {
+      return this.$store.state.pagination_length;
+    },
+    current_page() {
+      return this.$store.state.pagination_current;
+    }
+  },
+  methods: {
+    change_page(value) {
+      axios.get(`/api/admin/books/?page=${value}`).then(({data}) => {
+        this.$store.commit('addData', { route: 'books', data})
+      });
     }
   }
 };

@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(TagTableSeeder::class);
         // $this->call(PublisherTableSeeder::class);
         // $this->call(SuppliersTableSeeder::class);
-        $this->call(AuthorTableSeeder::class);
-        $this->call(BooksTableSeeder::class);
-        $this->call(CommentTableSeeder::class);
-        $this->call(AdminTableSeeder::class);
-        $this->call(RatingTableSeeder::class);
-        $this->call(WishTableSeeder::class);
-        $this->call(OrderTableSeeder::class);
+        // $this->call(AuthorTableSeeder::class);
+        // $this->call(BooksTableSeeder::class);
+        // $this->call(CommentTableSeeder::class);
+        // $this->call(AdminTableSeeder::class);
+        // $this->call(RatingTableSeeder::class);
+        // $this->call(WishTableSeeder::class);
+        // $this->call(OrderTableSeeder::class);
     }
 }

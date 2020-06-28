@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/books/{id}','BookController@singleView');
     Route::post('/admin/books/{id}','BookController@singleView');
     Route::get('/admin/books/register', 'BookController@register_web');
+    Route::post('/admin/books/create','BookController@create');
 
     Route::get('/admin/authors', 'AuthorController@get_authors_web');
     Route::post('/admin/authors/register', 'AuthorController@create');

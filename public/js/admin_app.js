@@ -2827,7 +2827,68 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2861,26 +2922,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      book_name: null,
-      image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ3mlqedKcDFuzWNP0CybnRWz8H9TTZVw8d5yUjf1dclZrJX53g&usqp=CAU"
+      fields: {},
+      image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ3mlqedKcDFuzWNP0CybnRWz8H9TTZVw8d5yUjf1dclZrJX53g&usqp=CAU",
+      act: "/admin/books/create",
+      statename: "authors"
     };
   },
-  computed: {
-    categories: function categories() {
-      return this.$store.state.categories;
-    },
-    authors: function authors() {
-      return this.$store.state.authors;
-    },
-    tags: function tags() {
-      return this.$store.state.tags;
-    },
-    publishers: function publishers() {
-      return this.$store.state.publishers;
-    },
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    categories: "categories",
+    authors: "authors",
+    tags: "tags",
+    publishers: "publishers",
+    suppliers: "suppliers",
     category_list: function category_list() {
       var categoryTemp = [];
       this.categories.forEach(function (element) {
@@ -2920,11 +2978,25 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       return publisherTemp;
+    },
+    supplier_list: function supplier_list() {
+      var supplierTemp = [];
+      this.suppliers.forEach(function (element) {
+        supplierTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return supplierTemp;
     }
-  },
+  }),
   methods: {
     Preview_image: function Preview_image(e) {
       this.image_url = URL.createObjectURL(e);
+    },
+    save: function save() {
+      console.log(this.fields);
+      this.submit();
     }
   }
 });
@@ -2940,6 +3012,50 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3103,10 +3219,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: ''
+    };
+  },
   computed: {
     books: function books() {
-      return this.$store.state.books;
+      var _this = this;
+
+      return this.$store.state.books.filter(function (element) {
+        return element.name.toLowerCase().includes(_this.search.toLowerCase());
+      });
+    },
+    total_pages: function total_pages() {
+      return this.$store.state.pagination_length;
+    },
+    current_page: function current_page() {
+      return this.$store.state.pagination_current;
+    }
+  },
+  methods: {
+    change_page: function change_page(value) {
+      var _this2 = this;
+
+      axios.get("/api/admin/books/?page=".concat(value)).then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.$store.commit('addData', {
+          route: 'books',
+          data: data
+        });
+      });
     }
   }
 });
@@ -3706,6 +3865,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3985,6 +4145,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -4005,6 +4167,12 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Book Count",
         value: "count"
+      }, {
+        text: "Phone no.",
+        value: "phno"
+      }, {
+        text: "Address",
+        value: "address"
       }, {
         text: "Actions",
         value: "actions"
@@ -4240,6 +4408,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
 /* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
 /* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -4520,6 +4689,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -4569,11 +4739,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  computed: {
-    users: function users() {
-      return this.$store.state.users;
-    }
-  },
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
+    users: 'users'
+  }),
   methods: {
     reset: function reset() {
       this.fields = {};
@@ -44460,7 +44628,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._l(_vm.author.books, function(books, index) {
+              _vm._l(_vm.author.books, function(book, index) {
                 return _c(
                   "div",
                   { key: index },
@@ -44474,7 +44642,7 @@ var render = function() {
                             _c("v-col", { attrs: { cols: "12", md: "3" } }, [
                               _c("img", {
                                 staticStyle: { width: "100%", height: "250px" },
-                                attrs: { src: books.thumb }
+                                attrs: { src: book.thumb }
                               })
                             ]),
                             _vm._v(" "),
@@ -44485,21 +44653,22 @@ var render = function() {
                                 attrs: { cols: "12", md: "9" }
                               },
                               [
-                                _c("h1", [_vm._v(_vm._s(books.name))]),
+                                _c("h1", [_vm._v(_vm._s(book.name))]),
                                 _vm._v(" "),
                                 _c("h4", { staticStyle: { color: "yellow" } }, [
                                   _vm._v(
-                                    "Price - " + _vm._s(books.price) + " ks"
+                                    "Price - " + _vm._s(book.price) + " ks"
                                   )
                                 ]),
+                                _vm._v(" "),
                                 _c("br"),
                                 _vm._v(" "),
-                                _c("p", [_vm._v(_vm._s(books.description))]),
+                                _c("p", [_vm._v(_vm._s(book.description))]),
                                 _vm._v(" "),
                                 _c("p", [
                                   _vm._v(
                                     "Published on - " +
-                                      _vm._s(books.published_date)
+                                      _vm._s(book.published_date)
                                   )
                                 ]),
                                 _vm._v(" "),
@@ -44509,9 +44678,20 @@ var render = function() {
                                     _c("v-spacer"),
                                     _vm._v(" "),
                                     _c(
-                                      "v-btn",
-                                      { attrs: { outlined: "", rounded: "" } },
-                                      [_vm._v("view book")]
+                                      "router-link",
+                                      {
+                                        attrs: { to: "/admin/books/" + book.id }
+                                      },
+                                      [
+                                        _c(
+                                          "v-btn",
+                                          {
+                                            attrs: { outlined: "", rounded: "" }
+                                          },
+                                          [_vm._v("view book")]
+                                        )
+                                      ],
+                                      1
                                     )
                                   ],
                                   1
@@ -45408,7 +45588,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-form",
-    { staticClass: "ma-10" },
+    {
+      staticClass: "ma-10",
+      attrs: { enctype: "multipart/form-data" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.submit($event)
+        }
+      }
+    },
     [
       _c("h2", [_vm._v("Book Register")]),
       _vm._v(" "),
@@ -45423,11 +45612,11 @@ var render = function() {
               _c("v-text-field", {
                 attrs: { outlined: "", label: "Name" },
                 model: {
-                  value: _vm.book_name,
+                  value: _vm.fields.book_name,
                   callback: function($$v) {
-                    _vm.book_name = $$v
+                    _vm.$set(_vm.fields, "book_name", $$v)
                   },
-                  expression: "book_name"
+                  expression: "fields.book_name"
                 }
               })
             ],
@@ -45440,8 +45629,6 @@ var render = function() {
             [
               _c("v-autocomplete", {
                 attrs: {
-                  error: _vm.goterror,
-                  "error-messages": _vm.errors.authors,
                   outlined: "",
                   items: _vm.author_list,
                   "item-text": "name",
@@ -45462,12 +45649,68 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "12", md: "12" } },
+            [
+              _c("v-textarea", {
+                attrs: { outlined: "", label: "Description" },
+                model: {
+                  value: _vm.fields.book_description,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fields, "book_description", $$v)
+                  },
+                  expression: "fields.book_description"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "12", md: "6" } },
+            [
+              _c("v-text-field", {
+                attrs: { outlined: "", label: "Price", suffix: "ks" },
+                model: {
+                  value: _vm.fields.book_price,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fields, "book_price", $$v)
+                  },
+                  expression: "fields.book_price"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "12", md: "6" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  outlined: "",
+                  label: "Publish date",
+                  placeholder: "2020/05/29"
+                },
+                model: {
+                  value: _vm.fields.book_published_date,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fields, "book_published_date", $$v)
+                  },
+                  expression: "fields.book_published_date"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-autocomplete", {
                 attrs: {
-                  error: _vm.goterror,
-                  "error-messages": _vm.errors.categories,
                   outlined: "",
                   items: _vm.categories,
                   "item-text": "name",
@@ -45492,8 +45735,6 @@ var render = function() {
             [
               _c("v-autocomplete", {
                 attrs: {
-                  error: _vm.goterror,
-                  "error-messages": _vm.errors.tags,
                   items: _vm.tag_list,
                   "item-text": "name",
                   outlined: "",
@@ -45518,19 +45759,41 @@ var render = function() {
             [
               _c("v-autocomplete", {
                 attrs: {
-                  error: _vm.goterror,
-                  "error-messages": _vm.errors.publishers,
                   items: _vm.publisher_list,
                   "item-text": "name",
+                  "item-value": "id",
                   outlined: "",
                   label: "Publisher"
                 },
                 model: {
-                  value: _vm.fields.publishers,
+                  value: _vm.fields.publisher,
                   callback: function($$v) {
-                    _vm.$set(_vm.fields, "publishers", $$v)
+                    _vm.$set(_vm.fields, "publisher", $$v)
                   },
-                  expression: "fields.publishers"
+                  expression: "fields.publisher"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "12", md: "6" } },
+            [
+              _c("v-autocomplete", {
+                attrs: {
+                  items: _vm.supplier_list,
+                  "item-text": "name",
+                  outlined: "",
+                  label: "Supplier"
+                },
+                model: {
+                  value: _vm.fields.supplier,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fields, "supplier", $$v)
+                  },
+                  expression: "fields.supplier"
                 }
               })
             ],
@@ -45542,12 +45805,7 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-file-input", {
-                attrs: {
-                  error: _vm.goterror,
-                  "error-messages": _vm.errors.image,
-                  outlined: "",
-                  label: "Upload Image"
-                },
+                attrs: { outlined: "", label: "Upload Image" },
                 on: {
                   change: function($event) {
                     return _vm.Preview_image($event)
@@ -45575,7 +45833,10 @@ var render = function() {
                   staticClass: "white--text align-end",
                   attrs: { height: "200px", src: _vm.image_url }
                 },
-                [_c("v-card-title", [_vm._v(_vm._s(_vm.book_name))])],
+                [
+                  _c("v-card-title", [_vm._v(_vm._s(_vm.fields.book_name))]),
+                  _vm._v("s\n      ")
+                ],
                 1
               )
             ],
@@ -45583,6 +45844,20 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          attrs: { color: "success", type: "submit" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.save($event)
+            }
+          }
+        },
+        [_vm._v("Create")]
       )
     ],
     1
@@ -45666,6 +45941,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("v-rating", {
+                staticStyle: { "text-align": "center" },
                 attrs: {
                   color: "yellow",
                   "background-color": "grey darken-1",
@@ -45692,6 +45968,30 @@ var render = function() {
                   }
                 },
                 [_vm._v(_vm._s(_vm.book.rates) + " out of 5")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticStyle: {
+                    color: "grey",
+                    "text-align": "center",
+                    "font-size": "15px"
+                  }
+                },
+                [_vm._v("Publisher")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticStyle: { "text-align": "center", "font-weight": "bold" }
+                },
+                [_vm._v(_vm._s(_vm.book.publisher.name))]
               )
             ],
             1
@@ -45702,53 +46002,117 @@ var render = function() {
             { attrs: { cols: "12", md: "10" } },
             [
               _c(
-                "v-list",
-                { staticStyle: { background: "#121212" } },
+                "v-row",
                 [
-                  _c("v-subheader", [_vm._v("AUTHORS")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.book.authors, function(author, index) {
-                    return _c(
-                      "v-list-item",
-                      { key: index },
-                      [
-                        _c(
-                          "v-list-item-icon",
-                          [
-                            _c(
-                              "v-avatar",
-                              [_c("v-img", { attrs: { src: author.thumb } })],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-item-content",
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "author_link",
-                                attrs: { to: "/admin/authors/" + author.id }
-                              },
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6" } },
+                    [
+                      _c(
+                        "v-list",
+                        { staticStyle: { background: "#121212" } },
+                        [
+                          _c("v-header", [_vm._v("AUTHORS")]),
+                          _vm._v(" "),
+                          _vm._l(_vm.book.authors, function(author, index) {
+                            return _c(
+                              "v-list-item",
+                              { key: index },
                               [
-                                _c("v-list-item-title", {
-                                  domProps: { textContent: _vm._s(author.name) }
-                                })
+                                _c(
+                                  "v-list-item-icon",
+                                  [
+                                    _c(
+                                      "v-avatar",
+                                      [
+                                        _c("v-img", {
+                                          attrs: { src: author.thumb }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "author_link",
+                                        attrs: {
+                                          to: "/admin/authors/" + author.id
+                                        }
+                                      },
+                                      [
+                                        _c("v-list-item-title", {
+                                          domProps: {
+                                            textContent: _vm._s(author.name)
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
                               ],
                               1
                             )
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6" } },
+                    [
+                      _c("v-header", [_vm._v("CATEGORIES")]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm._l(_vm.book.categories, function(category, index) {
+                        return _c(
+                          "span",
+                          { key: index },
+                          [
+                            _c("v-chip", { staticClass: "ma-1" }, [
+                              _vm._v(_vm._s(category.name))
+                            ])
                           ],
                           1
                         )
-                      ],
-                      1
-                    )
-                  })
+                      }),
+                      _vm._v(" "),
+                      _c("v-divider", { staticStyle: { margin: "20px" } }),
+                      _vm._v(" "),
+                      _c("v-header", [_vm._v("TAGS")]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm._l(_vm.book.tags, function(tag, index) {
+                        return _c(
+                          "span",
+                          { key: index },
+                          [
+                            _c("v-chip", { staticClass: "ma-1" }, [
+                              _vm._v("#" + _vm._s(tag.name))
+                            ])
+                          ],
+                          1
+                        )
+                      })
+                    ],
+                    2
+                  )
                 ],
-                2
+                1
               ),
               _vm._v(" "),
               _c(
@@ -45843,6 +46207,59 @@ var render = function() {
                           )
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c("v-tab", [_vm._v("Suppliers")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-tab-item",
+                    [
+                      _c(
+                        "v-card",
+                        { attrs: { flat: "", tile: "" } },
+                        _vm._l(_vm.book.suppliers, function(supplier, index) {
+                          return _c(
+                            "div",
+                            { key: index },
+                            [
+                              _c(
+                                "v-card-text",
+                                [
+                                  _c(
+                                    "v-row",
+                                    { staticClass: "comment_content" },
+                                    [
+                                      _c("h3", [_vm._v(_vm._s(supplier.name))]),
+                                      _vm._v(" "),
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v("Ph - " + _vm._s(supplier.phno))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("br")
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", { staticStyle: { color: "grey" } }, [
+                                    _vm._v("Address")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("p", [_vm._v(_vm._s(supplier.address))])
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-divider")
+                            ],
+                            1
+                          )
+                        }),
+                        0
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
@@ -45891,6 +46308,19 @@ var render = function() {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { placeholder: "Search by Book Name" },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
           _c(
             "router-link",
             { attrs: { tag: "p", to: "books/register" } },
@@ -45907,6 +46337,36 @@ var render = function() {
             ],
             1
           )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { attrs: { align: "center", justify: "end" } },
+        [
+          _c("v-pagination", {
+            attrs: {
+              color: "#4054b5",
+              circle: "",
+              length: _vm.total_pages,
+              "next-icon": "mdi-chevron-right",
+              "prev-icon": "mdi-chevron-left",
+              "total-visible": "10"
+            },
+            on: {
+              input: function($event) {
+                return _vm.change_page($event)
+              }
+            },
+            model: {
+              value: _vm.current_page,
+              callback: function($$v) {
+                _vm.current_page = $$v
+              },
+              expression: "current_page"
+            }
+          })
         ],
         1
       ),
@@ -46870,6 +47330,8 @@ var render = function() {
                               "v-col",
                               { key: index, attrs: { cols: "12" } },
                               [
+                                _c("p", [_vm._v(_vm._s(edit_book))]),
+                                _vm._v(" "),
                                 edit_book.removed
                                   ? _c(
                                       "v-row",
@@ -48067,6 +48529,10 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(supplier.name))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(supplier.count))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(supplier.phno))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(supplier.address))]),
                             _vm._v(" "),
                             _c(
                               "td",
@@ -109193,6 +109659,7 @@ __webpack_require__.r(__webpack_exports__);
         //(this.act)action and (this.fields)fields will be from component's data
 
         axios.post(this.act, this.fields).then(function (response) {
+          console.log(response);
           _this.loaded = true;
           _this.success = true;
           _this.goterror = false;
@@ -109586,11 +110053,7 @@ router.beforeEach(function (to, from, next) {
   }
 
   if (to.path === '/admin/books') {
-    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.books.length > 0) {
-      next();
-    } else {
-      getApiData(to.path, to.name);
-    }
+    getApiData(to.path, to.name);
   }
 
   if (to.path === '/admin/authors') {
@@ -109736,7 +110199,9 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
     users: [],
     orders: [],
     authorview: [],
-    bookview: []
+    bookview: [],
+    pagination_length: 0,
+    pagination_current: 0
   },
   getters: {
     getCategories: function getCategories(state) {
@@ -109814,6 +110279,8 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
         state[route] = data;
       } else {
         state[route] = data[route];
+        state['pagination_length'] = data['total_pages'];
+        state['pagination_current'] = data['current_page'];
       }
     }
   }
@@ -109988,7 +110455,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/admin/".concat(statename, "/lastrecord")).then(function (_ref) {
         var data = _ref.data;
-        console.log(data);
 
         _this.$store.commit('addOneRecord', {
           route: statename,

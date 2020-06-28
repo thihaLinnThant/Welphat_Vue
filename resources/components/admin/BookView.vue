@@ -17,29 +17,53 @@
         <v-rating
           v-model="book.rates"
           color="yellow"
+          style="text-align:center"
           background-color="grey darken-1"
           half-increments
           readonly
           small
         ></v-rating>
         <p style="color:grey;text-align:center;font-size:10px">{{book.rates}} out of 5</p>
+        <v-divider></v-divider>
+        <br />
+        <p style="color:grey;text-align:center;font-size:15px">Publisher</p>
+        <p style="text-align:center;font-weight:bold">{{book.publisher.name}}</p>
       </v-col>
       <v-col cols="12" md="10">
-        <v-list style="background:#121212">
-          <v-subheader>AUTHORS</v-subheader>
-          <v-list-item v-for="(author,index) in book.authors" :key="index">
-            <v-list-item-icon>
-              <v-avatar>
-                <v-img :src="author.thumb"></v-img>
-              </v-avatar>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <router-link :to="'/admin/authors/'+author.id" class="author_link">
-                <v-list-item-title v-text="author.name"></v-list-item-title>
-              </router-link>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-list style="background:#121212">
+              <v-header>AUTHORS</v-header>
+              <v-list-item v-for="(author,index) in book.authors" :key="index">
+                <v-list-item-icon>
+                  <v-avatar>
+                    <v-img :src="author.thumb"></v-img>
+                  </v-avatar>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <router-link :to="'/admin/authors/'+author.id" class="author_link">
+                    <v-list-item-title v-text="author.name"></v-list-item-title>
+                  </router-link>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-header>CATEGORIES</v-header>
+            <br />
+            <span v-for="(category,index) in book.categories" :key="index">
+              <v-chip class="ma-1">{{category.name}}</v-chip>
+            </span>
+
+            <v-divider style="margin: 20px"></v-divider>
+            <v-header>TAGS</v-header>
+            <br />
+            <span v-for="(tag,index) in book.tags" :key="index">
+              <v-chip class="ma-1">#{{tag.name}}</v-chip>
+            </span>
+          </v-col>
+        </v-row>
+
         <v-tabs>
           <v-tab>Preview</v-tab>
           <v-tab-item>
@@ -66,6 +90,26 @@
             </v-card>
             <v-card flat tile v-else>
               <v-card-text>No comments yet</v-card-text>
+            </v-card>
+          </v-tab-item>
+          <v-tab>Suppliers</v-tab>
+          <v-tab-item>
+            <v-card flat tile>
+              <div v-for="(supplier,index) in book.suppliers" :key="index">
+                <v-card-text>
+                  <v-row class="comment_content">
+                    <h3>{{supplier.name}}</h3>
+                    <v-spacer></v-spacer>
+                    <p>Ph - {{supplier.phno}}</p>
+                    <br />
+                  </v-row>
+
+                  <p style="color:grey;">Address</p>
+
+                  <p>{{supplier.address}}</p>
+                </v-card-text>
+                <v-divider></v-divider>
+              </div>
             </v-card>
           </v-tab-item>
         </v-tabs>

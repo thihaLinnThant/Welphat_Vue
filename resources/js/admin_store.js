@@ -22,7 +22,9 @@ export default new Vuex.Store({
         users: [],
         orders: [],
         authorview : [],
-        bookview : []
+        bookview : [],
+        pagination_length : 0,
+        pagination_current: 0
     },
     getters: {
         getCategories(state) {
@@ -78,8 +80,10 @@ export default new Vuex.Store({
             if(route === 'authorview' || route === 'bookview'){
                 state[route] = data;
             }else{
+                
                 state[route] = data[route];
-
+                state['pagination_length'] = data['total_pages'];
+                state['pagination_current'] = data['current_page'];
             }
         }
     }

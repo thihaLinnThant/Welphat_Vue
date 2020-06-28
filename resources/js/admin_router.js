@@ -45,13 +45,12 @@ router.beforeEach((to, from, next) => {
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
-          
             Store.commit('addData', { route: name, data })
             next();
         });
     }
 
-    if (to.path === '/admin/books') { if (Store.state.books.length > 0) { next() } else { getApiData(to.path, to.name) } }
+    if (to.path === '/admin/books') { getApiData(to.path, to.name)}
 
     if (to.path === '/admin/authors') { if (Store.state.authors.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
