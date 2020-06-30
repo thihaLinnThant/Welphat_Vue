@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <router-link to="/admin/books">
+      <router-link to="/admin/books" style="text-decoration:none">
         <v-btn text icon>
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
@@ -12,7 +12,7 @@
     </v-row>
     <v-row>
       <v-col cols="12" md="2">
-        <v-img :src="book.thumb" style="width: 100%"></v-img>
+        <v-img :src="book.thumb" style="width: 100%" v-if="book.thumb"></v-img>
         <p style="color:yellow;text-align:center;margin-top: 20px">{{book.price}} ks</p>
         <v-rating
           v-model="book.rates"
@@ -23,7 +23,8 @@
           readonly
           small
         ></v-rating>
-        <p style="color:grey;text-align:center;font-size:10px">{{book.rates}} out of 5</p>
+        <p style="color:grey;text-align:center;font-size:10px" v-if="book.rates">{{book.rates}} out of 5</p>
+        <p style="color:grey;text-align:center;font-size:10px" v-else>no rating yet</p>
         <v-divider></v-divider>
         <br />
         <p style="color:grey;text-align:center;font-size:15px">Publisher</p>

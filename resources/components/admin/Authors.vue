@@ -298,6 +298,7 @@ export default {
     },
     cropSuccess(imgDataUrl, field) {
       this.fields.image = imgDataUrl;
+      console.log(imgDataUrl)
       this.fields.edit_image = imgDataUrl;
 
       console.log("-------- crop success --------");
