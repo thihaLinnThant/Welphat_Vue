@@ -99,10 +99,10 @@
                   :error-messages="errors.name"
                   required
                   name="name"
-                  v-model="fields.edit_name"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                    v-model="fields.edit_name"
+                    outlined
+                  ></v-text-field>
+                </v-col>
               <v-col cols="12">
                 <v-textarea
                   name="bio"

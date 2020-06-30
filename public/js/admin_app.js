@@ -2934,6 +2934,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3018,7 +3057,12 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     save: function save() {
-      console.log(this.fields);
+      this.$refs.form.validate();
+
+      if (!this.fields.book_name || !this.fields.book_description || !this.fields.authors || !this.fields.book_price || !this.fields.book_published_date || !this.fields.tags || !this.fields.categories || !this.fields.publisher || !this.fields.supplier) {
+        return;
+      }
+
       this.submit();
     }
   }
@@ -46356,13 +46400,21 @@ var render = function() {
   return _c(
     "v-form",
     {
+      ref: "form",
       staticClass: "ma-10",
-      attrs: { enctype: "multipart/form-data" },
+      attrs: { enctype: "multipart/form-data", "lazy-validation": "" },
       on: {
         submit: function($event) {
           $event.preventDefault()
           return _vm.submit($event)
         }
+      },
+      model: {
+        value: _vm.valid,
+        callback: function($$v) {
+          _vm.valid = $$v
+        },
+        expression: "valid"
       }
     },
     [
@@ -46377,7 +46429,16 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-text-field", {
-                attrs: { outlined: "", label: "Name" },
+                attrs: {
+                  outlined: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Name is required"
+                    }
+                  ],
+                  label: "Name",
+                  required: ""
+                },
                 model: {
                   value: _vm.fields.book_name,
                   callback: function($$v) {
@@ -46401,7 +46462,13 @@ var render = function() {
                   "item-text": "name",
                   "item-value": "id",
                   multiple: "",
-                  label: "Author(s)"
+                  label: "Author(s)",
+                  rules: [
+                    function(v) {
+                      return !!v || "Author is required"
+                    }
+                  ],
+                  required: ""
                 },
                 model: {
                   value: _vm.fields.authors,
@@ -46420,7 +46487,16 @@ var render = function() {
             { attrs: { cols: "12", md: "12" } },
             [
               _c("v-textarea", {
-                attrs: { outlined: "", label: "Description" },
+                attrs: {
+                  required: "",
+                  outlined: "",
+                  label: "Description",
+                  rules: [
+                    function(v) {
+                      return !!v || "Description is required"
+                    }
+                  ]
+                },
                 model: {
                   value: _vm.fields.book_description,
                   callback: function($$v) {
@@ -46438,7 +46514,17 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-text-field", {
-                attrs: { outlined: "", label: "Price", suffix: "ks" },
+                attrs: {
+                  required: "",
+                  outlined: "",
+                  label: "Price",
+                  suffix: "ks",
+                  rules: [
+                    function(v) {
+                      return !!v || "Price is required"
+                    }
+                  ]
+                },
                 model: {
                   value: _vm.fields.book_price,
                   callback: function($$v) {
@@ -46459,7 +46545,13 @@ var render = function() {
                 attrs: {
                   outlined: "",
                   label: "Publish date",
-                  placeholder: "2020/05/29"
+                  placeholder: "2020/05/29",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Date is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.book_published_date,
@@ -46484,7 +46576,13 @@ var render = function() {
                   "item-text": "name",
                   "item-value": "id",
                   multiple: "",
-                  label: "Categories"
+                  label: "Categories",
+                  rules: [
+                    function(v) {
+                      return !!v || "Category is required"
+                    }
+                  ],
+                  required: ""
                 },
                 model: {
                   value: _vm.fields.categories,
@@ -46509,7 +46607,13 @@ var render = function() {
                   "item-value": "id",
                   outlined: "",
                   multiple: "",
-                  label: "Tags"
+                  label: "Tags",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Tag is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.tags,
@@ -46533,7 +46637,13 @@ var render = function() {
                   "item-text": "name",
                   "item-value": "id",
                   outlined: "",
-                  label: "Publisher"
+                  label: "Publisher",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Publisher is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.publisher,
@@ -46557,7 +46667,14 @@ var render = function() {
                   "item-text": "name",
                   "item-value": "id",
                   outlined: "",
-                  label: "Supplier"
+                  label: "Supplier",
+                  required: "",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Supplier is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.supplier,
@@ -46573,7 +46690,15 @@ var render = function() {
           _vm._v(" "),
           _c("v-col", { attrs: { cols: "12", md: "6" } }, [
             _c("input", {
-              attrs: { type: "file" },
+              attrs: {
+                type: "file",
+                requried: "",
+                rules: [
+                  function(v) {
+                    return !!v || "Date is required"
+                  }
+                ]
+              },
               on: { change: _vm.uploadImage }
             })
           ]),
@@ -111257,7 +111382,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.lastRecord = data.name;
 
-        _this.$router.push("/admin/books/".concat(data.id));
+        if (statename == 'books') {
+          _this.$router.push("/admin/books/".concat(data.id));
+        }
 
         _this.alertMessage = "".concat(statename, " (").concat(data.name, ") is registered with id - ").concat(data.id);
       })["catch"](function (error) {
