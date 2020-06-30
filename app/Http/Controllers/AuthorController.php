@@ -52,6 +52,9 @@ class AuthorController extends Controller
     public function get_oneRecord_api($id)
     {
         $data = Author::with('books')->find($id);
+        for($i= 0 ;$i< count($data->books);$i++){
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');  
+        }
         $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
         return response()->json($data);
     }
@@ -60,7 +63,6 @@ class AuthorController extends Controller
     public function singleView(Request $request)
     {
         $data = $this->add_meta_data($request);
-
         return view('admin.app', ['data' => $data]);
     }
 

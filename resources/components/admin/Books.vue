@@ -3,6 +3,8 @@
     <v-row class="d-flex">
       <h2>Books</h2>
       <v-spacer></v-spacer>
+      <v-text-field v-model="search" placeholder="Search by Book Name"></v-text-field>
+      <v-spacer></v-spacer>
       <router-link tag="p" to="books/register">
         <v-btn class="ml-5" outlined style="text-decoration:none !important">Create New +</v-btn>
       </router-link>
@@ -32,22 +34,14 @@
             </v-img>
           </span>
 
-          <!-- <span v-else>
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              src="https://i.pinimg.com/originals/ef/c3/35/efc335ff7f03fc4ba2603b9178918c2d.jpg"
-            >
-              <v-card-title class="justify-center">{{ book.name }}</v-card-title>
-            </v-img>
-          </span>-->
-
           <div v-for="(author,index) in book.authors" :key="index" class="justify-center">
             <p class="mb-0" style="color: grey;text-align:center">{{ author.name }}</p>
           </div>
 
           <v-card-actions class="justify-center">
+            <router-link :to="'/admin/books/'+book.id" style="text-decoration:none">
             <v-btn>View</v-btn>
+            </router-link>
             <v-btn>Edit</v-btn>
             <v-btn>Delete</v-btn>
           </v-card-actions>
@@ -88,9 +82,16 @@
 
 <script>
 export default {
+  data(){
+    return {
+      search : ''
+    }
+  },
   computed: {
     books() {
-      return this.$store.state.books;
+      return this.$store.state.books.filter(element => {
+        return element.name.toLowerCase().includes(this.search.toLowerCase())
+      })
     },
     total_pages() {
       return this.$store.state.pagination_length;
@@ -102,7 +103,6 @@ export default {
   methods: {
     change_page(value) {
       axios.get(`/api/admin/books/?page=${value}`).then(({data}) => {
-        console.log(data);
         this.$store.commit('addData', { route: 'books', data})
       });
     }

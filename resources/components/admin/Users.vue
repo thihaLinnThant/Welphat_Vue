@@ -283,6 +283,7 @@ import InputMixin from "../../js/RecordInputmixin";
 import EditMixin from "../../js/editFrom";
 import DeleteMixin from "../../js/deleteForm";
 import lastRecordMixin from "../../js/lastRecordmixin";
+import { mapState } from "vuex";
 export default {
   mixins: [InputMixin, lastRecordMixin, EditMixin, DeleteMixin],
   data() {
@@ -316,11 +317,9 @@ export default {
       }
     };
   },
-  computed: {
-    users() {
-      return this.$store.state.users;
-    }
-  },
+  computed: mapState({
+    users: 'users'
+  }),
   methods: {
     reset() {
       this.fields = {};

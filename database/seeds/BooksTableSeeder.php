@@ -23,7 +23,7 @@ class BooksTableSeeder extends Seeder
         $suppliers = Supplier::all();
         $authors = Author::all();
         $categories = Category::all();
-        for ($i=1; $i <= 10; $i++) {
+        for ($i=11; $i <= 40; $i++) {
             $book = Book::create([
                 'name' => $faker->name,
                 'published_date' => $faker->date('Y-m-d', 'now'),
@@ -31,13 +31,13 @@ class BooksTableSeeder extends Seeder
                 'price' => 1000,
                 'publisher_id' => Publisher::find(rand(1,10))->id
             ]);
-            // $file = file_get_contents("https://dummyimage.com/300x400/4053b5/f0e8f0");
-            // $path = '/images/books/' . $i . "/image_1.png";
-            // Storage::disk('public')->put($path , $file);
+            $file = file_get_contents("https://dummyimage.com/300x400/4053b5/f0e8f0");
+            $path = '/images/books/' . $i . "/image_1.png";
+            Storage::disk('public')->put($path , $file);
 
-            // $thumb_file = file_get_contents('https://dummyimage.com/150x200/4053b5/f0e8f0');
-            // $thumb_path = '/images/books/' . $i . '/thumb_nail.png';
-            // Storage::disk('public')->put($thumb_path , $thumb_file);
+            $thumb_file = file_get_contents('https://dummyimage.com/150x200/4053b5/f0e8f0');
+            $thumb_path = '/images/books/' . $i . '/thumb_nail.png';
+            Storage::disk('public')->put($thumb_path , $thumb_file);
 
             $book->tags()->sync($tags->random(3));
             $book->suppliers()->sync($suppliers->random(3));

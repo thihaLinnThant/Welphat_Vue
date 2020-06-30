@@ -22,6 +22,7 @@ export default new Vuex.Store({
         users: [],
         orders: [],
         authorview : [],
+        bookview : [],
         pagination_length : 0,
         pagination_current: 0
     },
@@ -40,9 +41,7 @@ export default new Vuex.Store({
             state[route].splice(index, 1)
         },
         replaceOneRecord(state, { route, data, id }) {
-            console.log(data);
-            var index = state[route].findIndex(route => route.id == id)
-
+            var index = state[route].findIndex(route => route.id == id);
             state[route][index].name = data.name;
             if (route == 'users') {
                 state[route][index].email = data.email;
@@ -68,16 +67,30 @@ export default new Vuex.Store({
                 state[route][index].email = data.email;
             }
 
+            if (route == 'orders'){
+                state[route][index].user_name = data.user_name;
+                state[route][index].address = data.address;
+                state[route][index].phone_no = data.phone_no;
+                var book_count = 0;
+                var total_book_price = 0;
+                for(var i=0;i< state[route][index].book_orders.length;i++){
+                    state[route][index].book_orders[i].qty = data.book_orders[i].qty;
+                    book_count += data.book_orders[i].qty;
+                    total_book_price += (data.book_orders[i].qty * data.book_orders[i].book_price);
+                }
+                state[route][index].count = book_count;
+                state[route][index].total_price = total_book_price;
+            }
         },
         addData(state, { route, data }) {
-            if(route === 'authorview'){
+            if(route === 'authorview' || route === 'bookview'){
                 state[route] = data;
             }else{
+                
                 state[route] = data[route];
                 state['pagination_length'] = data['total_pages'];
                 state['pagination_current'] = data['current_page'];
             }
-
         }
     }
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class BookController extends Controller
     }
 
     private function get_book_list() {
-        $collection = Book::with('authors')->with('categories')->with('tags')->paginate(3);
+        $collection = Book::with('authors')->with('categories')->with('tags')->paginate(10);
         $books = collect();
         foreach($collection as $book) {
             $book->rates = $book->averageRating();
@@ -42,6 +43,31 @@ class BookController extends Controller
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
+    public function get_oneRecord_api($id){
+        $data = Book::with('authors')->with('comments')->with('tags')->with('categories')->with('publisher')->with('suppliers')->find($id);
+        $data->rates = $data->averageRating();
+
+
+        foreach($data->comments as $key=>$comment){
+            $data->comments[$key]->user_info = User::where('id', $comment['user_id'])->first();
+        }
+
+        for($i= 0 ;$i< count($data->authors);$i++){
+            $data->authors[$i]->thumb = asset('storage/images/authors/' . $data->authors[$i]->id . '/image_1.png');  
+        }
+        $data->thumb = asset('storage/images/books/' . $data->id . '/image_1.png');
+        return response()->json($data);
+    }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+    public function get_lastBook_api(){
+        $data = User::latest()->first();
+        return response()->json($data);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,9 +83,19 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        Book::create([
+            'name' => $request->book_name,
+            'description' => $request->book_description,
+            'price' => $request->book_price,
+            'publisher_id' => $request->publisher,
+            'published_date' => $request->book_published_date
+        ]);
+
+
+        return response()->json(null, 200);
+
     }
 
     /**
