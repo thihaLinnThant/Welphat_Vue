@@ -17,7 +17,8 @@ class SuppliersTableSeeder extends Seeder
             Supplier::create([
                 "name"  => $faker->word,
                 "phno"  => $faker->phoneNumber,
-                "address"  => $faker->address
+                "address"  => $faker->address,
+                "email" => $faker->email
             ]);
         }
     }

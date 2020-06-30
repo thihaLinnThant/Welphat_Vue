@@ -62,6 +62,11 @@ export default new Vuex.Store({
                 state[route][index].bio = data.bio;
                 state[route][index].thumb = data.thumb;
             }
+            if(route == 'suppliers'){
+                state[route][index].phno = data.phno;
+                state[route][index].address = data.address;
+                state[route][index].email = data.email;
+            }
 
         },
         addData(state, { route, data }) {

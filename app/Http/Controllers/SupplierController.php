@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class SupplierController extends Controller
 {
     private function get_suppliers() {
-        $collection = Supplier::all([ 'id', 'name', 'phno', 'address' ]);
+        $collection = Supplier::all([ 'id', 'name', 'phno', 'address', 'email' ]);
         $suppliers = collect();
         foreach($collection as $supplier) {
             $supplier->count = $supplier->books()->count();
@@ -37,7 +37,7 @@ class SupplierController extends Controller
     }
 
     public function get_oneRecord_api($id){
-        $data = Supplier::find($id);
+        $data = Supplier::find($id, ['id', 'name', 'phno', 'address', 'email' ]);
         return response()->json($data);
     }
     /**
@@ -58,10 +58,18 @@ class SupplierController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'ph_no' => 'required',
+            'address' => 'required',
+            'email' => 'required'
         ]);
         
-        Supplier::create([ 'name' => $request->name ]);
+        Supplier::create([ 
+            'name' => $request->name,
+            'phno' => $request->ph_no,
+            'address' => $request->address,
+            'email' => $request->email
+        ]);
 
         return response()->json(null,200);
     }
@@ -109,12 +117,18 @@ class SupplierController extends Controller
     public function update($id,Request $request)
     {
         $request->validate([
-            'edit_name' => 'required'
+            'edit_name' => 'required',
+            'edit_ph_no' => 'required',
+            'edit_address' => 'required',
+            'edit_email' => 'required'
         ]);
         
-        $category = Supplier::find($id);
-        $category->name = $request->edit_name;
-        $category->save();
+        $supplier = Supplier::find($id);
+        $supplier->name = $request->edit_name;
+        $supplier->phno = $request->edit_ph_no;
+        $supplier->address = $request->edit_address;
+        $supplier->email = $request->edit_email;
+        $supplier->save();
 
         return response()->json(null,200);
     }

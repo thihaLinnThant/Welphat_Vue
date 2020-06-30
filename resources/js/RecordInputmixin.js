@@ -14,7 +14,7 @@ export default {
             alert: false,
             alertMessage: '',
             alertType: '',
-
+            registerDialog: false
         }
     },
     methods: {
@@ -37,12 +37,17 @@ export default {
                         this.fields = {}; //Clear input fields.
 
                         this.lastrecord(this.statename);
+                        this.registerDialog = false;
 
 
                     }).catch(error => {
                         //Catch will excecuted when the validation got error
                         this.loaded = true;
                         this.goterror = true;
+                        console.log(error.response);
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data.errors || {}; //get error json file from controller
+                        }
                     });
 
             }

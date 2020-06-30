@@ -2,20 +2,58 @@
 <div>
     <v-dialog
     v-model="editDialog"
-    max-width="350"
+    max-width="500"
     persistent
   >
     <v-card>
       <v-card-title primary-title>
-        Edit Supplier title
+        Edit Supplier
       </v-card-title>
       <v-card-text>
-        <v-text-field
-          :error-messages=errors.edit_name
-          name="edit_name"
-          v-model="fields.edit_name"
-          label="supplier name"
-        ></v-text-field>
+        <v-col cols="12">
+          <v-text-field
+            :error-messages=errors.edit_name
+            name="edit_name"
+            v-model="fields.edit_name"
+            label="supplier name"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field
+            outlined
+            address="ph_no"
+            label="Phone Number"
+            :error="errors.edit_ph_no"
+            :error-messages="errors.edit_ph_no"
+            v-model="fields.edit_ph_no"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-textarea
+            :error="errors.edit_address"
+            :error-messages="errors.edit_address"
+            label="Address"
+            name="address"
+            v-model="fields.edit_address"
+            auto-grow
+            outlined
+            rows="3"
+            row-height="15"
+          ></v-textarea>
+        </v-col>
+        <v-col cols="12">
+          <v-textarea
+            :error="errors.edit_email"
+            :error-messages="errors.edit_email"
+            label="Email"
+            name="email"
+            v-model="fields.edit_email"
+            auto-grow
+            outlined
+            rows="3"
+            row-height="15"
+          ></v-textarea>
+        </v-col>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -27,10 +65,85 @@
         </v-btn>
         <v-btn
           text
-          @click="submitEdit(target_item.id, fields)"
+          @click="submitEdit(target_item.id)"
           color="primary" outlined
         >
           Save
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog 
+    v-model="registerDialog"
+    max-width="500"
+    persistent
+  >
+    <v-card>
+      <v-card-title primary-title>
+        Register Supplier
+      </v-card-title>
+      <v-card-text>
+        <v-col cols="12">
+          <v-text-field
+            :error="errors.name"
+            :error-messages=errors.name
+            name="name"
+            v-model="fields.name"
+            label="supplier name"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field
+            outlined
+            address="ph_no"
+            label="Phone Number"
+            :error="errors.ph_no"
+            :error-messages="errors.ph_no"
+            v-model="fields.ph_no"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-textarea
+            :error="errors.address"
+            :error-messages="errors.address"
+            label="Address"
+            name="address"
+            v-model="fields.address"
+            auto-grow
+            outlined
+            rows="3"
+            row-height="15"
+          ></v-textarea>
+        </v-col>
+        <v-col cols="12">
+          <v-textarea
+            :error="errors.email"
+            :error-messages="errors.email"
+            label="Email"
+            name="email"
+            v-model="fields.email"
+            auto-grow
+            outlined
+            rows="3"
+            row-height="15"
+          ></v-textarea>
+        </v-col>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          text
+          @click="registerDialog = false; target_item = '';"
+        >
+          Cancel
+        </v-btn>
+        <v-btn
+          text
+          @click="submit()" 
+          color="primary" outlined
+        >
+          Register
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -73,20 +186,7 @@
       <v-card>
         <v-card-title>
           Suppliers
-          <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit">
-            <v-text-field
-              append-icon="mdi-plus"
-              label="Add new"
-              single-line
-              hide-details
-              :error-messages=errors.name
-              color="#4054b5"
-              v-model="fields.name"
-              name="name"
-              required
-            ></v-text-field>
-          </v-form>
+          <v-btn outlined class="ml-3" @click="registerDialog = true">create new +</v-btn>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -95,24 +195,19 @@
             single-line
             hide-details
           ></v-text-field>
-
         </v-card-title>
         <v-data-table :headers="headers" :items="suppliers" :search="search">
-          <template v-slot:body="{ items }">
-            <tbody v-for="(supplier,index) in items" :key="index">
-              <tr>
-                <td>{{supplier.id}}</td>
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.count}}</td>
-                <td>{{supplier.phno}}</td>
-                <td>{{supplier.address}}</td>
-                <td class="d-flex flex-row">
+          <template #item.name="{value}">{{value}}</template>
+          <template #item.count="{value}">{{value}}</template>
+          <template #item.phno="{value}">{{value}}</template>
+          <template #item.address="{value}">{{value}}</template>
+          <template #item.email="{value}">{{value}}</template>
+          <template #item.actions='{item}'>
+            <div class="d-flex flex-row">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn
-                        @click="editDialog = true;
-                        target_item = supplier;
-                        fields.edit_name = supplier.name"
+                        @click="openEditForm(item)"
                         class="mt-1" text icon v-on="on">
                         <v-icon>mdi-pencil</v-icon>
                       </v-btn>
@@ -129,15 +224,13 @@
                   </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn @click="deleteDialog = true; target_item = supplier" class="mt-1" text icon v-on="on">
+                      <v-btn @click="deleteDialog = true; target_item = item" class="mt-1" text icon v-on="on">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </template>
                     <span>delete supplier</span>
                   </v-tooltip>
-                </td>
-              </tr>
-            </tbody>
+                </div>
           </template>
         </v-data-table>
       </v-card>
@@ -167,6 +260,7 @@ export default {
         { text: "Book Count", value: "count" },
         { text: "Phone no.", value: "phno" },
         { text: "Address", value: "address" },
+        { text: "Email", value: "email"},
         { text: "Actions", value: "actions" }
       ],
       act: "/admin/suppliers/addsupplier",
@@ -176,11 +270,22 @@ export default {
       target_item: '',
       target_item_value: '',
       cascade: null,
+      registerDialog: false
     }
   },
   computed: {
     suppliers() {
       return this.$store.state.suppliers;
+    }
+  },
+  methods: {
+    openEditForm(supplier){
+      this.editDialog = true;
+      this.target_item = supplier;
+      this.fields.edit_name = supplier.name;
+      this.fields.edit_ph_no = supplier.phno;
+      this.fields.edit_address = supplier.address;
+      this.fields.edit_email = supplier.email;
     }
   }
 };

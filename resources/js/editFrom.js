@@ -11,12 +11,13 @@ export default {
             axios.post(`/admin/${this.statename}/update/${id}`, this.fields).then(response => {
             this.editDialog = false;
 
+                console.log('got updated');
                 // get edited data
 
                 axios.get(`/api/admin/${this.statename}/onerecord/${id}`).then(({ data }) => {
 
                     this.alert = true;
-
+                    console.log('got one record');
 
                     if (this.statename == 'admins/adminSuper') {
                         if (this.fields.super_admin == '5up3rP@s5wrod') {
