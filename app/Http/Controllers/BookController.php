@@ -16,9 +16,8 @@ class BookController extends Controller
     private function add_meta_data($request) {
         return collect(['path' => $request->getPathInfo()]);
     }
-    
     private function get_book_list() {
-        $collection = Book::with('authors')->with('categories')->with('tags')->paginate(10);
+        $collection = Book::with('authors')->with('categories')->with('tags')->with('publisher')->with('suppliers')->paginate(10);
         $books = collect();
         foreach($collection as $book) {
             $book->rates = $book->averageRating();
@@ -80,14 +79,14 @@ class BookController extends Controller
             $data->thumb = asset('storage/images/books/' . $data->id . '/image_1.png');
             return response()->json($data);
         }
- 
+        
         public function get_lastBook_api(){
             $data = Book::latest()->first();
             return response()->json($data);
         }
         
         public function book_search($value = "") {
-            $collection = Book::where('name',"LIKE","%{$value}%")->with('authors')->with('categories')->with('tags')->get();
+            $collection = Book::where('name',"LIKE","%{$value}%")->with('authors')->with('categories')->with('tags')->with('publisher')->with('suppliers')->get();
             $books = collect();
             foreach($collection as $book) {
                 $book->rates = $book->averageRating();
@@ -167,8 +166,10 @@ class BookController extends Controller
                     public function view_edit(Request $request,$id)
                     {
                         $data = $this->add_meta_data($request);
+                        $book = Book::with('authors')->with('tags')->with('categories')->with('publisher')->with('suppliers')->find($id);
                         
-                        return view('admin.app', ['data' => $data]);
+                        
+                        return view('admin.app', ['data' => $data, 'book' => $book]);
                     }
                     
                     /**

@@ -21,10 +21,9 @@ export default new Vuex.Store({
         comments: [],
         users: [],
         orders: [],
-        authorview : [],
-        bookview : [],
-        editBookview : [],
-        pagination_length : 0,
+        authorview: [],
+        bookview: [],
+        pagination_length: 0,
         pagination_current: 0
     },
     getters: {
@@ -62,19 +61,19 @@ export default new Vuex.Store({
                 state[route][index].bio = data.bio;
                 state[route][index].thumb = data.thumb;
             }
-            if(route == 'suppliers'){
+            if (route == 'suppliers') {
                 state[route][index].phno = data.phno;
                 state[route][index].address = data.address;
                 state[route][index].email = data.email;
             }
 
-            if (route == 'orders'){
+            if (route == 'orders') {
                 state[route][index].user_name = data.user_name;
                 state[route][index].address = data.address;
                 state[route][index].phone_no = data.phone_no;
                 var book_count = 0;
                 var total_book_price = 0;
-                for(var i=0;i< state[route][index].book_orders.length;i++){
+                for (var i = 0; i < state[route][index].book_orders.length; i++) {
                     state[route][index].book_orders[i].qty = data.book_orders[i].qty;
                     book_count += data.book_orders[i].qty;
                     total_book_price += (data.book_orders[i].qty * data.book_orders[i].book_price);
@@ -85,13 +84,14 @@ export default new Vuex.Store({
         },
         addData(state, { route, data }) {
 
-            if(route === 'authorview' || route === 'bookview' || route === 'editBookview'){
+            if (route === 'authorview' || route === 'bookview') {
                 state[route] = data;
-            }else{
-                
+            } else {
                 state[route] = data[route];
-                state['pagination_length'] = data['total_pages'];
-                state['pagination_current'] = data['current_page'];
+                if (data.current_page && data.total_pages) {
+                    state['pagination_length'] = data['total_pages'];
+                    state['pagination_current'] = data['current_page'];
+                }
             }
         }
     }

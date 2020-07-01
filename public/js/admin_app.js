@@ -2831,31 +2831,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookEdit.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  computed: {
-    editBooks: function editBooks() {
-      return this.$store.state.editBookview;
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookRegister.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookRegister.vue?vue&type=script&lang=js& ***!
@@ -3021,6 +2996,7 @@ __webpack_require__.r(__webpack_exports__);
 
       reader.onload = function (e) {
         _this.previewImage = e.target.result;
+        console.log(_this.previewImage);
         _this.fields.image = e.target.result;
       };
     },
@@ -3187,6 +3163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_dataListMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/dataListMixin */ "./resources/js/dataListMixin.js");
 //
 //
 //
@@ -3272,18 +3249,160 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_js_dataListMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
-      search: '',
-      progress: false
+      search: "",
+      progress: false,
+      editDialog: false,
+      fields: {},
+      previewImage: null
     };
   },
   computed: {
     books: function books() {
-      // return this.$store.state.books.filter(element => {
-      //   return element.name.toLowerCase().includes(this.search.toLowerCase())
-      // })
       return this.$store.state.books;
     },
     total_pages: function total_pages() {
@@ -3294,33 +3413,45 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    change_page: function change_page(value) {
+    uploadImage: function uploadImage(e) {
       var _this = this;
+
+      var image = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(image);
+
+      reader.onload = function (e) {
+        _this.previewImage = e.target.result;
+        _this.fields.edit_image = e.target.result;
+      };
+    },
+    change_page: function change_page(value) {
+      var _this2 = this;
 
       this.progress = true;
       axios.get("/api/admin/books/?page=".concat(value)).then(function (_ref) {
         var data = _ref.data;
-        _this.progress = false;
+        _this2.progress = false;
 
-        _this.$store.commit('addData', {
-          route: 'books',
+        _this2.$store.commit("addData", {
+          route: "books",
           data: data
         });
       });
     },
     search_book: function search_book(value) {
-      var _this2 = this;
+      var _this3 = this;
 
-      if (value == '' || !value) {
+      if (value == "" || !value) {
         this.change_page(1);
       } else {
         this.progress = true;
         axios.get("/api/admin/books/search/".concat(value)).then(function (_ref2) {
           var data = _ref2.data;
-          _this2.progress = false;
+          _this3.progress = false;
 
-          _this2.$store.commit('addData', {
-            route: 'books',
+          _this3.$store.commit("addData", {
+            route: "books",
             data: data
           });
         });
@@ -46480,34 +46611,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8& ***!
-  \**************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Edit")]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.editBooks))])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookRegister.vue?vue&type=template&id=667ad01d&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookRegister.vue?vue&type=template&id=667ad01d& ***!
@@ -47321,6 +47424,414 @@ var render = function() {
     { attrs: { fluid: "" } },
     [
       _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "1000", persistent: "" },
+          model: {
+            value: _vm.editDialog,
+            callback: function($$v) {
+              _vm.editDialog = $$v
+            },
+            expression: "editDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [_vm._v("Edit Book")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Name",
+                                  requried: "",
+                                  outlined: ""
+                                },
+                                model: {
+                                  value: _vm.fields.edit_name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_name", $$v)
+                                  },
+                                  expression: "fields.edit_name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-autocomplete", {
+                                attrs: {
+                                  outlined: "",
+                                  items: _vm.author_list,
+                                  "item-text": "name",
+                                  "item-value": "id",
+                                  multiple: "",
+                                  label: "Authors",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Author is required"
+                                    }
+                                  ],
+                                  required: ""
+                                },
+                                model: {
+                                  value: _vm.fields.edit_authors,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_authors", $$v)
+                                  },
+                                  expression: "fields.edit_authors"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  required: "",
+                                  outlined: "",
+                                  label: "Description",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Description is required"
+                                    }
+                                  ]
+                                },
+                                model: {
+                                  value: _vm.fields.edit_book_description,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.fields,
+                                      "edit_book_description",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "fields.edit_book_description"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  required: "",
+                                  outlined: "",
+                                  label: "Price",
+                                  suffix: "ks",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Price is required"
+                                    }
+                                  ]
+                                },
+                                model: {
+                                  value: _vm.fields.edit_book_price,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_book_price", $$v)
+                                  },
+                                  expression: "fields.edit_book_price"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  outlined: "",
+                                  label: "Publish date",
+                                  placeholder: "2020/05/29",
+                                  requried: "",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Date is required"
+                                    }
+                                  ]
+                                },
+                                model: {
+                                  value: _vm.fields.edit_book_published_date,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.fields,
+                                      "edit_book_published_date",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "fields.edit_book_published_date"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-autocomplete", {
+                                attrs: {
+                                  outlined: "",
+                                  items: _vm.categories,
+                                  "item-text": "name",
+                                  "item-value": "id",
+                                  multiple: "",
+                                  label: "Categories",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Category is required"
+                                    }
+                                  ],
+                                  required: ""
+                                },
+                                model: {
+                                  value: _vm.fields.edit_categories,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_categories", $$v)
+                                  },
+                                  expression: "fields.edit_categories"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-autocomplete", {
+                                attrs: {
+                                  outlined: "",
+                                  items: _vm.tags,
+                                  "item-text": "name",
+                                  "item-value": "id",
+                                  multiple: "",
+                                  label: "Tags",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Tag is required"
+                                    }
+                                  ],
+                                  required: ""
+                                },
+                                model: {
+                                  value: _vm.fields.edit_tags,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_tags", $$v)
+                                  },
+                                  expression: "fields.edit_tags"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-autocomplete", {
+                                attrs: {
+                                  items: _vm.publisher_list,
+                                  "item-text": "name",
+                                  "item-value": "id",
+                                  outlined: "",
+                                  label: "Publisher",
+                                  requried: "",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Publisher is required"
+                                    }
+                                  ]
+                                },
+                                model: {
+                                  value: _vm.fields.edit_publisher,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_publisher", $$v)
+                                  },
+                                  expression: "fields.edit_publisher"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "6" } },
+                            [
+                              _c("v-autocomplete", {
+                                attrs: {
+                                  outlined: "",
+                                  items: _vm.suppliers,
+                                  "item-text": "name",
+                                  "item-value": "id",
+                                  multiple: "",
+                                  label: "Suppliers",
+                                  rules: [
+                                    function(v) {
+                                      return !!v || "Supplier is required"
+                                    }
+                                  ],
+                                  required: ""
+                                },
+                                model: {
+                                  value: _vm.fields.edit_suppliers,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.fields, "edit_suppliers", $$v)
+                                  },
+                                  expression: "fields.edit_suppliers"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-col", { attrs: { cols: "12", md: "6" } }, [
+                            _c("input", {
+                              attrs: {
+                                type: "file",
+                                requried: "",
+                                rules: [
+                                  function(v) {
+                                    return !!v || "Date is required"
+                                  }
+                                ]
+                              },
+                              on: { change: _vm.uploadImage }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card",
+                            { attrs: { width: "250px" } },
+                            [
+                              _vm.previewImage
+                                ? _c(
+                                    "v-img",
+                                    {
+                                      staticClass: "white--text align-end",
+                                      attrs: {
+                                        height: "200px",
+                                        src: _vm.previewImage
+                                      }
+                                    },
+                                    [
+                                      _c("v-card-title", [
+                                        _vm._v(_vm._s(_vm.fields.edit_name))
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                : _c(
+                                    "v-img",
+                                    {
+                                      staticClass: "white--text align-end",
+                                      attrs: {
+                                        height: "200px",
+                                        src: _vm.fields.edit_image
+                                      }
+                                    },
+                                    [
+                                      _c("v-card-title", [
+                                        _vm._v(_vm._s(_vm.fields.edit_name))
+                                      ])
+                                    ],
+                                    1
+                                  )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.editDialog = false
+                          _vm.target_item = ""
+                          _vm.previewImage = null
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "primary",
+                        text: "",
+                        type: "submit",
+                        outlined: ""
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.submitEdit(_vm.target_item.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-row",
         { staticClass: "d-flex" },
         [
@@ -47476,7 +47987,20 @@ var render = function() {
                         {
                           on: {
                             click: function($event) {
-                              return _vm.editDialog(book)
+                              _vm.editDialog = true
+                              _vm.target_item = book
+                              _vm.fields.edit_name = book.name
+                              _vm.fields.edit_authors = book.authors
+                              _vm.fields.edit_book_description =
+                                book.description
+                              _vm.fields.edit_book_price = book.price
+                              _vm.fields.edit_book_published_date =
+                                book.published_date
+                              _vm.fields.edit_categories = book.categories
+                              _vm.fields.edit_tags = book.tags
+                              ;(_vm.fields.edit_publisher = book.publisher),
+                                (_vm.fields.edit_suppliers = book.suppliers),
+                                (_vm.fields.edit_image = book.thumb)
                             }
                           }
                         },
@@ -110134,75 +110658,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/components/admin/BookEdit.vue":
-/*!*************************************************!*\
-  !*** ./resources/components/admin/BookEdit.vue ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookEdit.vue?vue&type=template&id=a07cf5f8& */ "./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&");
-/* harmony import */ var _BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BookEdit.vue?vue&type=script&lang=js& */ "./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/components/admin/BookEdit.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&":
-/*!**************************************************************************!*\
-  !*** ./resources/components/admin/BookEdit.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./BookEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&":
-/*!********************************************************************************!*\
-  !*** ./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8& ***!
-  \********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./BookEdit.vue?vue&type=template&id=a07cf5f8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/components/admin/BookRegister.vue":
 /*!*****************************************************!*\
   !*** ./resources/components/admin/BookRegister.vue ***!
@@ -111342,13 +111797,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_Users__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/admin/Users */ "./resources/components/admin/Users.vue");
 /* harmony import */ var _components_admin_AuthorView__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/admin/AuthorView */ "./resources/components/admin/AuthorView.vue");
 /* harmony import */ var _components_admin_BookView__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/admin/BookView */ "./resources/components/admin/BookView.vue");
-/* harmony import */ var _components_admin_BookEdit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/admin/BookEdit */ "./resources/components/admin/BookEdit.vue");
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
 
 
 
@@ -111372,10 +111825,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/admin/books/register',
     component: _components_admin_BookRegister_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     name: 'book_register'
-  }, {
-    path: '/admin/books/edit/:id',
-    component: _components_admin_BookEdit__WEBPACK_IMPORTED_MODULE_17__["default"],
-    name: 'editBookview'
   }, {
     path: '/admin/authors',
     component: _components_admin_Authors_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -111507,15 +111956,9 @@ router.beforeEach(function (to, from, next) {
     } else {
       getApiData(to.path, to.name);
     }
-  } else if (to.path === "/admin/books/edit/".concat(to.params.id)) {
-    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.editBookview.length > 0) {
-      next();
-    } else {
-      getApiData(to.path, to.name);
-    }
   } else if (to.path === '/admin') {
     next();
-  } else if (to.path === '/admin/books/register') {
+  } else if (to.path === '/admin/books') {
     if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.categories.length <= 0) {
       getApiData('/admin/categories', 'categories');
     }
@@ -111591,7 +112034,6 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
     orders: [],
     authorview: [],
     bookview: [],
-    editBookview: [],
     pagination_length: 0,
     pagination_current: 0
   },
@@ -111673,12 +112115,15 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
       var route = _ref4.route,
           data = _ref4.data;
 
-      if (route === 'authorview' || route === 'bookview' || route === 'editBookview') {
+      if (route === 'authorview' || route === 'bookview') {
         state[route] = data;
       } else {
         state[route] = data[route];
-        state['pagination_length'] = data['total_pages'];
-        state['pagination_current'] = data['current_page'];
+
+        if (data.current_page && data.total_pages) {
+          state['pagination_length'] = data['total_pages'];
+          state['pagination_current'] = data['current_page'];
+        }
       }
     }
   }
