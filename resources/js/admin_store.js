@@ -23,6 +23,7 @@ export default new Vuex.Store({
         orders: [],
         authorview : [],
         bookview : [],
+        editBookview : [],
         pagination_length : 0,
         pagination_current: 0
     },
@@ -83,7 +84,8 @@ export default new Vuex.Store({
             }
         },
         addData(state, { route, data }) {
-            if(route === 'authorview' || route === 'bookview'){
+
+            if(route === 'authorview' || route === 'bookview' || route === 'editBookview'){
                 state[route] = data;
             }else{
                 

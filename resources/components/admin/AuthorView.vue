@@ -29,7 +29,7 @@
                 <p>Published on - {{book.published_date}}</p>
                 <v-row>
                   <v-spacer></v-spacer>
-                  <router-link :to="'/admin/books/'+ book.id">
+                  <router-link :to="'/admin/books/'+ book.id" style="text-decoration: none">
                     <v-btn outlined rounded>view book</v-btn>
                   </router-link>
                 </v-row>

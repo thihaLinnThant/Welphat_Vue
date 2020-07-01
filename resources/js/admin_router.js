@@ -17,17 +17,15 @@ import Admin from '../components/admin/Admins'
 import User from '../components/admin/Users';
 import AuthorView from '../components/admin/AuthorView';
 import BookView from '../components/admin/BookView';
+import BookEdit from '../components/admin/BookEdit';
 let router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/admin/books', component: Books, name: 'books' },
         { path: '/admin/books/register', component: BookRegister, name: 'book_register' },
-
+        { path: '/admin/books/edit/:id', component: BookEdit, name: 'editBookview'},
         { path: '/admin/authors', component: Authors, name: 'authors' },
-
         { path: '/admin/categories', component: Categories, name: 'categories' },
-
-
         { path: '/admin/tags', component: Tags, name: 'tags' },
         { path: '/admin/publishers', component: Publishers, name: 'publishers' },
         { path: '/admin/suppliers', component: Suppliers, name: 'suppliers' },
@@ -42,6 +40,7 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     let serverData = JSON.parse(window.welphat_server_data);
+    console.log(to.path)
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
@@ -78,6 +77,10 @@ router.beforeEach((to, from, next) => {
     }
     else if( to.path === `/admin/books/${to.params.id}`){
         if (Store.state.bookview.length > 0) { next() } else { getApiData(to.path, to.name) }
+    }
+    else if( to.path === `/admin/books/edit/${to.params.id}`){
+
+        if (Store.state.editBookview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
     else if (to.path === '/admin') { next(); }
 

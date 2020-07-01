@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2781,6 +2793,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     cropSuccess: function cropSuccess(imgDataUrl, field) {
       this.fields.image = imgDataUrl;
+      console.log(imgDataUrl);
       this.fields.edit_image = imgDataUrl;
       console.log("-------- crop success --------");
     },
@@ -2818,6 +2831,31 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookEdit.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    editBooks: function editBooks() {
+      return this.$store.state.editBookview;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookRegister.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookRegister.vue?vue&type=script&lang=js& ***!
@@ -2827,8 +2865,47 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/RecordInputmixin */ "./resources/js/RecordInputmixin.js");
+/* harmony import */ var _js_dataListMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/dataListMixin */ "./resources/js/dataListMixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2929,73 +3006,31 @@ __webpack_require__.r(__webpack_exports__);
       fields: {},
       image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ3mlqedKcDFuzWNP0CybnRWz8H9TTZVw8d5yUjf1dclZrJX53g&usqp=CAU",
       act: "/admin/books/create",
-      statename: "authors"
+      statename: "books",
+      previewImage: null
     };
   },
-  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    categories: "categories",
-    authors: "authors",
-    tags: "tags",
-    publishers: "publishers",
-    suppliers: "suppliers",
-    category_list: function category_list() {
-      var categoryTemp = [];
-      this.categories.forEach(function (element) {
-        categoryTemp.push({
-          name: element.name,
-          id: element.id
-        });
-      });
-      return categoryTemp;
-    },
-    author_list: function author_list() {
-      var authorTemp = [];
-      this.authors.forEach(function (element) {
-        authorTemp.push({
-          name: element.name,
-          id: element.id
-        });
-      });
-      return authorTemp;
-    },
-    tag_list: function tag_list() {
-      var tagTemp = [];
-      this.tags.forEach(function (element) {
-        tagTemp.push({
-          name: element.name,
-          id: element.id
-        });
-      });
-      return tagTemp;
-    },
-    publisher_list: function publisher_list() {
-      var publisherTemp = [];
-      this.publishers.forEach(function (element) {
-        publisherTemp.push({
-          name: element.name,
-          id: element.id
-        });
-      });
-      return publisherTemp;
-    },
-    supplier_list: function supplier_list() {
-      var supplierTemp = [];
-      this.suppliers.forEach(function (element) {
-        supplierTemp.push({
-          name: element.name,
-          id: element.id
-        });
-      });
-      return supplierTemp;
-    }
-  }),
+  mixins: [_js_RecordInputmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _js_dataListMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
-    Preview_image: function Preview_image(e) {
-      this.image_url = URL.createObjectURL(e);
+    uploadImage: function uploadImage(e) {
+      var _this = this;
+
+      var image = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(image);
+
+      reader.onload = function (e) {
+        _this.previewImage = e.target.result;
+        _this.fields.image = e.target.result;
+      };
     },
     save: function save() {
-      console.log(this.fields);
+      this.$refs.form.validate();
+
+      if (!this.fields.book_name || !this.fields.book_description || !this.fields.authors || !this.fields.book_price || !this.fields.book_published_date || !this.fields.tags || !this.fields.categories || !this.fields.publisher || !this.fields.supplier) {
+        return;
+      }
+
       this.submit();
     }
   }
@@ -3012,6 +3047,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3229,14 +3265,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      search: ''
+      search: ""
     };
   },
   computed: {
@@ -3261,8 +3293,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/admin/books/?page=".concat(value)).then(function (_ref) {
         var data = _ref.data;
 
-        _this2.$store.commit('addData', {
-          route: 'books',
+        _this2.$store.commit("addData", {
+          route: "books",
           data: data
         });
       });
@@ -9478,7 +9510,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -40542,6 +40574,746 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
+
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -44787,6 +45559,9 @@ var render = function() {
                                     _c(
                                       "router-link",
                                       {
+                                        staticStyle: {
+                                          "text-decoration": "none"
+                                        },
                                         attrs: { to: "/admin/books/" + book.id }
                                       },
                                       [
@@ -45678,6 +46453,34 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h1", [_vm._v("Edit")]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.editBooks))])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookRegister.vue?vue&type=template&id=667ad01d&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/BookRegister.vue?vue&type=template&id=667ad01d& ***!
@@ -45696,13 +46499,21 @@ var render = function() {
   return _c(
     "v-form",
     {
+      ref: "form",
       staticClass: "ma-10",
-      attrs: { enctype: "multipart/form-data" },
+      attrs: { enctype: "multipart/form-data", "lazy-validation": "" },
       on: {
         submit: function($event) {
           $event.preventDefault()
           return _vm.submit($event)
         }
+      },
+      model: {
+        value: _vm.valid,
+        callback: function($$v) {
+          _vm.valid = $$v
+        },
+        expression: "valid"
       }
     },
     [
@@ -45717,7 +46528,16 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-text-field", {
-                attrs: { outlined: "", label: "Name" },
+                attrs: {
+                  outlined: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Name is required"
+                    }
+                  ],
+                  label: "Name",
+                  required: ""
+                },
                 model: {
                   value: _vm.fields.book_name,
                   callback: function($$v) {
@@ -45739,8 +46559,15 @@ var render = function() {
                   outlined: "",
                   items: _vm.author_list,
                   "item-text": "name",
+                  "item-value": "id",
                   multiple: "",
-                  label: "Author(s)"
+                  label: "Author(s)",
+                  rules: [
+                    function(v) {
+                      return !!v || "Author is required"
+                    }
+                  ],
+                  required: ""
                 },
                 model: {
                   value: _vm.fields.authors,
@@ -45759,7 +46586,16 @@ var render = function() {
             { attrs: { cols: "12", md: "12" } },
             [
               _c("v-textarea", {
-                attrs: { outlined: "", label: "Description" },
+                attrs: {
+                  required: "",
+                  outlined: "",
+                  label: "Description",
+                  rules: [
+                    function(v) {
+                      return !!v || "Description is required"
+                    }
+                  ]
+                },
                 model: {
                   value: _vm.fields.book_description,
                   callback: function($$v) {
@@ -45777,7 +46613,17 @@ var render = function() {
             { attrs: { cols: "12", md: "6" } },
             [
               _c("v-text-field", {
-                attrs: { outlined: "", label: "Price", suffix: "ks" },
+                attrs: {
+                  required: "",
+                  outlined: "",
+                  label: "Price",
+                  suffix: "ks",
+                  rules: [
+                    function(v) {
+                      return !!v || "Price is required"
+                    }
+                  ]
+                },
                 model: {
                   value: _vm.fields.book_price,
                   callback: function($$v) {
@@ -45798,7 +46644,13 @@ var render = function() {
                 attrs: {
                   outlined: "",
                   label: "Publish date",
-                  placeholder: "2020/05/29"
+                  placeholder: "2020/05/29",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Date is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.book_published_date,
@@ -45821,8 +46673,15 @@ var render = function() {
                   outlined: "",
                   items: _vm.categories,
                   "item-text": "name",
+                  "item-value": "id",
                   multiple: "",
-                  label: "Categories"
+                  label: "Categories",
+                  rules: [
+                    function(v) {
+                      return !!v || "Category is required"
+                    }
+                  ],
+                  required: ""
                 },
                 model: {
                   value: _vm.fields.categories,
@@ -45844,9 +46703,16 @@ var render = function() {
                 attrs: {
                   items: _vm.tag_list,
                   "item-text": "name",
+                  "item-value": "id",
                   outlined: "",
                   multiple: "",
-                  label: "Tags"
+                  label: "Tags",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Tag is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.tags,
@@ -45870,7 +46736,13 @@ var render = function() {
                   "item-text": "name",
                   "item-value": "id",
                   outlined: "",
-                  label: "Publisher"
+                  label: "Publisher",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Publisher is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.publisher,
@@ -45892,8 +46764,16 @@ var render = function() {
                 attrs: {
                   items: _vm.supplier_list,
                   "item-text": "name",
+                  "item-value": "id",
                   outlined: "",
-                  label: "Supplier"
+                  label: "Supplier",
+                  required: "",
+                  requried: "",
+                  rules: [
+                    function(v) {
+                      return !!v || "Supplier is required"
+                    }
+                  ]
                 },
                 model: {
                   value: _vm.fields.supplier,
@@ -45907,28 +46787,20 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", md: "6" } },
-            [
-              _c("v-file-input", {
-                attrs: { outlined: "", label: "Upload Image" },
-                on: {
-                  change: function($event) {
-                    return _vm.Preview_image($event)
+          _c("v-col", { attrs: { cols: "12", md: "6" } }, [
+            _c("input", {
+              attrs: {
+                type: "file",
+                requried: "",
+                rules: [
+                  function(v) {
+                    return !!v || "Date is required"
                   }
-                },
-                model: {
-                  value: _vm.fields.image,
-                  callback: function($$v) {
-                    _vm.$set(_vm.fields, "image", $$v)
-                  },
-                  expression: "fields.image"
-                }
-              })
-            ],
-            1
-          ),
+                ]
+              },
+              on: { change: _vm.uploadImage }
+            })
+          ]),
           _vm._v(" "),
           _c(
             "v-card",
@@ -45938,12 +46810,9 @@ var render = function() {
                 "v-img",
                 {
                   staticClass: "white--text align-end",
-                  attrs: { height: "200px", src: _vm.image_url }
+                  attrs: { height: "200px", src: _vm.previewImage }
                 },
-                [
-                  _c("v-card-title", [_vm._v(_vm._s(_vm.fields.book_name))]),
-                  _vm._v("s\n      ")
-                ],
+                [_c("v-card-title", [_vm._v(_vm._s(_vm.fields.book_name))])],
                 1
               )
             ],
@@ -46000,7 +46869,10 @@ var render = function() {
         [
           _c(
             "router-link",
-            { attrs: { to: "/admin/books" } },
+            {
+              staticStyle: { "text-decoration": "none" },
+              attrs: { to: "/admin/books" }
+            },
             [
               _c(
                 "v-btn",
@@ -46030,10 +46902,12 @@ var render = function() {
             "v-col",
             { attrs: { cols: "12", md: "2" } },
             [
-              _c("v-img", {
-                staticStyle: { width: "100%" },
-                attrs: { src: _vm.book.thumb }
-              }),
+              _vm.book.thumb
+                ? _c("v-img", {
+                    staticStyle: { width: "100%" },
+                    attrs: { src: _vm.book.thumb }
+                  })
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "p",
@@ -46065,17 +46939,29 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c(
-                "p",
-                {
-                  staticStyle: {
-                    color: "grey",
-                    "text-align": "center",
-                    "font-size": "10px"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.book.rates) + " out of 5")]
-              ),
+              _vm.book.rates
+                ? _c(
+                    "p",
+                    {
+                      staticStyle: {
+                        color: "grey",
+                        "text-align": "center",
+                        "font-size": "10px"
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.book.rates) + " out of 5")]
+                  )
+                : _c(
+                    "p",
+                    {
+                      staticStyle: {
+                        color: "grey",
+                        "text-align": "center",
+                        "font-size": "10px"
+                      }
+                    },
+                    [_vm._v("no rating yet")]
+                  ),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
@@ -46545,7 +47431,17 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-btn", [_vm._v("Edit")]),
+                      _c(
+                        "v-btn",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.editDialog(book)
+                            }
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
                       _vm._v(" "),
                       _c("v-btn", [_vm._v("Delete")])
                     ],
@@ -107687,7 +108583,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -109198,6 +110094,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/components/admin/BookEdit.vue":
+/*!*************************************************!*\
+  !*** ./resources/components/admin/BookEdit.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookEdit.vue?vue&type=template&id=a07cf5f8& */ "./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&");
+/* harmony import */ var _BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BookEdit.vue?vue&type=script&lang=js& */ "./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/components/admin/BookEdit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/components/admin/BookEdit.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./BookEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&":
+/*!********************************************************************************!*\
+  !*** ./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./BookEdit.vue?vue&type=template&id=a07cf5f8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/BookEdit.vue?vue&type=template&id=a07cf5f8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookEdit_vue_vue_type_template_id_a07cf5f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/components/admin/BookRegister.vue":
 /*!*****************************************************!*\
   !*** ./resources/components/admin/BookRegister.vue ***!
@@ -109969,12 +110934,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lastRecordmixin */ "./resources/js/lastRecordmixin.js");
-/* harmony import */ var _editFrom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editFrom */ "./resources/js/editFrom.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lastRecordmixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+/* harmony import */ var _editFrom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editFrom */ "./resources/js/editFrom.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__["default"], _editFrom__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_lastRecordmixin__WEBPACK_IMPORTED_MODULE_1__["default"], _editFrom__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       csrf_token: window.csrf_token,
@@ -109994,35 +110967,47 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      if (this.loaded) {
-        this.loaded = false;
-        this.success = false;
-        this.errors = {}; //post request to the server with request fields
-        //(this.act)action and (this.fields)fields will be from component's data
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!_this.loaded) {
+                  _context.next = 6;
+                  break;
+                }
 
-        axios.post(this.act, this.fields).then(function (response) {
-          console.log(response);
-          _this.loaded = true;
-          _this.success = true;
-          _this.goterror = false;
-          _this.alert = true;
-          _this.alertType = "success";
-          _this.fields = {}; //Clear input fields.
+                _this.loaded = false;
+                _this.success = false;
+                _this.errors = {}; //post request to the server with request fields
+                //(this.act)action and (this.fields)fields will be from component's data
 
-          _this.lastrecord(_this.statename);
+                _context.next = 6;
+                return axios.post(_this.act, _this.fields).then(function (response) {
+                  _this.loaded = true;
+                  _this.success = true;
+                  _this.goterror = false;
+                  _this.alert = true;
+                  _this.alertType = "success";
+                  _this.fields = {}; //Clear input fields.
 
-          _this.registerDialog = false;
-        })["catch"](function (error) {
-          //Catch will excecuted when the validation got error
-          _this.loaded = true;
-          _this.goterror = true;
-          console.log(error.response);
+                  _this.lastrecord(_this.statename);
 
-          if (error.response.status === 422) {
-            _this.errors = error.response.data.errors || {}; //get error json file from controller
+                  _this.registerDialog = false;
+                })["catch"](function (error) {
+                  //Catch will excecuted when the validation got error
+                  _this.loaded = true;
+                  _this.goterror = true;
+                  console.log(error.response);
+                });
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
           }
-        });
-      }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -110313,11 +111298,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_Users__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/admin/Users */ "./resources/components/admin/Users.vue");
 /* harmony import */ var _components_admin_AuthorView__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/admin/AuthorView */ "./resources/components/admin/AuthorView.vue");
 /* harmony import */ var _components_admin_BookView__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/admin/BookView */ "./resources/components/admin/BookView.vue");
+/* harmony import */ var _components_admin_BookEdit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/admin/BookEdit */ "./resources/components/admin/BookEdit.vue");
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -110341,6 +111328,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/admin/books/register',
     component: _components_admin_BookRegister_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     name: 'book_register'
+  }, {
+    path: '/admin/books/edit/:id',
+    component: _components_admin_BookEdit__WEBPACK_IMPORTED_MODULE_17__["default"],
+    name: 'editBookview'
   }, {
     path: '/admin/authors',
     component: _components_admin_Authors_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -110389,6 +111380,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 });
 router.beforeEach(function (to, from, next) {
   var serverData = JSON.parse(window.welphat_server_data);
+  console.log(to.path);
 
   function getApiData(path, name) {
     axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api".concat(path)).then(function (_ref) {
@@ -110471,6 +111463,12 @@ router.beforeEach(function (to, from, next) {
     } else {
       getApiData(to.path, to.name);
     }
+  } else if (to.path === "/admin/books/edit/".concat(to.params.id)) {
+    if (_admin_store__WEBPACK_IMPORTED_MODULE_3__["default"].state.editBookview.length > 0) {
+      next();
+    } else {
+      getApiData(to.path, to.name);
+    }
   } else if (to.path === '/admin') {
     next();
   } else if (to.path === '/admin/books/register') {
@@ -110549,6 +111547,7 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
     orders: [],
     authorview: [],
     bookview: [],
+    editBookview: [],
     pagination_length: 0,
     pagination_current: 0
   },
@@ -110630,7 +111629,7 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
       var route = _ref4.route,
           data = _ref4.data;
 
-      if (route === 'authorview' || route === 'bookview') {
+      if (route === 'authorview' || route === 'bookview' || route === 'editBookview') {
         state[route] = data;
       } else {
         state[route] = data[route];
@@ -110685,6 +111684,79 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/dataListMixin.js":
+/*!***************************************!*\
+  !*** ./resources/js/dataListMixin.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    categories: "categories",
+    authors: "authors",
+    tags: "tags",
+    publishers: "publishers",
+    suppliers: "suppliers",
+    category_list: function category_list() {
+      var categoryTemp = [];
+      this.categories.forEach(function (element) {
+        categoryTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return categoryTemp;
+    },
+    author_list: function author_list() {
+      var authorTemp = [];
+      this.authors.forEach(function (element) {
+        authorTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return authorTemp;
+    },
+    tag_list: function tag_list() {
+      var tagTemp = [];
+      this.tags.forEach(function (element) {
+        tagTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return tagTemp;
+    },
+    publisher_list: function publisher_list() {
+      var publisherTemp = [];
+      this.publishers.forEach(function (element) {
+        publisherTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return publisherTemp;
+    },
+    supplier_list: function supplier_list() {
+      var supplierTemp = [];
+      this.suppliers.forEach(function (element) {
+        supplierTemp.push({
+          name: element.name,
+          id: element.id
+        });
+      });
+      return supplierTemp;
+    }
+  })
+});
 
 /***/ }),
 
@@ -110819,6 +111891,11 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this.lastRecord = data.name;
+
+        if (statename == 'books') {
+          _this.$router.push("/admin/books/".concat(data.id));
+        }
+
         _this.alertMessage = "".concat(statename, " (").concat(data.name, ") is registered with id - ").concat(data.id);
       })["catch"](function (error) {
         _this.alertMessage = "Something went wrong!";
@@ -110871,8 +111948,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/WelPhat.com/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

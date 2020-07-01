@@ -14,10 +14,10 @@
         v-model="current_page"
         color="#4054b5"
         circle
-        :length=total_pages
+        :length="total_pages"
         next-icon="mdi-chevron-right"
         prev-icon="mdi-chevron-left"
-        total-visible=10
+        total-visible="10"
         @input="change_page($event)"
       ></v-pagination>
     </v-row>
@@ -25,11 +25,7 @@
       <v-col cols="12" md="4" v-for="(book,index) in books" :key="index">
         <v-card max-width="344" class="mx-auto">
           <span>
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              :src="book.thumb"
-            >
+            <v-img class="white--text align-end" height="200px" :src="book.thumb">
               <v-card-title class="justify-center">{{ book.name }}</v-card-title>
             </v-img>
           </span>
@@ -40,9 +36,9 @@
 
           <v-card-actions class="justify-center">
             <router-link :to="'/admin/books/'+book.id" style="text-decoration:none">
-            <v-btn>View</v-btn>
+              <v-btn>View</v-btn>
             </router-link>
-            <v-btn>Edit</v-btn>
+            <v-btn @click="editDialog(book)">Edit</v-btn>
             <v-btn>Delete</v-btn>
           </v-card-actions>
 
@@ -82,16 +78,17 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      search : ''
-    }
+      search: ""
+    };
   },
+
   computed: {
     books() {
       return this.$store.state.books.filter(element => {
-        return element.name.toLowerCase().includes(this.search.toLowerCase())
-      })
+        return element.name.toLowerCase().includes(this.search.toLowerCase());
+      });
     },
     total_pages() {
       return this.$store.state.pagination_length;
@@ -102,8 +99,8 @@ export default {
   },
   methods: {
     change_page(value) {
-      axios.get(`/api/admin/books/?page=${value}`).then(({data}) => {
-        this.$store.commit('addData', { route: 'books', data})
+      axios.get(`/api/admin/books/?page=${value}`).then(({ data }) => {
+        this.$store.commit("addData", { route: "books", data });
       });
     }
   }
