@@ -3265,19 +3265,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      search: ""
+      search: '',
+      progress: false
     };
   },
   computed: {
     books: function books() {
-      var _this = this;
-
-      return this.$store.state.books.filter(function (element) {
-        return element.name.toLowerCase().includes(_this.search.toLowerCase());
-      });
+      // return this.$store.state.books.filter(element => {
+      //   return element.name.toLowerCase().includes(this.search.toLowerCase())
+      // })
+      return this.$store.state.books;
     },
     total_pages: function total_pages() {
       return this.$store.state.pagination_length;
@@ -3288,16 +3295,36 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     change_page: function change_page(value) {
-      var _this2 = this;
+      var _this = this;
 
+      this.progress = true;
       axios.get("/api/admin/books/?page=".concat(value)).then(function (_ref) {
         var data = _ref.data;
+        _this.progress = false;
 
-        _this2.$store.commit("addData", {
-          route: "books",
+        _this.$store.commit('addData', {
+          route: 'books',
           data: data
         });
       });
+    },
+    search_book: function search_book(value) {
+      var _this2 = this;
+
+      if (value == '' || !value) {
+        this.change_page(1);
+      } else {
+        this.progress = true;
+        axios.get("/api/admin/books/search/".concat(value)).then(function (_ref2) {
+          var data = _ref2.data;
+          _this2.progress = false;
+
+          _this2.$store.commit('addData', {
+            route: 'books',
+            data: data
+          });
+        });
+      }
     }
   }
 });
@@ -47303,6 +47330,11 @@ var render = function() {
           _vm._v(" "),
           _c("v-text-field", {
             attrs: { placeholder: "Search by Book Name" },
+            on: {
+              keyup: function($event) {
+                return _vm.search_book(_vm.search)
+              }
+            },
             model: {
               value: _vm.search,
               callback: function($$v) {
@@ -47336,30 +47368,38 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-row",
-        { attrs: { align: "center", justify: "end" } },
+        { attrs: { align: "center", justify: "center" } },
         [
-          _c("v-pagination", {
-            attrs: {
-              color: "#4054b5",
-              circle: "",
-              length: _vm.total_pages,
-              "next-icon": "mdi-chevron-right",
-              "prev-icon": "mdi-chevron-left",
-              "total-visible": "10"
-            },
-            on: {
-              input: function($event) {
-                return _vm.change_page($event)
-              }
-            },
-            model: {
-              value: _vm.current_page,
-              callback: function($$v) {
-                _vm.current_page = $$v
-              },
-              expression: "current_page"
-            }
-          })
+          _vm.search
+            ? _c("h3", [_vm._v("Search result")])
+            : _c("v-pagination", {
+                attrs: {
+                  color: "#4054b5",
+                  circle: "",
+                  length: _vm.total_pages,
+                  "next-icon": "mdi-chevron-right",
+                  "prev-icon": "mdi-chevron-left",
+                  "total-visible": "10"
+                },
+                on: {
+                  input: function($event) {
+                    return _vm.change_page($event)
+                  }
+                },
+                model: {
+                  value: _vm.current_page,
+                  callback: function($$v) {
+                    _vm.current_page = $$v
+                  },
+                  expression: "current_page"
+                }
+              }),
+          _vm._v(" "),
+          _vm.progress
+            ? _c("v-progress-linear", {
+                attrs: { indeterminate: "", color: "#4054b5" }
+              })
+            : _vm._e()
         ],
         1
       ),
@@ -110999,6 +111039,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.loaded = true;
                   _this.goterror = true;
                   console.log(error.response);
+
+                  if (error.response.status === 422) {
+                    _this.errors = error.response.data.errors || {}; //get error json file from controller
+                  }
                 });
 
               case 6:

@@ -46,6 +46,9 @@ export default {
                         this.loaded = true;
                         this.goterror = true;
                         console.log(error.response);
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data.errors || {}; //get error json file from controller
+                        }
                     });
 
             }

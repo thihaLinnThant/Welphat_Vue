@@ -29,8 +29,29 @@ class BookController extends Controller
             'books' => $books,
             'total_pages' => $collection->lastPage(),
             'current_page' => $collection->currentPage()
-            ]);
-        }
+        ]);
+    }
+    
+    public function get_books_api(){
+        $data = $this->get_book_list()->toArray();
+        return response()->json($data);
+        // return Book::with('authors')->with('categories')->with('tags')->paginate(5);
+    }
+    
+    public function get_books_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data ]);
+    }
+    
+    public function register_web(Request $request) {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+    public function get_oneRecord_api($id){
+        $data = Book::with('authors')->with('comments')->with('tags')->with('categories')->with('publisher')->with('suppliers')->find($id);
+        $data->rates = $data->averageRating();
+
+        
         
         public function get_books_api(){
             $data = $this->get_book_list()->toArray();
@@ -66,21 +87,40 @@ class BookController extends Controller
         {
             $data = $this->add_meta_data($request);
             return view('admin.app', ['data' => $data]);
-        }
-        public function get_lastBook_api(){
-            $data = Book::latest()->first();
-            return response()->json($data);
+        
+        foreach($data->comments as $key=>$comment){
+            $data->comments[$key]->user_info = User::where('id', $comment['user_id'])->first();
         }
         
-        /**
-        * Display a listing of the resource.
-        *
-        * @return \Illuminate\Http\Response
-        */
-        public function index()
-        {
-            //
+        for($i= 0 ;$i< count($data->authors);$i++){
+            $data->authors[$i]->thumb = asset('storage/images/authors/' . $data->authors[$i]->id . '/image_1.png');  
         }
+        $data->thumb = asset('storage/images/books/' . $data->id . '/image_1.png');
+        return response()->json($data);
+    }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+    public function get_lastBook_api(){
+        $data = Book::latest()->first();
+        return response()->json($data);
+    }
+
+    public function book_search($value = "") {
+        $collection = Book::where('name',"LIKE","%{$value}%")->with('authors')->with('categories')->with('tags')->get();
+        $books = collect();
+        foreach($collection as $book) {
+            $book->rates = $book->averageRating();
+            $book->thumb = asset('storage/images/books/'. $book->id . '/thumb_nail.png');
+            $books->push($book);
+        }
+        return collect([
+            'books' => $books,
+            'total_pages' => 0,
+            'current_page' => 0
+        ]);
         
         /**
         * Show the form for creating a new resource.

@@ -3,14 +3,16 @@
     <v-row class="d-flex">
       <h2>Books</h2>
       <v-spacer></v-spacer>
-      <v-text-field v-model="search" placeholder="Search by Book Name"></v-text-field>
+      <v-text-field @keyup="search_book(search)" v-model="search" placeholder="Search by Book Name"></v-text-field>
       <v-spacer></v-spacer>
       <router-link tag="p" to="books/register">
         <v-btn class="ml-5" outlined style="text-decoration:none !important">Create New +</v-btn>
       </router-link>
     </v-row>
-    <v-row align="center" justify="end">
+    <v-row align="center" justify="center">
+      <h3 v-if="search">Search result</h3>
       <v-pagination
+        v-else
         v-model="current_page"
         color="#4054b5"
         circle
@@ -20,6 +22,11 @@
         total-visible="10"
         @input="change_page($event)"
       ></v-pagination>
+      <v-progress-linear
+        v-if="progress"
+        indeterminate
+        color="#4054b5"
+      ></v-progress-linear>
     </v-row>
     <v-row>
       <v-col cols="12" md="4" v-for="(book,index) in books" :key="index">
@@ -80,15 +87,17 @@
 export default {
   data() {
     return {
-      search: ""
-    };
+      search : '',
+      progress: false
+    }
   },
 
   computed: {
     books() {
-      return this.$store.state.books.filter(element => {
-        return element.name.toLowerCase().includes(this.search.toLowerCase());
-      });
+      // return this.$store.state.books.filter(element => {
+      //   return element.name.toLowerCase().includes(this.search.toLowerCase())
+      // })
+      return this.$store.state.books;
     },
     total_pages() {
       return this.$store.state.pagination_length;
@@ -99,9 +108,23 @@ export default {
   },
   methods: {
     change_page(value) {
-      axios.get(`/api/admin/books/?page=${value}`).then(({ data }) => {
-        this.$store.commit("addData", { route: "books", data });
+      this.progress = true;
+      axios.get(`/api/admin/books/?page=${value}`).then(({data}) => {
+        this.progress = false
+        this.$store.commit('addData', { route: 'books', data})
       });
+    },
+    search_book(value) {
+      if(value == '' || !value){
+        this.change_page(1);
+      }else {
+        this.progress = true;
+        axios.get(`/api/admin/books/search/${value}`).then(({data}) => {
+          this.progress = false;
+          this.$store.commit('addData', { route: 'books', data})
+        });
+      }
+      
     }
   }
 };

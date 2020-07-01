@@ -26,6 +26,7 @@ Route::get('/admin/books/onerecord/{id}', 'BookController@get_oneRecord_api');
 Route::get('/admin/books/edit/{id}', 'BookController@get_oneRecord_api');
 
 Route::get('/admin/books/{id}','BookController@get_oneRecord_api');
+Route::get('/admin/books/search/{value}','BookController@book_search');
 
 
 Route::get('/admin/authors', 'AuthorController@get_authors_api');
