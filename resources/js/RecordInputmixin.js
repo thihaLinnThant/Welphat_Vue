@@ -18,16 +18,14 @@ export default {
         }
     },
     methods: {
-        submit() {
+        async submit() {
             if (this.loaded) {
                 this.loaded = false;
                 this.success = false;
                 this.errors = {};
-               
                     //post request to the server with request fields
                     //(this.act)action and (this.fields)fields will be from component's data
-                    axios.post(this.act, this.fields).then(response => {
-                        console.log(response);
+                    await axios.post(this.act, this.fields).then(response => {
                         this.loaded = true;
                         this.success = true;
                         this.goterror = false;
@@ -41,7 +39,9 @@ export default {
                         this.registerDialog = false;
 
 
-                    }).catch(error => {
+
+                    })
+                    .catch(error => {
                         //Catch will excecuted when the validation got error
                         this.loaded = true;
                         this.goterror = true;

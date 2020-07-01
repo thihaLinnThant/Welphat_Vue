@@ -99,10 +99,10 @@
                   :error-messages="errors.name"
                   required
                   name="name"
-                  v-model="fields.edit_name"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                    v-model="fields.edit_name"
+                    outlined
+                  ></v-text-field>
+                </v-col>
               <v-col cols="12">
                 <v-textarea
                   name="bio"
@@ -298,6 +298,7 @@ export default {
     },
     cropSuccess(imgDataUrl, field) {
       this.fields.image = imgDataUrl;
+      console.log(imgDataUrl)
       this.fields.edit_image = imgDataUrl;
 
       console.log("-------- crop success --------");
