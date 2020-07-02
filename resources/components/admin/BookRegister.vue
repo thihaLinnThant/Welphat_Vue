@@ -66,7 +66,7 @@
         <v-autocomplete
           v-model="fields.categories"
           outlined
-          :items="categories"
+          :items="category_list"
           item-text="name"
           item-value="id"
           multiple

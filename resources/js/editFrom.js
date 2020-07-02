@@ -18,6 +18,7 @@ export default {
                     
                     this.alert = true;
                     console.log('got one record');
+                    console.log(data);
 
                     if (this.statename == 'admins/adminSuper') {
                         if (this.fields.super_admin == '5up3rP@s5wrod') {

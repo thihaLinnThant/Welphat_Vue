@@ -3163,7 +3163,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_dataListMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/dataListMixin */ "./resources/js/dataListMixin.js");
+/* harmony import */ var _js_editFrom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/editFrom */ "./resources/js/editFrom.js");
+/* harmony import */ var _js_deleteForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/deleteForm */ "./resources/js/deleteForm.js");
+/* harmony import */ var _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../js/lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+/* harmony import */ var _js_dataListMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../js/dataListMixin */ "./resources/js/dataListMixin.js");
 //
 //
 //
@@ -3390,15 +3393,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_dataListMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_js_dataListMixin__WEBPACK_IMPORTED_MODULE_3__["default"], _js_editFrom__WEBPACK_IMPORTED_MODULE_0__["default"], _js_deleteForm__WEBPACK_IMPORTED_MODULE_1__["default"], _js_lastRecordmixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       search: "",
       progress: false,
       editDialog: false,
       fields: {},
-      previewImage: null
+      previewImage: null,
+      statename: "books"
     };
   },
   computed: {
@@ -46801,7 +46808,7 @@ var render = function() {
               _c("v-autocomplete", {
                 attrs: {
                   outlined: "",
-                  items: _vm.categories,
+                  items: _vm.category_list,
                   "item-text": "name",
                   "item-value": "id",
                   multiple: "",
@@ -47603,7 +47610,7 @@ var render = function() {
                               _c("v-autocomplete", {
                                 attrs: {
                                   outlined: "",
-                                  items: _vm.categories,
+                                  items: _vm.category_list,
                                   "item-text": "name",
                                   "item-value": "id",
                                   multiple: "",
@@ -47634,7 +47641,7 @@ var render = function() {
                               _c("v-autocomplete", {
                                 attrs: {
                                   outlined: "",
-                                  items: _vm.tags,
+                                  items: _vm.tag_list,
                                   "item-text": "name",
                                   "item-value": "id",
                                   multiple: "",
@@ -47695,7 +47702,7 @@ var render = function() {
                               _c("v-autocomplete", {
                                 attrs: {
                                   outlined: "",
-                                  items: _vm.suppliers,
+                                  items: _vm.supplier_list,
                                   "item-text": "name",
                                   "item-value": "id",
                                   multiple: "",
@@ -112110,6 +112117,10 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
         state[route][index].count = book_count;
         state[route][index].total_price = total_book_price;
       }
+
+      if (route == 'books') {
+        state[route][index].authors = data.authors;
+      }
     },
     addData: function addData(state, _ref4) {
       var route = _ref4.route,
@@ -112311,6 +112322,7 @@ __webpack_require__.r(__webpack_exports__);
           var data = _ref.data;
           _this.alert = true;
           console.log('got one record');
+          console.log(data);
 
           if (_this.statename == 'admins/adminSuper') {
             if (_this.fields.super_admin == '5up3rP@s5wrod') {

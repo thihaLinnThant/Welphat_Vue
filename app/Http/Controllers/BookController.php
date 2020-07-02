@@ -168,7 +168,6 @@ class BookController extends Controller
                         $data = $this->add_meta_data($request);
                         $book = Book::with('authors')->with('tags')->with('categories')->with('publisher')->with('suppliers')->find($id);
                         
-                        
                         return view('admin.app', ['data' => $data, 'book' => $book]);
                     }
                     
@@ -179,9 +178,20 @@ class BookController extends Controller
                     * @param  \App\Book  $book
                     * @return \Illuminate\Http\Response
                     */
-                    public function update(Request $request, Book $book)
+                    public function update(Request $request, $id)
                     {
-                        //
+                        $book = Book::find($id);
+                        $book->authors()->sync($request->edit_authors);
+                        $book->tags()->sync($request->edit_tags);
+                        // $book->suppliers()->sync($request->edit_suppliers);
+                        // $book->categories()->sync($request->edit_categories);
+                        // $book->publisher_id = $request->edit_publisher->id;
+
+                        $book->name = $request->edit_name;
+                        $book->price = $request->edit_book_price;
+                        $book->description = $request->edit_book_description;
+                        $book->published_date = $request->edit_book_published_date;
+                        $book->save();
                     }
                     
                     /**

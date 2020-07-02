@@ -57,7 +57,7 @@
                 <v-autocomplete
                   v-model="fields.edit_categories"
                   outlined
-                  :items="categories"
+                  :items="category_list"
                   item-text="name"
                   item-value="id"
                   multiple
@@ -70,7 +70,7 @@
                 <v-autocomplete
                   v-model="fields.edit_tags"
                   outlined
-                  :items="tags"
+                  :items="tag_list"
                   item-text="name"
                   item-value="id"
                   multiple
@@ -95,7 +95,7 @@
                 <v-autocomplete
                   v-model="fields.edit_suppliers"
                   outlined
-                  :items="suppliers"
+                  :items="supplier_list"
                   item-text="name"
                   item-value="id"
                   multiple
@@ -224,17 +224,22 @@
 </template>
 
 <script>
+import EditMixin from "../../js/editFrom";
+import DeleteMixin from "../../js/deleteForm";
+import lastRecordMixin from "../../js/lastRecordmixin";
 import dataListMixin from "../../js/dataListMixin";
 
 export default {
-  mixins: [dataListMixin],
+  mixins: [dataListMixin,EditMixin,DeleteMixin,lastRecordMixin],
   data() {
     return {
       search: "",
       progress: false,
       editDialog: false,
       fields: {},
-      previewImage: null
+      previewImage: null,
+      statename: "books",
+
     };
   },
 

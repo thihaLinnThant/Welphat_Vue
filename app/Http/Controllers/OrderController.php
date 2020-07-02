@@ -114,9 +114,7 @@ class OrderController extends Controller
      */
     public function update($id,Request $request)
     {
-
         $order = Order::with('book_orders')->find($id);
-
         foreach($request->edit_books as $book){
             $orderBook = $order->book_orders->where('book_id', $book['book_id'])->first();
             if(isset($book['removed']) && $book['removed']){

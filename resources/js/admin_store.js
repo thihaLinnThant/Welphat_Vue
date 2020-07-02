@@ -81,6 +81,10 @@ export default new Vuex.Store({
                 state[route][index].count = book_count;
                 state[route][index].total_price = total_book_price;
             }
+            if(route == 'books'){
+                state[route][index].authors = data.authors;
+                
+            }
         },
         addData(state, { route, data }) {
 
