@@ -13,6 +13,7 @@ export default {
 
                 console.log('got updated');
                 // get edited data
+                console.log(response);
 
                 axios.get(`/api/admin/${this.statename}/onerecord/${id}`).then(({ data }) => {
                     

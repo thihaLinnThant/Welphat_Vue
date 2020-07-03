@@ -183,9 +183,9 @@ class BookController extends Controller
                         $book = Book::find($id);
                         $book->authors()->sync($request->edit_authors);
                         $book->tags()->sync($request->edit_tags);
-                        // $book->suppliers()->sync($request->edit_suppliers);
-                        // $book->categories()->sync($request->edit_categories);
-                        // $book->publisher_id = $request->edit_publisher->id;
+                        $book->suppliers()->sync($request->edit_suppliers);
+                        $book->categories()->sync($request->edit_categories);
+                        $book->publisher_id = $request->edit_publisher;
 
                         $book->name = $request->edit_name;
                         $book->price = $request->edit_book_price;

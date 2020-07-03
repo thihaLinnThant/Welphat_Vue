@@ -3003,7 +3003,8 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       this.$refs.form.validate();
 
-      if (!this.fields.book_name || !this.fields.book_description || !this.fields.authors || !this.fields.book_price || !this.fields.book_published_date || !this.fields.tags || !this.fields.categories || !this.fields.publisher || !this.fields.supplier) {
+      if (!this.fields.book_name || !this.fields.book_description || !this.fields.authors || this.fields.authors.length < 0 || !this.fields.book_price || !this.fields.book_published_date || !this.fields.tags || this.fields.tags.length < 0 || !this.fields.categories || this.fields.categories.length < 0 || !this.fields.publisher || !this.fields.supplier || !this.fields.supplier.length < 0) {
+        console.log('invalid');
         return;
       }
 
@@ -3392,6 +3393,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3463,6 +3465,38 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
       }
+    },
+    openEditDialog: function openEditDialog(book) {
+      this.editDialog = true;
+      this.target_item = book;
+      this.fields.edit_name = book.name;
+      this.fields.edit_authors = book.authors.map(function (value) {
+        return value.id;
+      });
+      this.fields.edit_book_description = book.description;
+      this.fields.edit_book_price = book.price;
+      this.fields.edit_book_published_date = book.published_date;
+      this.fields.edit_categories = book.categories.map(function (value) {
+        return value.id;
+      });
+      this.fields.edit_tags = book.tags.map(function (value) {
+        return value.id;
+      });
+      this.fields.edit_publisher = book.publisher.id;
+      this.fields.edit_suppliers = book.suppliers.map(function (value) {
+        return value.id;
+      });
+      this.fields.edit_image = book.thumb;
+    },
+    save: function save() {
+      this.$refs.form.validate();
+
+      if (!this.fields.edit_book_name || !this.fields.edit_book_description || !this.fields.edit_authors || this.fields.edit_authors.length < 0 || !this.fields.edit_book_price || !this.fields.edit_book_published_date || !this.fields.edit_tags || this.fields.edit_tags.length < 0 || !this.fields.edit_categories || this.fields.edit_categories.length < 0 || !this.fields.edit_publisher || !this.fields.edit_supplier || !this.fields.edit_supplier.length < 0) {
+        console.log('invalid');
+        return;
+      }
+
+      submitEdit(target_item.id);
     }
   }
 });
@@ -46701,7 +46735,7 @@ var render = function() {
                   label: "Author(s)",
                   rules: [
                     function(v) {
-                      return !!v || "Author is required"
+                      return v.length > 0 || "Author is required"
                     }
                   ],
                   required: ""
@@ -46815,7 +46849,7 @@ var render = function() {
                   label: "Categories",
                   rules: [
                     function(v) {
-                      return !!v || "Category is required"
+                      return v.length > 0 || "Category is required"
                     }
                   ],
                   required: ""
@@ -46844,10 +46878,10 @@ var render = function() {
                   outlined: "",
                   multiple: "",
                   label: "Tags",
-                  requried: "",
+                  required: "",
                   rules: [
                     function(v) {
-                      return !!v || "Tag is required"
+                      return v.length > 0 || "Tag is required"
                     }
                   ]
                 },
@@ -46899,25 +46933,25 @@ var render = function() {
             [
               _c("v-autocomplete", {
                 attrs: {
-                  items: _vm.supplier_list,
+                  items: _vm.tag_list,
                   "item-text": "name",
                   "item-value": "id",
                   outlined: "",
-                  label: "Supplier",
+                  multiple: "",
+                  label: "Suppliers",
                   required: "",
-                  requried: "",
                   rules: [
                     function(v) {
-                      return !!v || "Supplier is required"
+                      return v.length > 0 || "Supplier is required"
                     }
                   ]
                 },
                 model: {
-                  value: _vm.fields.supplier,
+                  value: _vm.fields.suppliers,
                   callback: function($$v) {
-                    _vm.$set(_vm.fields, "supplier", $$v)
+                    _vm.$set(_vm.fields, "suppliers", $$v)
                   },
-                  expression: "fields.supplier"
+                  expression: "fields.suppliers"
                 }
               })
             ],
@@ -47444,340 +47478,397 @@ var render = function() {
         },
         [
           _c(
-            "v-card",
+            "v-form",
+            {
+              ref: "form",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.save()
+                }
+              }
+            },
             [
-              _c("v-card-title", [
-                _c("span", { staticClass: "headline" }, [_vm._v("Edit Book")])
-              ]),
-              _vm._v(" "),
               _c(
-                "v-card-text",
+                "v-card",
                 [
+                  _c("v-card-title", [
+                    _c("span", { staticClass: "headline" }, [
+                      _vm._v("Edit Book")
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "v-container",
+                    "v-card-text",
                     [
                       _c(
-                        "v-row",
+                        "v-container",
                         [
                           _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
+                            "v-row",
                             [
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "Name",
-                                  requried: "",
-                                  outlined: ""
-                                },
-                                model: {
-                                  value: _vm.fields.edit_name,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_name", $$v)
-                                  },
-                                  expression: "fields.edit_name"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  outlined: "",
-                                  items: _vm.author_list,
-                                  "item-text": "name",
-                                  "item-value": "id",
-                                  multiple: "",
-                                  label: "Authors",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Author is required"
-                                    }
-                                  ],
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.fields.edit_authors,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_authors", $$v)
-                                  },
-                                  expression: "fields.edit_authors"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12" } },
-                            [
-                              _c("v-textarea", {
-                                attrs: {
-                                  required: "",
-                                  outlined: "",
-                                  label: "Description",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Description is required"
-                                    }
-                                  ]
-                                },
-                                model: {
-                                  value: _vm.fields.edit_book_description,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.fields,
-                                      "edit_book_description",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "fields.edit_book_description"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: {
-                                  required: "",
-                                  outlined: "",
-                                  label: "Price",
-                                  suffix: "ks",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Price is required"
-                                    }
-                                  ]
-                                },
-                                model: {
-                                  value: _vm.fields.edit_book_price,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_book_price", $$v)
-                                  },
-                                  expression: "fields.edit_book_price"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: {
-                                  outlined: "",
-                                  label: "Publish date",
-                                  placeholder: "2020/05/29",
-                                  requried: "",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Date is required"
-                                    }
-                                  ]
-                                },
-                                model: {
-                                  value: _vm.fields.edit_book_published_date,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.fields,
-                                      "edit_book_published_date",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "fields.edit_book_published_date"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  outlined: "",
-                                  items: _vm.category_list,
-                                  "item-text": "name",
-                                  "item-value": "id",
-                                  multiple: "",
-                                  label: "Categories",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Category is required"
-                                    }
-                                  ],
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.fields.edit_categories,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_categories", $$v)
-                                  },
-                                  expression: "fields.edit_categories"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  outlined: "",
-                                  items: _vm.tag_list,
-                                  "item-text": "name",
-                                  "item-value": "id",
-                                  multiple: "",
-                                  label: "Tags",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Tag is required"
-                                    }
-                                  ],
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.fields.edit_tags,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_tags", $$v)
-                                  },
-                                  expression: "fields.edit_tags"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  items: _vm.publisher_list,
-                                  "item-text": "name",
-                                  "item-value": "id",
-                                  outlined: "",
-                                  label: "Publisher",
-                                  requried: "",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Publisher is required"
-                                    }
-                                  ]
-                                },
-                                model: {
-                                  value: _vm.fields.edit_publisher,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_publisher", $$v)
-                                  },
-                                  expression: "fields.edit_publisher"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", md: "6" } },
-                            [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  outlined: "",
-                                  items: _vm.supplier_list,
-                                  "item-text": "name",
-                                  "item-value": "id",
-                                  multiple: "",
-                                  label: "Suppliers",
-                                  rules: [
-                                    function(v) {
-                                      return !!v || "Supplier is required"
-                                    }
-                                  ],
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.fields.edit_suppliers,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.fields, "edit_suppliers", $$v)
-                                  },
-                                  expression: "fields.edit_suppliers"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-col", { attrs: { cols: "12", md: "6" } }, [
-                            _c("input", {
-                              attrs: {
-                                type: "file",
-                                requried: "",
-                                rules: [
-                                  function(v) {
-                                    return !!v || "Date is required"
-                                  }
-                                ]
-                              },
-                              on: { change: _vm.uploadImage }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-card",
-                            { attrs: { width: "250px" } },
-                            [
-                              _vm.previewImage
-                                ? _c(
-                                    "v-img",
-                                    {
-                                      staticClass: "white--text align-end",
-                                      attrs: {
-                                        height: "200px",
-                                        src: _vm.previewImage
-                                      }
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Name",
+                                      requried: "",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "Name is required"
+                                        }
+                                      ],
+                                      outlined: ""
                                     },
-                                    [
-                                      _c("v-card-title", [
-                                        _vm._v(_vm._s(_vm.fields.edit_name))
-                                      ])
-                                    ],
-                                    1
-                                  )
-                                : _c(
-                                    "v-img",
-                                    {
-                                      staticClass: "white--text align-end",
-                                      attrs: {
-                                        height: "200px",
-                                        src: _vm.fields.edit_image
-                                      }
+                                    model: {
+                                      value: _vm.fields.edit_name,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.fields, "edit_name", $$v)
+                                      },
+                                      expression: "fields.edit_name"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-autocomplete", {
+                                    attrs: {
+                                      outlined: "",
+                                      items: _vm.author_list,
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      multiple: "",
+                                      label: "Authors",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            v.length > 0 || "Author is required"
+                                          )
+                                        }
+                                      ],
+                                      required: ""
                                     },
-                                    [
-                                      _c("v-card-title", [
-                                        _vm._v(_vm._s(_vm.fields.edit_name))
-                                      ])
-                                    ],
-                                    1
-                                  )
+                                    model: {
+                                      value: _vm.fields.edit_authors,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_authors",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_authors"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12" } },
+                                [
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      required: "",
+                                      outlined: "",
+                                      label: "Description",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            v.length > 0 ||
+                                            "Description is required"
+                                          )
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_book_description,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_book_description",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_book_description"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      required: "",
+                                      outlined: "",
+                                      label: "Price",
+                                      suffix: "ks",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "Price is required"
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_book_price,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_book_price",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_book_price"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      outlined: "",
+                                      label: "Publish date",
+                                      placeholder: "2020/05/29",
+                                      requried: "",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "Date is required"
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value:
+                                        _vm.fields.edit_book_published_date,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_book_published_date",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "fields.edit_book_published_date"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-autocomplete", {
+                                    attrs: {
+                                      outlined: "",
+                                      items: _vm.category_list,
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      multiple: "",
+                                      label: "Categories",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            v.length > 0 ||
+                                            "Category is required"
+                                          )
+                                        }
+                                      ],
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_categories,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_categories",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_categories"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-autocomplete", {
+                                    attrs: {
+                                      outlined: "",
+                                      items: _vm.tag_list,
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      multiple: "",
+                                      label: "Tags",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            v.length > 0 || "Tag is required"
+                                          )
+                                        }
+                                      ],
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_tags,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.fields, "edit_tags", $$v)
+                                      },
+                                      expression: "fields.edit_tags"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-autocomplete", {
+                                    attrs: {
+                                      items: _vm.publisher_list,
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      outlined: "",
+                                      label: "Publisher",
+                                      requried: "",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "Publisher is required"
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_publisher,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_publisher",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_publisher"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c("v-autocomplete", {
+                                    attrs: {
+                                      outlined: "",
+                                      items: _vm.supplier_list,
+                                      "item-text": "name",
+                                      "item-value": "id",
+                                      multiple: "",
+                                      label: "Suppliers",
+                                      rules: [
+                                        function(v) {
+                                          return (
+                                            v.length > 0 ||
+                                            "Supplier is required"
+                                          )
+                                        }
+                                      ],
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.fields.edit_suppliers,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.fields,
+                                          "edit_suppliers",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "fields.edit_suppliers"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-col", { attrs: { cols: "12", md: "6" } }, [
+                                _c("input", {
+                                  attrs: {
+                                    type: "file",
+                                    requried: "",
+                                    rules: [
+                                      function(v) {
+                                        return !!v || "Date is required"
+                                      }
+                                    ]
+                                  },
+                                  on: { change: _vm.uploadImage }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "v-card",
+                                { attrs: { width: "250px" } },
+                                [
+                                  _vm.previewImage
+                                    ? _c(
+                                        "v-img",
+                                        {
+                                          staticClass: "white--text align-end",
+                                          attrs: {
+                                            height: "200px",
+                                            src: _vm.previewImage
+                                          }
+                                        },
+                                        [
+                                          _c("v-card-title", [
+                                            _vm._v(_vm._s(_vm.fields.edit_name))
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "v-img",
+                                        {
+                                          staticClass: "white--text align-end",
+                                          attrs: {
+                                            height: "200px",
+                                            src: _vm.fields.edit_image
+                                          }
+                                        },
+                                        [
+                                          _c("v-card-title", [
+                                            _vm._v(_vm._s(_vm.fields.edit_name))
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
@@ -47786,47 +47877,42 @@ var render = function() {
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { text: "" },
-                      on: {
-                        click: function($event) {
-                          _vm.editDialog = false
-                          _vm.target_item = ""
-                          _vm.previewImage = null
-                        }
-                      }
-                    },
-                    [_vm._v("Cancel")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      attrs: {
-                        color: "primary",
-                        text: "",
-                        type: "submit",
-                        outlined: ""
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.submitEdit(_vm.target_item.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Save")]
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.editDialog = false
+                              _vm.target_item = ""
+                              _vm.previewImage = null
+                            }
+                          }
+                        },
+                        [_vm._v("Cancel")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            color: "primary",
+                            text: "",
+                            type: "submit",
+                            outlined: ""
+                          }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
@@ -47994,20 +48080,7 @@ var render = function() {
                         {
                           on: {
                             click: function($event) {
-                              _vm.editDialog = true
-                              _vm.target_item = book
-                              _vm.fields.edit_name = book.name
-                              _vm.fields.edit_authors = book.authors
-                              _vm.fields.edit_book_description =
-                                book.description
-                              _vm.fields.edit_book_price = book.price
-                              _vm.fields.edit_book_published_date =
-                                book.published_date
-                              _vm.fields.edit_categories = book.categories
-                              _vm.fields.edit_tags = book.tags
-                              ;(_vm.fields.edit_publisher = book.publisher),
-                                (_vm.fields.edit_suppliers = book.suppliers),
-                                (_vm.fields.edit_image = book.thumb)
+                              return _vm.openEditDialog(book)
                             }
                           }
                         },
@@ -112318,6 +112391,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.editDialog = false;
         console.log('got updated'); // get edited data
 
+        console.log(response);
         axios.get("/api/admin/".concat(_this.statename, "/onerecord/").concat(id)).then(function (_ref) {
           var data = _ref.data;
           _this.alert = true;
@@ -112449,8 +112523,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
-module.exports = __webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

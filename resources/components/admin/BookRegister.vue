@@ -28,7 +28,7 @@
           item-value="id"
           multiple
           label="Author(s)"
-          :rules="[v => !!v || 'Author is required']"
+          :rules="[v => v.length > 0 || 'Author is required']"
           required
         ></v-autocomplete>
       </v-col>
@@ -71,7 +71,7 @@
           item-value="id"
           multiple
           label="Categories"
-          :rules="[v => !!v || 'Category is required']"
+          :rules="[v => v.length > 0 || 'Category is required']"
           required
         ></v-autocomplete>
       </v-col>
@@ -84,8 +84,8 @@
           outlined
           multiple
           label="Tags"
-          requried
-          :rules="[v => !!v || 'Tag is required']"
+          required
+          :rules="[v => v.length > 0 || 'Tag is required']"
         ></v-autocomplete>
       </v-col>
       <v-col cols="12" md="6">
@@ -102,15 +102,15 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-autocomplete
-          v-model="fields.supplier"
-          :items="supplier_list"
+          v-model="fields.suppliers"
+          :items="tag_list"
           item-text="name"
           item-value="id"
           outlined
-          label="Supplier"
+          multiple
+          label="Suppliers"
           required
-          requried
-          :rules="[v => !!v || 'Supplier is required']"
+          :rules="[v => v.length > 0 || 'Supplier is required']"
         ></v-autocomplete>
       </v-col>
 
@@ -161,14 +161,15 @@ export default {
       if (
         !this.fields.book_name ||
         !this.fields.book_description ||
-        !this.fields.authors ||
+        !this.fields.authors || this.fields.authors.length < 0 ||
         !this.fields.book_price ||
         !this.fields.book_published_date ||
-        !this.fields.tags ||
-        !this.fields.categories ||
+        !this.fields.tags || this.fields.tags.length < 0 ||
+        !this.fields.categories || this.fields.categories.length < 0 ||
         !this.fields.publisher ||
-        !this.fields.supplier
+        !this.fields.supplier || !this.fields.supplier.length < 0
       ) {
+        console.log('invalid');
         return;
       }
       this.submit();
