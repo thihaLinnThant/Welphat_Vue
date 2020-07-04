@@ -7,8 +7,9 @@ export default {
     },
     methods: {
         submitEdit(id) {
-
+          console.log(this.fields);
             axios.post(`/admin/${this.statename}/update/${id}`, this.fields).then(response => {
+              console.log(response);
             this.editDialog = false;
 
                 console.log('got updated');
@@ -16,7 +17,7 @@ export default {
                 console.log(response);
 
                 axios.get(`/api/admin/${this.statename}/onerecord/${id}`).then(({ data }) => {
-                    
+
                     this.alert = true;
                     console.log('got one record');
                     console.log(data);

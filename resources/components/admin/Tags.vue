@@ -117,14 +117,16 @@
                     </template>
                     <span>edit</span>
                   </v-tooltip>
+                  <router-link :to="'/admin/tags/'+tag.id" style="text-decoration:none">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn class="mt-1" text icon v-on="on">
                         <v-icon>mdi-eye</v-icon>
                       </v-btn>
                     </template>
-                    <span>view books</span>
+                    <span>view</span>
                   </v-tooltip>
+                  </router-link>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn @click="deleteDialog = true; target_item = tag" class="mt-1" text icon v-on="on">

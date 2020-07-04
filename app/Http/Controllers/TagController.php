@@ -34,14 +34,24 @@ class TagController extends Controller
     }
 
     public function get_lastTag_api() {
-        $data = Tag::latest()->first();        
+        $data = Tag::latest()->first();
         return response()->json($data);
     }
 
     public function get_oneRecord_api($id){
-        $data = Tag::find($id);
+        $data = Tag::with('books')->find($id);
+        for($i= 0 ;$i< count($data->books);$i++){
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');
+        }
+        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
         return response()->json($data);
     }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -63,7 +73,7 @@ class TagController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        
+
         Tag::create([ 'name' => $request->name ]);
 
         return response()->json(null,200);
@@ -114,7 +124,7 @@ class TagController extends Controller
         $request->validate([
             'edit_name' => 'required'
         ]);
-        
+
         $category = Tag::find($id);
         $category->name = $request->edit_name;
         $category->save();

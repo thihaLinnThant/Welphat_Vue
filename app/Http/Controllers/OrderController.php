@@ -15,6 +15,18 @@ class OrderController extends Controller
         foreach($collection as $order){
             $order->total_price = $order->totalPrice();
             $order->count = $order->count();
+            $count = 0;
+            foreach($order->book_orders as $book){
+              if($book->book_id){
+                $order->book_orders[$count]->deleted = false;
+                $order->book_orders[$count]->thumb = asset('storage/images/books/'. $book->book_id . '/thumb_nail.png');
+              }else{
+                $order->book_orders[$count]->deleted = true;
+                                    $order->book_orders[$count]->thumb = null;
+              }
+              $count++;
+              
+            }
 
             $orders->push($order);
         }

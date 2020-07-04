@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/books/register', 'BookController@register_web');
     Route::post('/admin/books/update/{id}', 'BookController@update');
     Route::get('/admin/books/update/{id}', 'BookController@update');
+    Route::get('/admin/books/delete/{id}','BookController@destroy');
+    Route::post('/admin/books/delete/{id}','BookController@destroy');
 
 
     Route::get('/admin/authors', 'AuthorController@get_authors_web');
@@ -79,6 +81,9 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/tags/addtag', 'TagController@create');
     Route::post('/admin/tags/update/{id}', 'TagController@update');
     Route::post('/admin/tags/delete/{id}','TagController@destroy');
+    Route::post('/admin/tags/{id}','TagController@singleView');
+    Route::get('/admin/tags/{id}','TagController@singleView');
+
 
     Route::get('/admin/suppliers', 'SupplierController@get_suppliers_web');
     Route::post('/admin/suppliers/addsupplier', 'SupplierController@create');

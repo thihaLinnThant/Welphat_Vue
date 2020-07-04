@@ -53,7 +53,7 @@ class AuthorController extends Controller
     {
         $data = Author::with('books')->find($id);
         for($i= 0 ;$i< count($data->books);$i++){
-            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');  
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');
         }
         $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
         return response()->json($data);
@@ -161,6 +161,7 @@ class AuthorController extends Controller
         $author = Author::find($id);
         $author->name = $request->edit_name;
         $author->bio = $request->edit_bio;
+
         $file = file_get_contents($request->edit_image);
         $path = '/images/authors/' . $id . "/image_1.png";
         Storage::disk('public')->put($path, $file);

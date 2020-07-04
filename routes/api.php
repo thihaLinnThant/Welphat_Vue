@@ -49,7 +49,7 @@ Route::get('/admin/categories/onerecord/{id}', 'CategoryController@get_oneRecord
 Route::get('/admin/tags', 'TagController@get_tags_api');
 Route::get('/admin/tags/lastrecord','TagController@get_lastTag_api');
 Route::get('/admin/tags/onerecord/{id}', 'TagController@get_oneRecord_api');
-
+Route::get('/admin/tags/{id}', 'TagController@get_oneRecord_api');
 
 Route::get('/admin/publishers', 'PublisherController@get_publishers_api');
 Route::get('/admin/publishers/lastrecord','PublisherController@get_lastPublisher_api');

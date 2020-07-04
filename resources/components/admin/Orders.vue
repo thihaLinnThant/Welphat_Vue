@@ -194,14 +194,14 @@
           </template>
           <template #item.user_name="{value}">{{value}}</template>
           <template #item.count="{value}">
-            <!-- <p>available:({{value.available_count}})</p>
-            <p v-if=value.deleted_count style="color : red ">deleted:({{value.deleted_count}})</p>-->
-            <p>{{value}}</p>
+            <p>available:({{value.available_count}})</p>
+            <p v-if=value.deleted_count style="color : red ">deleted:({{value.deleted_count}})</p>
+
           </template>
           <template #item.total_price="{value}">
-            <!-- <p>available:({{value.available_book_price}}ks)</p>
-            <p v-if=value.deleted_book_price style="color : red ">deleted:({{value.deleted_book_price}}ks)</p>-->
-            <p>{{value}}</p>
+            <p>available:({{value.available_book_price}}ks)</p>
+            <p v-if=value.deleted_book_price style="color : red ">deleted:({{value.deleted_book_price}}ks)</p>
+
           </template>
           <template #item.created_at="{value}">{{dateFormat(value)}}</template>
           <template #item.user.ph_no="{value}">{{value}}</template>
@@ -252,32 +252,38 @@
               </v-tooltip>
             </div>
           </template>
-          <template #expanded-item="{item}">
-            <td :colspan="headers.length+1">
-              <v-container>
-                <v-row align="start">
-                  <v-card dense v-for="(book,index) in item.book_orders" :key="index" class="ma-2">
-                    <v-list-item>
-                      <v-list-item-avatar tile size="80">
-                        <img :src="book.thumb" />
-                      </v-list-item-avatar>
-                      <v-list-item-subtitle>
-                        <!-- <span style="color: red" v-if=book.deleted><s>{{book.book_name}}<br>qty:({{book.qty}})</s><br>!Deleted</span> -->
-                        <span>
-                          {{book.book_name}}
-                          <br />
-                          qty:({{book.qty}})
-                        </span>
-                      </v-list-item-subtitle>
-                      <v-card-actions>
-                        <v-btn small dense>view</v-btn>
-                      </v-card-actions>
-                    </v-list-item>
-                  </v-card>
-                </v-row>
-              </v-container>
-            </td>
-          </template>
+          <template #expanded-item={item}>
+             <td :colspan="headers.length+1">
+               <v-container>
+                 <v-row align="start">
+                   <v-card
+                     dense
+                     v-for="(book,index) in item.book_orders"
+                     :key="index"
+                     class="ma-2"
+                   >
+                     <v-list-item>
+                       <v-list-item-avatar
+                         tile
+                         size="80"
+                       >
+                         <img
+                           :src='book.thumb'
+                         >
+                       </v-list-item-avatar>
+                       <v-list-item-subtitle>
+                         <span style="color: red" v-if="book.deleted"><s>{{book.book_name}}<br>qty:({{book.qty}})</s><br>!Deleted</span>
+                         <span v-else>{{book.book_name}}<br>qty:({{book.qty}})</span>
+                       </v-list-item-subtitle>
+                       <v-card-actions>
+                         <v-btn v-if="!book.deleted" small dense>view</v-btn>
+                       </v-card-actions>
+                     </v-list-item>
+                   </v-card>
+                 </v-row>
+               </v-container>
+             </td>
+           </template>
         </v-data-table>
       </v-card>
     </div>

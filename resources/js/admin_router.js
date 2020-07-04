@@ -17,6 +17,7 @@ import Admin from '../components/admin/Admins'
 import User from '../components/admin/Users';
 import AuthorView from '../components/admin/AuthorView';
 import BookView from '../components/admin/BookView';
+import TagView from '../components/admin/TagView'
 let router = new VueRouter({
     mode: 'history',
     routes: [
@@ -32,7 +33,8 @@ let router = new VueRouter({
         { path: '/admin/admins', component: Admin, name: 'admins' },
         { path: '/admin/users', component: User, name : 'users'},
         { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'},
-        { path: '/admin/books/:id',component: BookView, name: 'bookview'}
+        { path: '/admin/books/:id',component: BookView, name: 'bookview'},
+        { path: '/admin/tags/:id',component: TagView, name: 'tagview'}
     ]
 });
 
@@ -75,6 +77,9 @@ router.beforeEach((to, from, next) => {
     }
     else if( to.path === `/admin/books/${to.params.id}`){
         if (Store.state.bookview.length > 0) { next() } else { getApiData(to.path, to.name) }
+    }
+    else if( to.path === `/admin/tags/${to.params.id}`){
+      if (Store.state.tagview.length > 0) { next() } else { getApiData(to.path, to.name)}
     }
     else if (to.path === '/admin') { next(); }
 

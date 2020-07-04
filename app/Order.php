@@ -25,30 +25,35 @@ class Order extends Model
 
     public function totalPrice()
     {
-        // $available_book_price = 0;
-        // $deleted_book_price = 0;
+        $available_book_price = 0;
+        $deleted_book_price = 0;
         $total_book_price = 0;
         foreach ($this->book_orders as $book) {
             $total_book_price += ($book->book_price * $book->qty);
-            // ($book->book_id)? $available_book_price += ($book->book_price * $book->qty) : $deleted_book_price += ($book->book_price * $book->qty);
+            ($book->book_id)? $available_book_price += ($book->book_price * $book->qty) : $deleted_book_price += ($book->book_price * $book->qty);
         }
-        return $total_book_price;
-        //++++++++++++++++++++++++++ appreciate ur work ++++++++++++++++++
-            // 'available_book_price' => $available_book_price
-            // 'deleted_book_price' => $deleted_book_price,
+        return collect([
+               'available_book_price' => $available_book_price,
+               'deleted_book_price' => $deleted_book_price,
+               'total_book_price' => $total_book_price,
+           ]);
     }
 
     public function count()
     {
 
-        $total_count = $this->book_orders->sum('qty');
-        // $available_count = 0;
-        // $deleted_count = 0;
+      $total_count = $this->book_orders->sum('qty');
+      $available_count = 0;
+      $deleted_count = 0;
 
-        // foreach ($this->book_orders as $book) {
-        //     ($book->book_id) ? $available_count += $book->qty : $deleted_count += $book->qty;
-        // }
-        return $total_count;
+      foreach($this->book_orders as $book){
+          ($book->book_id)? $available_count += $book->qty : $deleted_count += $book->qty;
+      }
+      return collect([
+          'available_count' => $available_count,
+          'deleted_count' => $deleted_count,
+          'total_count' => $total_count,
+      ]);
 
     }
 }

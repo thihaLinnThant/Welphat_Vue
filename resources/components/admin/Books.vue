@@ -1,5 +1,28 @@
 <template>
   <v-container fluid>
+
+    <v-snackbar v-model="alert" color="success">
+      {{alertMessage}}
+      <v-btn text @click="alert = false">Close</v-btn>
+    </v-snackbar>
+    <v-dialog v-model="deleteDialog" max-width="350" persistent>
+      <v-card>
+        <v-card-title>Delete Book</v-card-title>
+        <v-card-text>Do you want to delete this book?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="deleteDialog = false; target_item = '';" color="primary" outlined>No</v-btn>
+
+          <v-btn
+            text
+            @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);"
+          >Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+
     <v-dialog v-model="editDialog" max-width="1000" persistent>
       <v-form @submit.prevent="save()" ref="form">
         <v-card>
@@ -187,7 +210,7 @@
             <v-btn
               @click="openEditDialog(book)"
             >Edit</v-btn>
-            <v-btn>Delete</v-btn>
+            <v-btn @click="deleteDialog = true; target_item = book">Delete</v-btn>
           </v-card-actions>
 
           <v-card-text>
@@ -240,6 +263,7 @@ export default {
       fields: {},
       previewImage: null,
       statename: "books",
+      deleteDialog : false
 
     };
   },
@@ -301,7 +325,7 @@ export default {
       this.$refs.form.validate();
 
       if (
-        !this.fields.edit_book_name ||
+        !this.fields.edit_name ||
         !this.fields.edit_book_description ||
         !this.fields.edit_authors || this.fields.edit_authors.length < 0 ||
         !this.fields.edit_book_price ||
@@ -309,12 +333,12 @@ export default {
         !this.fields.edit_tags || this.fields.edit_tags.length < 0 ||
         !this.fields.edit_categories || this.fields.edit_categories.length < 0 ||
         !this.fields.edit_publisher ||
-        !this.fields.edit_supplier || !this.fields.edit_supplier.length < 0
+        !this.fields.edit_suppliers || !this.fields.edit_suppliers.length < 0
       ) {
         console.log('invalid');
         return;
       }
-      submitEdit(target_item.id)
+      this.submitEdit(this.target_item.id)
     }
   }
 };

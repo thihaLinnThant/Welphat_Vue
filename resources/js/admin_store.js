@@ -23,6 +23,7 @@ export default new Vuex.Store({
         orders: [],
         authorview: [],
         bookview: [],
+        tagview : [],
         pagination_length: 0,
         pagination_current: 0
     },
@@ -83,12 +84,17 @@ export default new Vuex.Store({
             }
             if(route == 'books'){
                 state[route][index].authors = data.authors;
-                
+                state[route][index].categories = data.category;
+                state[route][index].tags = data.tags;
+                state[route][index].suppliers = data.suppliers;
+                state[route][index].publisher = data.publisher;
+
             }
+
         },
         addData(state, { route, data }) {
-
-            if (route === 'authorview' || route === 'bookview') {
+            console.log(route);
+            if (route === 'authorview' || route === 'bookview' || route === 'tagview') {
                 state[route] = data;
             } else {
                 state[route] = data[route];
