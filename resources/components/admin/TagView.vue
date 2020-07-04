@@ -1,7 +1,8 @@
 <template>
     <div>
       <v-row class="tagDisplayContainer">
-        #{{tags.name}}
+        <p style="text-align: center;">Tag<br> <span style="font-size: 50px"> #{{tags.name}}</span> </p><br>
+
       </v-row>
       <v-row class="mx-auto">
         <v-col cols="12" md="12">
@@ -22,7 +23,7 @@
                   <p>Published on - {{book.published_date}}</p>
                   <v-row>
                     <v-spacer></v-spacer>
-                    <router-link :to="'/admin/books/'+ book.id" style="text-decoration: none">
+                    <router-link :to="{ name: 'bookview', params: { id: book.id }}" style="text-decoration: none">
                       <v-btn outlined rounded>view book</v-btn>
                     </router-link>
                   </v-row>
@@ -46,14 +47,11 @@ export default {
 }
 </script>
 
-<style media="screen">
-  .tagDisplayContainer{
-    text-align: center;
-    justify-content: center;
-    font-size :50px;
-    background-color: #4056B5;
-    margin-top: 0px;
-    padding : 40px 0px;
-
-  }
+<style lang="css" scoped>
+.tagDisplayContainer {
+  justify-content: center;
+  background-color: #4056b5;
+  margin-top: 0px;
+  padding: 40px 0px;
+}
 </style>

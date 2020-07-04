@@ -89,6 +89,7 @@
                     </template>
                     <span>edit</span>
                   </v-tooltip>
+                  <router-link :to="{ name: 'categoryview', params: { id : category.id }}" style="text-decoration:none">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn class="mt-1" text icon v-on="on">
@@ -97,6 +98,7 @@
                     </template>
                     <span>view books</span>
                   </v-tooltip>
+                </router-link>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn

@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <v-row>
       <router-link to="/admin/books" style="text-decoration:none">
@@ -14,15 +15,13 @@
       <v-col cols="12" md="2">
         <v-img :src="book.thumb" style="width: 100%" v-if="book.thumb"></v-img>
         <p style="color:yellow;text-align:center;margin-top: 20px">{{book.price}} ks</p>
-        <v-rating
-          v-model="book.rates"
-          color="yellow"
-          style="text-align:center"
-          background-color="grey darken-1"
-          half-increments
-          readonly
-          small
-        ></v-rating>
+        <v-rating v-model="book.rates"
+                  color="yellow"
+                  style="text-align:center"
+                  background-color="grey darken-1"
+                  half-increments
+                  readonly
+                  small></v-rating>
         <p style="color:grey;text-align:center;font-size:10px" v-if="book.rates">{{book.rates}} out of 5</p>
         <p style="color:grey;text-align:center;font-size:10px" v-else>no rating yet</p>
         <v-divider></v-divider>
@@ -42,7 +41,7 @@
                   </v-avatar>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <router-link :to="'/admin/authors/'+author.id" class="author_link">
+                  <router-link :to="{ name: 'authorview', params: {id : author.id}}" class="link">
                     <v-list-item-title v-text="author.name"></v-list-item-title>
                   </router-link>
                 </v-list-item-content>
@@ -53,15 +52,19 @@
             <v-header>CATEGORIES</v-header>
             <br />
             <span v-for="(category,index) in book.categories" :key="index">
-              <v-chip class="ma-1">{{category.name}}</v-chip>
-            </span>
+                <router-link :to="{ name: 'categoryview', params: { id: category.id} }"  class="link">
+                  <v-chip class="ma-1 link">{{category.name}}</v-chip>
+                </router-link>
+              </span>
 
             <v-divider style="margin: 20px"></v-divider>
             <v-header>TAGS</v-header>
             <br />
             <span v-for="(tag,index) in book.tags" :key="index">
-              <v-chip class="ma-1">#{{tag.name}}</v-chip>
-            </span>
+              <router-link :to="{ name: 'tagview', params: { id: tag.id} }"  class="link">
+                <v-chip class="ma-1 link">{{tag.name}}</v-chip>
+              </router-link>
+              </span>
           </v-col>
         </v-row>
 
@@ -117,27 +120,33 @@
       </v-col>
     </v-row>
   </div>
+
 </template>
 
 <script>
-export default {
-  computed: {
-    book() {
-      return this.$store.state.bookview;
+
+  export default {
+    computed: {
+      book() {
+        return this.$store.state.bookview
+      }
     }
   }
-};
+
 </script>
 
 
 <style scoped>
-.author_link {
-  text-decoration: none;
-}
-.author_link:hover {
-  text-decoration: underline;
-}
-.comment_content {
-  padding-left: 15px;
-}
+
+  .link {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .link:hover {
+    text-decoration: underline;
+  }
+  .comment_content {
+    padding-left: 15px;
+  }
+
 </style>

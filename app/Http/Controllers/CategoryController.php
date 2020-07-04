@@ -37,17 +37,26 @@ class CategoryController extends Controller
     }
 
     public function get_lastCategory_api() {
-        $data = Category::latest()->first();        
+        $data = Category::latest()->first();
         return response()->json($data);
     }
 
     public function get_oneRecord_api($id){
-        $data = Category::find($id);
+        $data = Category::with('books')->find($id);
+        for($i= 0 ;$i< count($data->books);$i++){
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');
+        }
+        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
         return response()->json($data);
+    }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
     }
 
     public function get_categories_web(Request $request) {
-        $data = $this->add_meta_data($request);        
+        $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
     /**
@@ -70,7 +79,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        
+
         Category::create([ 'name' => $request->name ]);
 
         return response()->json(null, 200);
@@ -121,7 +130,7 @@ class CategoryController extends Controller
         $request->validate([
             'edit_name' => 'required'
         ]);
-        
+
         $category = Category::find($id);
         $category->name = $request->edit_name;
         $category->save();

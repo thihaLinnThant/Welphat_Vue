@@ -57,6 +57,9 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/categories/addcategory', 'CategoryController@create');
     Route::post('/admin/categories/update/{id}', 'CategoryController@update');
     Route::post('/admin/categories/delete/{id}','CategoryController@destroy');
+    Route::post('/admin/categories/{id}', 'CategoryController@singleView');
+    Route::get('/admin/categories/{id}', 'CategoryController@singleView');
+
 
     Route::get('/admin/comments', 'CommentController@get_comments_web');
     Route::post('/admin/comments/delete/{id}','CommentController@destroy');

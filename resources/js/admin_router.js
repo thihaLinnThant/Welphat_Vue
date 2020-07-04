@@ -11,13 +11,16 @@ import Categories from '../components/admin/Categories.vue';
 import Tags from '../components/admin/Tags.vue';
 import Suppliers from '../components/admin/Suppliers.vue';
 import Publishers from '../components/admin/publishers.vue';
-import Comment from '../components/admin/Comments.vue'
-import Order from '../components/admin/Orders.vue'
-import Admin from '../components/admin/Admins'
+import Comment from '../components/admin/Comments.vue';
+import Order from '../components/admin/Orders.vue';
+import Admin from '../components/admin/Admins';
 import User from '../components/admin/Users';
 import AuthorView from '../components/admin/AuthorView';
 import BookView from '../components/admin/BookView';
-import TagView from '../components/admin/TagView'
+import TagView from '../components/admin/TagView';
+import CategoryView from '../components/admin/CategoryView';
+
+
 let router = new VueRouter({
     mode: 'history',
     routes: [
@@ -34,7 +37,8 @@ let router = new VueRouter({
         { path: '/admin/users', component: User, name : 'users'},
         { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'},
         { path: '/admin/books/:id',component: BookView, name: 'bookview'},
-        { path: '/admin/tags/:id',component: TagView, name: 'tagview'}
+        { path: '/admin/tags/:id',component: TagView, name: 'tagview'},
+        { path: '/admin/categories/:id', component: CategoryView, name: 'categoryview'}
     ]
 });
 
@@ -80,6 +84,9 @@ router.beforeEach((to, from, next) => {
     }
     else if( to.path === `/admin/tags/${to.params.id}`){
       if (Store.state.tagview.length > 0) { next() } else { getApiData(to.path, to.name)}
+    }
+    else if(to.path === `/admin/categories/${to.params.id}`){
+      if (Store.state.categoryview.length > 0) { next ()} else { getApiData(to.path, to.name)}
     }
     else if (to.path === '/admin') { next(); }
 

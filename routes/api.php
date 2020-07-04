@@ -45,6 +45,7 @@ Route::get('/admin/users/onerecord/{id}', 'UserController@get_oneRecord_api');
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
 Route::get('/admin/categories/lastrecord','CategoryController@get_lastCategory_api');
 Route::get('/admin/categories/onerecord/{id}', 'CategoryController@get_oneRecord_api');
+Route::get('/admin/categories/{id}', 'CategoryController@get_oneRecord_api');
 
 Route::get('/admin/tags', 'TagController@get_tags_api');
 Route::get('/admin/tags/lastrecord','TagController@get_lastTag_api');
