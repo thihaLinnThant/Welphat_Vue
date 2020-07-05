@@ -46,8 +46,8 @@
           <tbody v-for="(comment,index) in items" :key="index">
             <tr>
               <td>{{comment.id}}</td>
-              <td>{{comment.user}}</td>
-              <td>{{comment.book}}</td>
+              <td>{{comment.user.name}}</td>
+              <td>{{comment.book.name}}</td>
               <td>{{comment.comment_text}}</td>
               <td class="d-flex flex-row">
                 <v-tooltip bottom>

@@ -62,7 +62,7 @@
             <br />
             <span v-for="(tag,index) in book.tags" :key="index">
               <router-link :to="{ name: 'tagview', params: { id: tag.id} }"  class="link">
-                <v-chip class="ma-1 link">{{tag.name}}</v-chip>
+                <v-chip class="ma-1 link">#{{tag.name}}</v-chip>
               </router-link>
               </span>
           </v-col>

@@ -14,7 +14,7 @@ class PublisherController extends Controller
         foreach($collection as $publisher) {
             $publisher->count = $publisher->books()->count();
             $publishers->push($publisher);
-        }        
+        }
         return collect(['publishers' => $publishers]);
     }
 
@@ -33,14 +33,25 @@ class PublisherController extends Controller
     }
 
     public function get_lastPublisher_api() {
-        $data = Publisher::latest()->first();        
+        $data = Publisher::latest()->first();
         return response()->json($data);
     }
 
     public function get_oneRecord_api($id){
-        $data = Publisher::find($id);
+        $data = Publisher::with('books')->find($id);
+        for($i= 0 ;$i< count($data->books);$i++){
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/thumb_nail.png');
+        }
+        $data->thumb = asset('storage/images/books/' . $data->id . '/thumb_nail.png');
         return response()->json($data);
     }
+
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +72,7 @@ class PublisherController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        
+
         Publisher::create([ 'name' => $request->name ]);
 
         return response()->json(null,200);
@@ -112,7 +123,7 @@ class PublisherController extends Controller
         $request->validate([
             'edit_name' => 'required'
         ]);
-        
+
         $category = Publisher::find($id);
         $category->name = $request->edit_name;
         $category->save();

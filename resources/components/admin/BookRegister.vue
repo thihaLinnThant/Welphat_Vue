@@ -167,7 +167,7 @@ export default {
         !this.fields.tags || this.fields.tags.length < 0 ||
         !this.fields.categories || this.fields.categories.length < 0 ||
         !this.fields.publisher ||
-        !this.fields.supplier || !this.fields.supplier.length < 0
+        !this.fields.suppliers || !this.fields.suppliers.length < 0
       ) {
         console.log('invalid');
         return;

@@ -323,7 +323,6 @@ export default {
     },
     save() {
       this.$refs.form.validate();
-
       if (
         !this.fields.edit_name ||
         !this.fields.edit_book_description ||
@@ -335,7 +334,6 @@ export default {
         !this.fields.edit_publisher ||
         !this.fields.edit_suppliers || !this.fields.edit_suppliers.length < 0
       ) {
-        console.log('invalid');
         return;
       }
       this.submitEdit(this.target_item.id)

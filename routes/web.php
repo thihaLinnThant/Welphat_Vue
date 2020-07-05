@@ -79,6 +79,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/publishers/addpublisher', 'PublisherController@create');
     Route::post('/admin/publishers/update/{id}', 'PublisherController@update');
     Route::post('/admin/publishers/delete/{id}','PublisherController@destroy');
+    Route::get('/admin/publishers/{id}', 'PublisherController@singleView');
+    Route::post('/admin/publishers/{id}', 'PublisherController@singleView');
 
     Route::get('/admin/tags', 'TagController@get_tags_web');
     Route::post('/admin/tags/addtag', 'TagController@create');

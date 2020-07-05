@@ -23,7 +23,7 @@ class BooksTableSeeder extends Seeder
         $suppliers = Supplier::all();
         $authors = Author::all();
         $categories = Category::all();
-        for ($i=11; $i <= 40; $i++) {
+        for ($i=1; $i <= 10; $i++) {
             $book = Book::create([
                 'name' => $faker->name,
                 'published_date' => $faker->date('Y-m-d', 'now'),

@@ -19,6 +19,7 @@ import AuthorView from '../components/admin/AuthorView';
 import BookView from '../components/admin/BookView';
 import TagView from '../components/admin/TagView';
 import CategoryView from '../components/admin/CategoryView';
+import PublisherView from '../components/admin/PublisherView';
 
 
 let router = new VueRouter({
@@ -38,16 +39,17 @@ let router = new VueRouter({
         { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'},
         { path: '/admin/books/:id',component: BookView, name: 'bookview'},
         { path: '/admin/tags/:id',component: TagView, name: 'tagview'},
-        { path: '/admin/categories/:id', component: CategoryView, name: 'categoryview'}
+        { path: '/admin/categories/:id', component: CategoryView, name: 'categoryview'},
+        { path : '/admin/publishers/:id', component: PublisherView, name: 'publisherview'}
     ]
 });
 
 router.beforeEach((to, from, next) => {
     let serverData = JSON.parse(window.welphat_server_data);
-    console.log(to.path)
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
+          console.log(data);
             Store.commit('addData', { route: name, data })
             next();
         });
@@ -87,6 +89,9 @@ router.beforeEach((to, from, next) => {
     }
     else if(to.path === `/admin/categories/${to.params.id}`){
       if (Store.state.categoryview.length > 0) { next ()} else { getApiData(to.path, to.name)}
+    }
+    else if(to.path === `/admin/publishers/${to.params.id}`){
+      if (Store.state.publisherview.length > 0) { next() } else { getApiData(to.path, to.name)}
     }
     else if (to.path === '/admin') { next(); }
 

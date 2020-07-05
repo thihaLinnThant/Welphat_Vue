@@ -43,7 +43,7 @@ class TagController extends Controller
         for($i= 0 ;$i< count($data->books);$i++){
             $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');
         }
-        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
+        $data->thumb = asset('storage/images/books/' . $data->id . '/image_1.png');
         return response()->json($data);
     }
     public function singleView(Request $request)

@@ -44,9 +44,9 @@ class CategoryController extends Controller
     public function get_oneRecord_api($id){
         $data = Category::with('books')->find($id);
         for($i= 0 ;$i< count($data->books);$i++){
-            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/thumb_nail.png');
         }
-        $data->thumb = asset('storage/images/authors/' . $data->id . '/image_1.png');
+        $data->thumb = asset('storage/images/books/' . $data->id . '/thumb_nail.png');
         return response()->json($data);
     }
     public function singleView(Request $request)
