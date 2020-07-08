@@ -15,12 +15,13 @@ import Comment from '../components/admin/Comments.vue';
 import Order from '../components/admin/Orders.vue';
 import Admin from '../components/admin/Admins';
 import User from '../components/admin/Users';
-import AuthorView from '../components/admin/AuthorView';
-import BookView from '../components/admin/BookView';
-import TagView from '../components/admin/TagView';
-import CategoryView from '../components/admin/CategoryView';
-import PublisherView from '../components/admin/PublisherView';
-
+import AuthorView from '../components/admin/adminSingleView/AuthorView';
+import BookView from '../components/admin/adminSingleView/BookView';
+import TagView from '../components/admin/adminSingleView/TagView';
+import CategoryView from '../components/admin/adminSingleView/CategoryView';
+import PublisherView from '../components/admin/adminSingleView/PublisherView';
+import SupplierView from '../components/admin/adminSingleView/SupplierView';
+import UserView from '../components/admin/adminSingleView/UserView';
 
 let router = new VueRouter({
     mode: 'history',
@@ -35,12 +36,14 @@ let router = new VueRouter({
         { path: '/admin/comments', component: Comment, name: 'comments' },
         { path: '/admin/orders', component: Order, name: 'orders' },
         { path: '/admin/admins', component: Admin, name: 'admins' },
-        { path: '/admin/users', component: User, name : 'users'},
-        { path : '/admin/authors/:id' , component: AuthorView, name: 'authorview'},
-        { path: '/admin/books/:id',component: BookView, name: 'bookview'},
-        { path: '/admin/tags/:id',component: TagView, name: 'tagview'},
-        { path: '/admin/categories/:id', component: CategoryView, name: 'categoryview'},
-        { path : '/admin/publishers/:id', component: PublisherView, name: 'publisherview'}
+        { path: '/admin/users', component: User, name: 'users' },
+        { path: '/admin/authors/:id', component: AuthorView, name: 'authorview' },
+        { path: '/admin/books/:id', component: BookView, name: 'bookview' },
+        { path: '/admin/tags/:id', component: TagView, name: 'tagview' },
+        { path: '/admin/categories/:id', component: CategoryView, name: 'categoryview' },
+        { path: '/admin/publishers/:id', component: PublisherView, name: 'publisherview' },
+        { path: '/admin/suppliers/:id', component: SupplierView, name: 'supplierview' },
+        { path: '/admin/users/:id', component: UserView, name: 'userview' }
     ]
 });
 
@@ -49,13 +52,12 @@ router.beforeEach((to, from, next) => {
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
-          console.log(data);
             Store.commit('addData', { route: name, data })
             next();
         });
     }
 
-    if (to.path === '/admin/books') { getApiData(to.path, to.name)}
+    if (to.path === '/admin/books') { getApiData(to.path, to.name) }
 
     if (to.path === '/admin/authors') { if (Store.state.authors.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
@@ -78,20 +80,26 @@ router.beforeEach((to, from, next) => {
             getApiData(to.path, to.name)
         }
     }
-    else if( to.path === `/admin/authors/${to.params.id}`){
+    else if (to.path === `/admin/authors/${to.params.id}`) {
         if (Store.state.authorview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
-    else if( to.path === `/admin/books/${to.params.id}`){
+    else if (to.path === `/admin/books/${to.params.id}`) {
         if (Store.state.bookview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
-    else if( to.path === `/admin/tags/${to.params.id}`){
-      if (Store.state.tagview.length > 0) { next() } else { getApiData(to.path, to.name)}
+    else if (to.path === `/admin/tags/${to.params.id}`) {
+        if (Store.state.tagview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
-    else if(to.path === `/admin/categories/${to.params.id}`){
-      if (Store.state.categoryview.length > 0) { next ()} else { getApiData(to.path, to.name)}
+    else if (to.path === `/admin/categories/${to.params.id}`) {
+        if (Store.state.categoryview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
-    else if(to.path === `/admin/publishers/${to.params.id}`){
-      if (Store.state.publisherview.length > 0) { next() } else { getApiData(to.path, to.name)}
+    else if (to.path === `/admin/publishers/${to.params.id}`) {
+        if (Store.state.publisherview.length > 0) { next() } else { getApiData(to.path, to.name) }
+    }
+    else if (to.path === `/admin/suppliers/${to.params.id}`) {
+        if (Store.state.supplierview.length > 0) { next() } else { getApiData(to.path, to.name) }
+    }
+    else if (to.path === `/admin/users/${to.params.id}`) {
+        if (Store.state.userview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
     else if (to.path === '/admin') { next(); }
 

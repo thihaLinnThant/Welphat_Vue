@@ -117,7 +117,7 @@
                     </template>
                     <span>edit</span>
                   </v-tooltip>
-                  <router-link :to="'/admin/tags/'+tag.id" style="text-decoration:none">
+                  <router-link :to="{ name: 'tagview', params: { id: tag.id }}" style="text-decoration:none">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn class="mt-1" text icon v-on="on">

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Book_order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     public function get_users_api()
@@ -44,11 +46,13 @@ class UserController extends Controller
         $data = User::latest()->first();
         return response()->json($data);
     }
-    public function destroy($id){
+    public function destroy($id)
+    {
         User::destroy($id);
-        return response()->json(null,200);
+        return response()->json(null, 200);
     }
-    public function update($id,Request $request){
+    public function update($id, Request $request)
+    {
         $request->validate([
             'edit_name' => 'required',
             'edit_email' => 'required',
@@ -64,11 +68,25 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(null,200);
+        return response()->json(null, 200);
     }
 
-    public function get_oneRecord_api($id){
-        $data = User::find($id);
+    public function get_oneRecord_api($id)
+    {
+        $data = User::with('wishes')->with('comments')->with('orders')->find($id);
+        $bookCount = 0;
+        foreach ($data->orders as $key=>$order) {
+            $collection = Book_order::where('order_id', $order->id)->get();
+            $data->orders[$key]['books'] = $collection;
+            $bookCount++;
+        }
+        $data->order_count = $bookCount;
+
         return response()->json($data);
+    }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
     }
 }

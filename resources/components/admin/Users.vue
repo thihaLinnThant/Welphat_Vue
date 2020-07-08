@@ -195,7 +195,6 @@
         <template v-slot:body="{ items }">
           <tbody v-for="(user,index) in items" :key="index">
             <tr>
-              <td>{{user.id}}</td>
               <td v-if="user.profile_image">
                 <v-avatar>
                   <img :src="user.profile_image" alt="John" />
@@ -209,6 +208,8 @@
                   />
                 </v-avatar>
               </td>
+              <td>{{user.id}}</td>
+
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
               <td v-if="user.ph_no">{{user.ph_no}}</td>
@@ -267,6 +268,19 @@
                     </template>
                     <span>delete {{user.name}}</span>
                   </v-tooltip>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn
+                        class="mt-1"
+                        text
+                        icon
+                        v-on="on"
+                      >
+                        <v-icon>mdi-eye</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>view</span>
+                  </v-tooltip>
                 </row>
               </td>
             </tr>
@@ -290,12 +304,12 @@ export default {
     return {
       search: "",
       headers: [
+        { text: "", value: "profile_image" },
         {
           text: "Id",
           align: "start",
           value: "id"
         },
-        { text: "Profile", value: "profile_image" },
         { text: "Name", value: "name" },
         { text: "Email", value: "email" },
         { text: "Ph number", value: "ph_no" },
@@ -318,7 +332,7 @@ export default {
     };
   },
   computed: mapState({
-    users: 'users'
+    users: "users"
   }),
   methods: {
     reset() {

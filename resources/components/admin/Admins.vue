@@ -2,13 +2,25 @@
   <div>
     <v-dialog v-model="deleteDialog" max-width="380" persistent>
       <v-card>
-          <v-card-title>Delete Admin</v-card-title>
+        <v-card-title>Delete Admin</v-card-title>
         <v-card-text v-if="isSuper_admin != 1">Do you want to delete this admin?</v-card-text>
         <v-card-text v-else>Sorry, you can't delete Super Admin</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="deleteDialog = false; target_item = '';" v-if="isSuper_admin != 1" outlined color="primary">No</v-btn>
-          <v-btn text @click="deleteDialog = false; target_item = '';" v-else outlined color="primary">OK</v-btn>
+          <v-btn
+            text
+            @click="deleteDialog = false; target_item = '';"
+            v-if="isSuper_admin != 1"
+            outlined
+            color="primary"
+          >No</v-btn>
+          <v-btn
+            text
+            @click="deleteDialog = false; target_item = '';"
+            v-else
+            outlined
+            color="primary"
+          >OK</v-btn>
 
           <v-btn
             text
@@ -48,7 +60,6 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-
             <v-row v-if="isSuper_admin != 1">
               <v-col cols="12">
                 <v-text-field
@@ -96,7 +107,6 @@
             @click="submitEdit(target_item.id, fields)"
             type="submit"
             outlined
-
           >Save</v-btn>
         </v-card-actions>
       </v-card>
@@ -184,10 +194,6 @@
         <template v-slot:body="{ items }">
           <tbody v-for="(admin,index) in items" :key="index">
             <tr>
-              <td>
-                <v-icon :color="admin.super_admin == 1? 'yellow' : 'grey'">mdi-star</v-icon>
-              </td>
-              <td>{{admin.id}}</td>
               <td v-if="admin.profile_image">
                 <v-avatar>
                   <img :src="admin.profile_image" alt="John" />
@@ -201,6 +207,11 @@
                   />
                 </v-avatar>
               </td>
+              <td>
+                <v-icon :color="admin.super_admin == 1? 'yellow' : 'grey'">mdi-star</v-icon>
+              </td>
+              <td>{{admin.id}}</td>
+
               <td>{{admin.name}}</td>
               <td>{{admin.email}}</td>
               <td>
@@ -291,6 +302,7 @@ export default {
       admin_name: window.admin_name,
       super_admin: window.super_admin,
       headers: [
+        { text: "", value: "profile_image" },
         {
           text: "Role",
           value: "super_admin"
@@ -300,7 +312,6 @@ export default {
           align: "start",
           value: "id"
         },
-        { text: "Profile", value: "profile_image" },
         { text: "Name", value: "name" },
         { text: "Email", value: "email" },
         { text: "Actions", value: "actions" }

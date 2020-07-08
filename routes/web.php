@@ -48,7 +48,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/authors/delete/{id}','AuthorController@destroy');
     Route::get('/admin/authors/delete/{id}','AuthorController@destroy');
     Route::post('/admin/authors/update/{id}','AuthorController@update');
-
     Route::get('/admin/authors/{id}','AuthorController@singleView');
     Route::post('/admin/authors/{id}','AuthorController@singleView');
 
@@ -74,6 +73,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/users/adduser','UserController@create');
     Route::post('/admin/users/delete/{id}','UserController@destroy');
     Route::post('/admin/users/update/{id}','UserController@update');
+    Route::get('/admin/users/{id}','UserController@singleView');
 
     Route::get('/admin/publishers', 'PublisherController@get_publishers_web');
     Route::post('/admin/publishers/addpublisher', 'PublisherController@create');
@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/suppliers/addsupplier', 'SupplierController@create');
     Route::post('/admin/suppliers/update/{id}', 'SupplierController@update');
     Route::post('/admin/suppliers/delete/{id}','SupplierController@destroy');
+    Route::get('/admin/suppliers/{id}','SupplierController@singleView');
 
     Route::get('/admin/orders', 'OrderController@get_orders_web');
     Route::post('/admin/orders/addorder', 'OrderController@create');

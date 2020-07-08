@@ -51,7 +51,7 @@ class TagController extends Controller
         $data = $this->add_meta_data($request);
         return view('admin.app', ['data' => $data]);
     }
-
+    
 
     /**
      * Display a listing of the resource.

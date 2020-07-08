@@ -41,6 +41,7 @@ Route::get('/admin/admins/onerecord/{id}','AdminController@get_oneRecord_api');
 Route::get('/admin/users', 'UserController@get_users_api');
 Route::get('/admin/users/lastrecord','UserController@get_lastUser_api');
 Route::get('/admin/users/onerecord/{id}', 'UserController@get_oneRecord_api');
+Route::get('/admin/users/{id}', 'UserController@get_oneRecord_api');
 
 Route::get('/admin/categories', 'CategoryController@get_categories_api');
 Route::get('/admin/categories/lastrecord','CategoryController@get_lastCategory_api');
@@ -60,6 +61,8 @@ Route::get('/admin/publishers/{id}','PublisherController@get_oneRecord_api');
 Route::get('/admin/suppliers', 'SupplierController@get_suppliers_api');
 Route::get('/admin/suppliers/lastrecord','SupplierController@get_lastSupplier_api');
 Route::get('/admin/suppliers/onerecord/{id}', 'SupplierController@get_oneRecord_api');
+Route::get('/admin/suppliers/{id}', 'SupplierController@get_oneRecord_api');
+
 
 Route::get('/admin/orders', 'OrderController@get_orders_api');
 Route::get('/admin/orders/lastrecord','OrderController@get_lastorder_api');

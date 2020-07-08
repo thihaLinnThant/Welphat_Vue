@@ -37,8 +37,16 @@ class SupplierController extends Controller
     }
 
     public function get_oneRecord_api($id){
-        $data = Supplier::find($id, ['id', 'name', 'phno', 'address', 'email' ]);
+        $data = Supplier::with('books')->find($id);
+        for($i= 0 ;$i< count($data->books);$i++){
+            $data->books[$i]->thumb = asset('storage/images/books/' . $data->books[$i]->id . '/image_1.png');
+        }
         return response()->json($data);
+    }
+    public function singleView(Request $request)
+    {
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
     }
     /**
      * Display a listing of the resource.
