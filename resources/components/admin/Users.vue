@@ -268,19 +268,20 @@
                     </template>
                     <span>delete {{user.name}}</span>
                   </v-tooltip>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn
-                        class="mt-1"
-                        text
-                        icon
-                        v-on="on"
-                      >
-                        <v-icon>mdi-eye</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>view</span>
-                  </v-tooltip>
+                  <router-link
+                    :to="{ name: 'userview', params: { id: user.id }}"
+                    style="text-decoration:none"
+                  >
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn class="mt-1" text icon v-on="on">
+                          <v-icon>mdi-eye</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <span>view</span>
+                    </v-tooltip>
+                  </router-link>
                 </row>
               </td>
             </tr>

@@ -1,11 +1,9 @@
 <template>
   <div>
     <v-row>
-      <router-link to="/admin/books" style="text-decoration:none">
-        <v-btn text icon>
+        <v-btn text icon @click="$router.go(-1)">
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
-      </router-link>
       <h2>{{book.name}}</h2>
       <v-spacer></v-spacer>
       <small style="margin-right:10px">published on {{book.published_date}}</small>
