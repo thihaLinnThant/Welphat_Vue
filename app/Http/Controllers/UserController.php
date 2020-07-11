@@ -76,8 +76,19 @@ class UserController extends Controller
         $data = User::with('wishes')->with('comments')->with('orders')->find($id);
         $bookCount = 0;
         foreach ($data->orders as $key=>$order) {
-            $collection = Book_order::where('order_id', $order->id)->get();
-            $data->orders[$key]['books'] = $collection;
+            
+            $collections = Book_order::where('order_id', $order->id)->get();
+            $data->orders[$key]['books'] = $collections;
+
+            foreach($collections as $index=>$collection){
+                if($collection->book_id){
+                    $data->orders[$key]['books'][$index]->deleted = false; 
+                }else{
+                    $data->orders[$key]['books'][$index]->deleted = true; 
+
+                }
+            }
+            
             $bookCount++;
         }
         $data->order_count = $bookCount;

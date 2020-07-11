@@ -79,9 +79,11 @@
                           <router-link
                             :to="{ name: 'bookview', params: { id: book.book_id }}"
                             style="text-decoration:none"
+                            v-if="!book.deleted"
                           >
                             <v-btn small dense outlined>view book</v-btn>
                           </router-link>
+                          <v-btn small dense outlined disabled v-else >deleted</v-btn>
                         </v-card-actions>
                       </v-list-item>
                     </v-card>
@@ -115,14 +117,16 @@
             <div v-for="(wish,index) in user.wishes" :key="index">
               <v-card-text>
                 <v-row>
-                  <v-col cols="10">{{wish.book_name}}</v-col>
+                  <v-col cols="10">{{wish.book_id? wish.book_name : `${wish.book_name} is deleted`}}</v-col>
                   <v-col cols="2">
                     <router-link
                       style="text-decoration:none"
                       :to="{ name: 'bookview', params: { id: wish.book_id }}"
+                      v-if="wish.book_id"
                     >
                       <v-btn>view book</v-btn>
                     </router-link>
+                    <v-btn v-else disabled>deleted</v-btn>
                   </v-col>
                 </v-row>
               </v-card-text>

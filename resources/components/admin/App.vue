@@ -67,6 +67,7 @@ export default {
     admin_name: window.admin_name,
     super_admin: window.super_admin,
     items: [
+      { text: "Dashboard", icon: "mdi-bookshelf", link: "dashboard", inactive : false},
       { text: "Books", icon: "mdi-bookshelf", link: "books", inactive: false },
       {
         text: "Admins",

@@ -71,7 +71,7 @@
         <v-list disabled>
           <v-card-title>Wish List</v-card-title>
           <v-list-item v-for="(item, i) in target_item_wish_list" :key="i" inactive>
-            <v-list-item-title>{{ item.book_name }}</v-list-item-title>
+            <v-list-item-title :style="item.book_id? '' : 'color:red'">{{item.book_id?  item.book_name : `${item.book_name} is deleted`}}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-card>

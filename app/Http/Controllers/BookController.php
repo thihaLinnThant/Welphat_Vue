@@ -7,6 +7,8 @@ use App\User;
 use App\Tag;
 use App\Author;
 use App\Comment;
+use App\Wish;
+use App\Order;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +53,7 @@ class BookController extends Controller
 
 
         public function get_oneRecord_api($id){
-            $data = Book::with('authors')->with('comments')->with('tags')->with('categories')->with('publisher')->with('suppliers')->find($id);
+            $data = Book::with('authors')->with('comments')->with('orders')->with('tags')->with('categories')->with('publisher')->with('suppliers')->findOrFail($id);
             $data->rates = $data->averageRating();
 
 
@@ -63,7 +65,11 @@ class BookController extends Controller
                 $data->authors[$i]->thumb = asset('storage/images/authors/' . $data->authors[$i]->id . '/image_1.png');
             }
             $data->thumb = asset('storage/images/books/' . $data->id . '/thumb_nail.png');
-            return response()->json($data);
+
+            //get wish list count
+            $data->wish_count = count(Wish::where('book_id', $id)->get());
+            return $data? response()->json($data) : response()->json('not found',404); 
+            
         }
         public function singleView(Request $request)
         {

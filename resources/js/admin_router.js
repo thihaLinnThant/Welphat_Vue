@@ -22,6 +22,7 @@ import CategoryView from '../components/admin/adminSingleView/CategoryView';
 import PublisherView from '../components/admin/adminSingleView/PublisherView';
 import SupplierView from '../components/admin/adminSingleView/SupplierView';
 import UserView from '../components/admin/adminSingleView/UserView';
+import NotFound from '../components/admin/NotFound'
 
 let router = new VueRouter({
     mode: 'history',
@@ -43,7 +44,8 @@ let router = new VueRouter({
         { path: '/admin/categories/:id', component: CategoryView, name: 'categoryview' },
         { path: '/admin/publishers/:id', component: PublisherView, name: 'publisherview' },
         { path: '/admin/suppliers/:id', component: SupplierView, name: 'supplierview' },
-        { path: '/admin/users/:id', component: UserView, name: 'userview' }
+        { path: '/admin/users/:id', component: UserView, name: 'userview' },
+        { path: '/admin/404', component: NotFound, name: 'notfound'}
     ]
 });
 
@@ -52,9 +54,12 @@ router.beforeEach((to, from, next) => {
 
     function getApiData(path, name) {
         Axios.get(`/api${path}`).then(({ data }) => {
+            
             Store.commit('addData', { route: name, data })
             next();
-        });
+        }).catch((error)=>{
+            error.response.status == '404' ? router.push({ name: 'notfound' }) : ''
+        })
     }
 
     if (to.path === '/admin/books') { getApiData(to.path, to.name) }

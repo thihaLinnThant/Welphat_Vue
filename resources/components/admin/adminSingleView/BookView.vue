@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-row>
-        <v-btn text icon @click="$router.go(-1)">
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
+      <v-btn text icon @click="$router.go(-1)">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
       <h2>{{book.name}}</h2>
       <v-spacer></v-spacer>
       <small style="margin-right:10px">published on {{book.published_date}}</small>
@@ -28,10 +28,36 @@
         <p style="color:grey;text-align:center;font-size:10px" v-else>no rating yet</p>
         <v-divider></v-divider>
         <br />
-        <p style="color:grey;text-align:center;font-size:15px">Publisher</p>
+        <p class="secondary_text">Publisher</p>
         <router-link :to="{ name: 'publisherview', params: {id : book.publisher.id}}" class="link">
           <p style="text-align:center;font-weight:bold">{{book.publisher.name}}</p>
         </router-link>
+        <v-divider></v-divider>
+        <br />
+        <p class="secondary_text">this book is added to wishlist by</p>
+        <v-flex class="text-center">
+          <v-avatar
+            color="green"
+            size="36"
+            style="margin: 0 auto"
+            justify="center"
+          >{{book.wish_count}}</v-avatar>
+        </v-flex>
+        <br />
+        <p class="secondary_text">{{book.wish_count> 1? 'people' : 'person'}}</p>
+        <v-divider></v-divider>
+        <br />
+        <p class="secondary_text">ordered</p>
+        <v-flex class="text-center">
+          <v-avatar
+            color="green"
+            size="36"
+            style="margin: 0 auto"
+            justify="center"
+          >{{book.orders.length}}</v-avatar>
+        </v-flex>
+        <br>
+        <p class="secondary_text">{{book.orders.length> 1? 'times' : 'time'}}</p>
       </v-col>
       <v-col cols="12" md="10">
         <v-row>
@@ -89,7 +115,12 @@
                       <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
                     </v-avatar>
                     <div class="comment_content">
-                      <h3>{{comment.user_info.name}}</h3>
+                      <router-link
+                        :to="{ name: 'userview', params: { id: comment.user_id}}"
+                        class="link"
+                      >
+                        <h3>{{comment.user_info.name}}</h3>
+                      </router-link>
                       <p>{{comment.comment_text}}</p>
                     </div>
                   </v-row>
@@ -152,5 +183,10 @@ export default {
 }
 .comment_content {
   padding-left: 15px;
+}
+.secondary_text {
+  text-align: center;
+  color: grey;
+  font-size: 15px;
 }
 </style>

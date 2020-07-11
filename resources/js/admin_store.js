@@ -97,6 +97,7 @@ export default new Vuex.Store({
 
         },
         addData(state, { route, data }) {
+            
 
             if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview') {
                 state[route] = data;
