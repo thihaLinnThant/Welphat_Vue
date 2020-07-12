@@ -72,3 +72,5 @@ Route::get('/admin/orders/onerecord/{id}', 'OrderController@get_oneRecord_api');
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');
 
 Route::get('/admin/comments', 'CommentController@get_comments_api');
+
+Route::get('/admin/overview', 'OverviewController@get_overview_api');
