@@ -1,9 +1,16 @@
 <template>
-    <h1>Overview</h1>
+    <div>
+        <p>{{overview}}</p>
+    </div>
 </template>
 
 <script>
 export default {
+    computed:{
+        overview(){
+            return this.$store.state.overview
+        }
+    }
 }
 </script>
 

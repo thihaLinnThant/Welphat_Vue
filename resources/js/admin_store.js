@@ -28,8 +28,9 @@ export default new Vuex.Store({
         publisherview : [],
         supplierview : [],
         userview : [],
+        overview : [],
         pagination_length: 0,
-        pagination_current: 0
+        pagination_current: 0,
     },
     getters: {
         getCategories(state) {
@@ -97,9 +98,7 @@ export default new Vuex.Store({
 
         },
         addData(state, { route, data }) {
-            
-
-            if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview') {
+            if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview' || route === 'overview') {
                 state[route] = data;
             } else {
                 state[route] = data[route];

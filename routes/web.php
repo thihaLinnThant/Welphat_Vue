@@ -106,5 +106,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');
+    Route::get('/admin/overview','OverviewController@get_overview_web');
+    Route::post('/admin/overview','OverviewController@get_overview_web');
+
 
 });

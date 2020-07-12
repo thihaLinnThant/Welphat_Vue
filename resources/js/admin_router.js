@@ -87,6 +87,11 @@ router.beforeEach((to, from, next) => {
             getApiData(to.path, to.name)
         }
     }
+    else if ( to.path === '/admin/overview'){
+        if(Store.state.overview.length > 0) { next() } else {
+            getApiData(to.path, to.name);
+        }
+    }
     else if (to.path === `/admin/authors/${to.params.id}`) {
         if (Store.state.authorview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
@@ -109,7 +114,7 @@ router.beforeEach((to, from, next) => {
         if (Store.state.userview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
 
-    else if (to.path === '/admin') { next(); }
+    else if (to.path === '/admin' ) { next(); }
 
 
     else if (to.path === '/admin/books') {
