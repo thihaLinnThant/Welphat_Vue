@@ -36,7 +36,7 @@
           <v-card-text>
             <div>Income</div>
             <v-row justify="space-around">
-              <p class="display-1 text--primary">899,800</p>
+              <p class="display-1 text--primary">{{overview.income}}</p>
               <p style="color:grey;font-size: 15px;margin-top: 10px">mmk</p>
             </v-row>
 

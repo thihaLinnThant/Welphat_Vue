@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
+use App\Order;
+
 
 class OverviewController extends Controller
 {
@@ -36,15 +38,25 @@ class OverviewController extends Controller
       'newAdded' => $newAdded,
       'current' => $current
     ]);
-
-    //get_user_count
   }
   private function get_overview()
   {
     return collect([
       'booksCount' => $this->get_count('Book'),
-      'usersCount' => $this->get_count('User')
+      'usersCount' => $this->get_count('User'),
+      'income' => $this->get_income()
     ]);
+  }
+  private function get_income(){
+    $orders = Order::with('book_orders')->get();
+    $income = 0;
+    foreach($orders as $order){
+      foreach($order->book_orders as $bookOrder){
+        $income += $bookOrder->book_price* $bookOrder->qty;
+
+      }
+    }
+    return $income;
   }
 
 

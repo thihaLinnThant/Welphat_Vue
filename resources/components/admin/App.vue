@@ -1,34 +1,27 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped>
-      <v-list class="nav-list" dense>
-        <v-list-item>
-          <v-list-item-action>
-            <v-avatar color="indigo">
-              <v-icon dark>mdi-account-circle</v-icon>
-            </v-avatar>
-          </v-list-item-action>
-          <v-list-item-content>
+      <v-list rounded dense>
+        <v-list-item :to="{ name: 'overview'}">
+          <v-list-item-icon>
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-icon>
 
-
-              <v-list-item-title>{{ admin_name }}&nbsp; <v-icon :color="super_admin == 1? 'yellow' : 'grey'">mdi-star</v-icon></v-list-item-title>
-
-
-          </v-list-item-content>
+          <v-list-item-title>Overview</v-list-item-title>
         </v-list-item>
-        <hr />
-        <div v-for="(item, i) in items" :key="i">
-          <router-link :to="{ name: item.link }">
-            <v-list-item :inactive="item.inactive" link>
-              <v-list-item-action>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
-        </div>
+
+        <v-list-group value="true">
+          <template v-slot:activator>
+            <v-list-item-title>Tables</v-list-item-title>
+          </template>
+
+          <v-list-item v-for="(item, i) in items" :key="i" link :to="{ name: item.link}">
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -36,10 +29,36 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>WelPhat Admin Panel</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn @click="logout" class="ml-5" outlined>Logout</v-btn>
-      <form id="logout_form" method="POST" action="/logout" sytle="display:hidden">
-        <input type="hidden" name="_token" :value="csrf_token" />
-      </form>
+      <span style="margin-right:10px">{{ admin_name }}</span>
+
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-badge
+            bordered
+            top
+            color="yellow"
+            dot
+            offset-x="10"
+            offset-y="10"
+            v-if="super_admin == 1"
+          >
+            <v-btn text icon v-on="on" :v-bind="attrs">
+              <v-icon dark>mdi-account-circle</v-icon>
+            </v-btn>
+          </v-badge>
+          <v-btn text icon v-on="on" :v-bind="attrs" v-else>
+            <v-icon dark>mdi-account-circle</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item @click="logout">
+            <form id="logout_form" method="POST" action="/logout" sytle="display:hidden">
+              <input type="hidden" name="_token" :value="csrf_token" />
+            </form>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-content>
@@ -56,18 +75,21 @@
 
 <script>
 // url_str = window.location.pathname;
-
+// import vueCustomScrollbar from "vue-custom-scrollbar";
 export default {
   props: {
     source: String
   },
+  // components: {
+  //   vueCustomScrollbar
+  // },
   data: () => ({
     drawer: null,
+    menuValue: null,
     csrf_token: window.csrf_token,
     admin_name: window.admin_name,
     super_admin: window.super_admin,
     items: [
-      { text: "Overview", icon: "mdi-view-dashboard", link: "overview", inactive : false},
       { text: "Books", icon: "mdi-bookshelf", link: "books", inactive: false },
       {
         text: "Admins",
@@ -131,6 +153,9 @@ export default {
 };
 </script>
 <style>
+.v-btn.active .v-icon {
+  transform: rotate(-180deg);
+}
 .nav-list a {
   text-decoration: none;
 }
@@ -139,5 +164,12 @@ export default {
   border: 1px solid dimgray;
   width: 90%;
   margin: auto;
+}
+
+.scroll-area {
+  position: relative;
+  margin: auto;
+  width: 600px;
+  height: 550px;
 }
 </style>
