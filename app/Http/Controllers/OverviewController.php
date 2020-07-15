@@ -16,8 +16,9 @@ class OverviewController extends Controller
   }
 
 
-  private function get_count($className){
-    $nameSpace = '\\App\\'; 
+  private function get_count($className)
+  {
+    $nameSpace = '\\App\\';
     $model = $nameSpace . $className;
     $collections = $model::all();
     $overviews = collect();
@@ -30,7 +31,7 @@ class OverviewController extends Controller
 
     $current = $newAdded = 0;
 
-    foreach($overviews as $over){
+    foreach ($overviews as $over) {
       $over->created == Carbon::now()->format('d-m-Y') ? $newAdded++ : $current++;
     }
 
@@ -47,16 +48,26 @@ class OverviewController extends Controller
       'income' => $this->get_income()
     ]);
   }
-  private function get_income(){
+  private function get_income()
+  {
     $orders = Order::with('book_orders')->get();
-    $income = 0;
-    foreach($orders as $order){
-      foreach($order->book_orders as $bookOrder){
-        $income += $bookOrder->book_price* $bookOrder->qty;
+    $incomeAll = 0;
+    $incomeTdy = 0;
+    foreach ($orders as $order) {
+      foreach ($order->book_orders as $bookOrder) {
+        $bookOrder->created = Carbon::createFromFormat('Y-m-d H:i:s', $bookOrder->created_at)
+          ->format('d-m-Y');
+        $bookOrder->created == Carbon::now()->format('d-m-Y') ? $incomeTdy += $bookOrder->book_price * $bookOrder->qty : $incomeAll += $bookOrder->book_price * $bookOrder->qty++;
 
+        
       }
     }
-    return $income;
+
+    return collect([
+      'incomeAll' => $incomeAll,
+      'incomeTdy' => $incomeTdy
+
+    ]);
   }
 
 
@@ -66,8 +77,9 @@ class OverviewController extends Controller
     return response()->json($data);
   }
 
-  public function get_overview_web(Request $request) {
+  public function get_overview_web(Request $request)
+  {
     $data = $this->add_meta_data($request);
-    return view('admin.app', ['data' => $data ]);
-}
+    return view('admin.app', ['data' => $data]);
+  }
 }
