@@ -46,6 +46,8 @@ class OverviewController extends Controller
       'booksCount' => $this->get_count('Book'),
       'usersCount' => $this->get_count('User'),
       'ordersCount' => $this->get_count('Order'),
+      'orderStatus' => $this->get_orders_count(),
+      'bestSelling' => $this->get_best_selling_books(),
       'income' => $this->get_income(),
     ]);
   }
@@ -59,8 +61,6 @@ class OverviewController extends Controller
         $bookOrder->created = Carbon::createFromFormat('Y-m-d H:i:s', $bookOrder->created_at)
           ->format('d-m-Y');
         $bookOrder->created == Carbon::now()->format('d-m-Y') ? $incomeTdy += $bookOrder->book_price * $bookOrder->qty : $incomeAll += $bookOrder->book_price * $bookOrder->qty++;
-
-        
       }
     }
 
@@ -71,8 +71,49 @@ class OverviewController extends Controller
     ]);
   }
 
-  private function get_orders_count(){
+  private function get_orders_count()
+  {
+    $orders = Order::all();
+    $in_progress = $delivered = $canceled = $dued_pass = 0;
+    foreach ($orders as $order) {
+      switch ($order->status) {
+        case 'code-3(in_progress)':
+          $in_progress++;
+          break;
+        case 'code-2(canceled)':
+          $canceled++;
+          break;
+        case 'code-1(delivered)':
+          $delivered++;
+          break;
+        case 'code-4(passed_due)':
+          $dued_pass++;
+          break;
+      }
+    }
+    return collect([
+      'inProgress' => $in_progress,
+      'delivered' => $delivered,
+      'canceled' => $canceled,
+      'dued' => $dued_pass
+    ]);
+  }
 
+  private function get_best_selling_books()
+  {
+    $orders = Order::with('book_orders')->get();
+    $bookBest = [];
+    foreach ($orders as $order) {
+      foreach ($order->book_orders as $book_order) {
+        if ($book_order->book_id) {
+          array_push($bookBest, $book_order->book_id);
+        }
+      }
+    }
+    $values = array_count_values($bookBest);
+    arsort($values);
+    $popular = array_slice(array_keys($values), 0, 10, true);
+    return $popular;
   }
 
 
