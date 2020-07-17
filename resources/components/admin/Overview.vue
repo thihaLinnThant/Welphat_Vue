@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-col cols="6" md="3">
+      <v-col cols="6" md="4">
         <v-card>
           <v-card-text>
             <v-row>
@@ -27,17 +27,17 @@
                   </span>
                 </p>
               </v-col>
-              <v-col cols="12" md="4">
-                <v-icon color="secondary" size="100">mdi-book</v-icon>
+              <v-col cols="12" md="4" class="d-none d-sm-block">
+                <v-icon color="secondary" size="50">mdi-book</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-btn block elevation="0">view detail</v-btn>
+            <v-btn block elevation="0" :to="{ name: 'books'}">view detail</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="6" md="3">
+      <v-col cols="6" md="4">
         <v-card>
           <v-card-text>
             <v-row>
@@ -63,17 +63,17 @@
                   </span>
                 </p>
               </v-col>
-              <v-col cols="12" md="4">
-                <v-icon color="secondary" size="100">mdi-account</v-icon>
+              <v-col cols="12" md="4" class="d-none d-sm-block">
+                <v-icon color="secondary" size="50">mdi-account</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-btn block elevation="0">view detail</v-btn>
+            <v-btn block elevation="0" :to="{ name : 'users'}">view detail</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="6" md="3">
+      <v-col cols="12" md="4">
         <v-card>
           <v-card-text>
             <v-row>
@@ -102,42 +102,70 @@
                   </span>
                 </p>
               </v-col>
-              <v-col cols="12" md="4">
-                <v-icon color="secondary" size="100">mdi-square-inc-cash</v-icon>
+              <v-col cols="12" md="4" class="d-none d-sm-block">
+                <v-icon color="secondary" size="50">mdi-square-inc-cash</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-btn block elevation="0">view detail</v-btn>
+            <v-btn block elevation="0" :to="{ name: 'orders'}">view detail</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
+    </v-row>
+    <v-row justify="center">
       <v-col cols="6" md="3">
-        <v-card>
-          <v-card-text>
-            <v-row>
-              <v-col cols="12" md="8">
-                <div>Budget</div>
-                <v-row justify="space-between">
-                  <p class="display-1 text--primary" style="margin-left:10px">
-                    <animated-number value="30000" :formatValue="format" :duration="2000" />
-                    <span style="color:grey;font-size: 20px;margin-top: 10px">mmk</span>
-                  </p>
-                </v-row>
+        <v-card color="#EBA276">
+          <v-card-subtitle>In Progress</v-card-subtitle>
+          <v-card-title class="headline">9</v-card-title>
 
-                <p>
-                  status
-                  <v-icon color="red">mdi-arrow-bottom-left</v-icon>
-                  <span style="color:red">-11000 mmk</span>
-                </p>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-icon color="secondary" size="100">mdi-cash-100</v-icon>
-              </v-col>
-            </v-row>
-          </v-card-text>
           <v-card-actions>
-            <v-btn block elevation="0">view detail</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn text icon :to="{ name: 'orders'}">
+              <v-icon>mdi-launch</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
+      <v-col cols="6" md="3">
+        <v-card color="green" dark>
+          <v-card-subtitle>Delivered</v-card-subtitle>
+          <v-card-title class="headline">9</v-card-title>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text icon :to="{ name: 'orders'}">
+              <v-icon>mdi-launch</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
+      <v-col cols="6" md="3">
+        <v-card color="#6663C7" dark>
+          <v-card-subtitle>Canceled</v-card-subtitle>
+          <v-card-title class="headline">9</v-card-title>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text icon :to="{ name: 'orders'}">
+              <v-icon>mdi-launch</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
+      <v-col cols="6" md="3">
+        <v-card color="red" dark>
+          <v-card-subtitle>Passed Due</v-card-subtitle>
+          <v-card-title class="headline">9</v-card-title>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text icon :to="{ name: 'orders'}">
+              <v-icon>mdi-launch</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

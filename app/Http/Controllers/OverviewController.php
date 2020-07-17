@@ -45,7 +45,8 @@ class OverviewController extends Controller
     return collect([
       'booksCount' => $this->get_count('Book'),
       'usersCount' => $this->get_count('User'),
-      'income' => $this->get_income()
+      'ordersCount' => $this->get_count('Order'),
+      'income' => $this->get_income(),
     ]);
   }
   private function get_income()
@@ -68,6 +69,10 @@ class OverviewController extends Controller
       'incomeTdy' => $incomeTdy
 
     ]);
+  }
+
+  private function get_orders_count(){
+
   }
 
 
