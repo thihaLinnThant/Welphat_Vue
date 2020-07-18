@@ -93,6 +93,7 @@
                   new books
                   <v-icon color="green">mdi-arrow-top-right</v-icon>
                   <span style="color:green">
+                    +
                     <animated-number
                       :value="overview.booksCount.newAdded"
                       :formatValue="format"
@@ -130,6 +131,7 @@
               today income
               <v-icon color="green">mdi-arrow-top-right</v-icon>
               <span style="color:green">
+                +
                 <animated-number
                   :value="overview.income.incomeTdy"
                   :formatValue="format"
@@ -241,18 +243,45 @@
             </thead>
             <tbody>
               <tr v-for="(best_selling_book,index) in overview.bestSelling" :key="index">
-              
                 <td>{{index+1}}</td>
                 <td>{{ best_selling_book.name }}</td>
                 <td>
-                  <v-btn text :to="{ name: 'bookview', params: { id : best_selling_book.id}}">see book</v-btn>
+                  <v-btn
+                    text
+                    :to="{ name: 'bookview', params: { id : best_selling_book.id}}"
+                  >see book</v-btn>
                 </td>
               </tr>
             </tbody>
           </template>
         </v-simple-table>
       </v-col>
-      <v-col cols="12" md="6"></v-col>
+      <v-col cols="12" md="6">
+        <h2 style="margin:5px">Most Wish Books</h2>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">Rank</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(most_wish_book,index) in overview.mostWish" :key="index">
+                <td>{{index+1}}</td>
+                <td>{{ most_wish_book.book_name }}</td>
+                <td>
+                  <v-btn
+                    text
+                    :to="{ name: 'bookview', params: { id : most_wish_book.book_id}}"
+                  >see book</v-btn>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-col>
     </v-row>
   </div>
 </template>

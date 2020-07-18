@@ -29,6 +29,7 @@ class BooksTableSeeder extends Seeder
                 'published_date' => $faker->date('Y-m-d', 'now'),
                 'description' => $faker->paragraph(3, true),
                 'price' => 1000,
+                'pages' => 165,
                 'publisher_id' => Publisher::find(rand(1,10))->id
             ]);
             $file = file_get_contents("https://creativebonito.com/wp-content/uploads/2018/07/book-cover-mockup-templates-cover.png");

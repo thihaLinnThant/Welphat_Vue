@@ -131,7 +131,8 @@ class OverviewController extends Controller
     $populars = $this->get_top_elements_from_array($most_wish);
     $most_wish_books = collect();
     foreach($populars as $popular){
-      // $books = $wishes::where('book_id',)
+      $books = $wishes->where('book_id',$popular)->first();
+      $most_wish_books->push($books);
     }
     return $most_wish_books;
   }
