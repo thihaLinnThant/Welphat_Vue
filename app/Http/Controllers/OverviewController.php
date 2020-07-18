@@ -111,9 +111,7 @@ class OverviewController extends Controller
         }
       }
     }
-    $values = array_count_values($bookBest);
-    arsort($values);
-    $populars = array_slice(array_keys($values), 0, 10, true);
+    $populars = $this->get_top_elements_from_array($bookBest);
     $best_selling_books = collect();
     foreach($populars as $popular){
       $books = Book::where('id',$popular)->first();
@@ -130,14 +128,19 @@ class OverviewController extends Controller
         array_push($most_wish,$wish->book_id);
       }
     }
-    $values = array_count_values($most_wish);
+    $populars = $this->get_top_elements_from_array($most_wish);
+    $most_wish_books = collect();
+    foreach($populars as $popular){
+      // $books = $wishes::where('book_id',)
+    }
+    return $most_wish_books;
+  }
+
+  private function get_top_elements_from_array($payload_array){
+    $values = array_count_values($payload_array);
     arsort($values);
     $populars = array_slice(array_keys($values), 0, 10, true);
     return $populars;
-  }
-
-  private function get_top_elements_from_array(){
-    
   }
 
 
