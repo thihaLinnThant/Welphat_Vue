@@ -227,6 +227,33 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12" md="6">
+        <h2 style="margin:5px">Best Selling Books</h2>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">Rank</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(best_selling_book,index) in overview.bestSelling" :key="index">
+              
+                <td>{{index+1}}</td>
+                <td>{{ best_selling_book.name }}</td>
+                <td>
+                  <v-btn text :to="{ name: 'bookview', params: { id : best_selling_book.id}}">see book</v-btn>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-col>
+      <v-col cols="12" md="6"></v-col>
+    </v-row>
   </div>
 </template>
 

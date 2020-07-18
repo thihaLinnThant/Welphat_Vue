@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 use App\Order;
+use App\Book;
+use App\Wish;
 
 
 class OverviewController extends Controller
@@ -48,6 +50,7 @@ class OverviewController extends Controller
       'ordersCount' => $this->get_count('Order'),
       'orderStatus' => $this->get_orders_count(),
       'bestSelling' => $this->get_best_selling_books(),
+      'mostWish' => $this->get_most_wish_books(),
       'income' => $this->get_income(),
     ]);
   }
@@ -63,11 +66,9 @@ class OverviewController extends Controller
         $bookOrder->created == Carbon::now()->format('d-m-Y') ? $incomeTdy += $bookOrder->book_price * $bookOrder->qty : $incomeAll += $bookOrder->book_price * $bookOrder->qty++;
       }
     }
-
     return collect([
       'incomeAll' => $incomeAll,
       'incomeTdy' => $incomeTdy
-
     ]);
   }
 
@@ -112,8 +113,31 @@ class OverviewController extends Controller
     }
     $values = array_count_values($bookBest);
     arsort($values);
-    $popular = array_slice(array_keys($values), 0, 10, true);
-    return $popular;
+    $populars = array_slice(array_keys($values), 0, 10, true);
+    $best_selling_books = collect();
+    foreach($populars as $popular){
+      $books = Book::where('id',$popular)->first();
+      $best_selling_books->push($books);
+    }
+    return $best_selling_books;
+  }
+
+  private function get_most_wish_books(){
+    $wishes = Wish::all();
+    $most_wish = [];
+    foreach($wishes as $wish){
+      if($wish->book_id){
+        array_push($most_wish,$wish->book_id);
+      }
+    }
+    $values = array_count_values($most_wish);
+    arsort($values);
+    $populars = array_slice(array_keys($values), 0, 10, true);
+    return $populars;
+  }
+
+  private function get_top_elements_from_array(){
+    
   }
 
 
