@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Carbon\Carbon;
 use App\Order;
 use App\Book;
@@ -36,11 +35,26 @@ class OverviewController extends Controller
     foreach ($overviews as $over) {
       $over->created == Carbon::now()->format('d-m-Y') ? $newAdded++ : $current++;
     }
+    // get last month data
+    $fromDate = Carbon::now()->subMonth()->startOfMonth()->toDateString();
+    $tillDate = Carbon::now()->subMonth()->endOfMonth()->toDateString();
+
+    $lastMonth = $model::whereBetween('created_at', [$fromDate, $tillDate])->get();
+
 
     return collect([
       'newAdded' => $newAdded,
-      'current' => $current
+      'current' => $current,
+      'lastMonth' => count($lastMonth),
+      'lastSevenDays' => $this->getDaysRecord(7,$model),
+      'last30Days' => $this->getDaysRecord(30,$model)
     ]);
+  }
+
+  private function getDaysRecord($subDaysCount,$modelName){
+    $date = Carbon::today()->subDays($subDaysCount);
+    $data = $modelName::where('created_at','>=', $date)->get();
+    return count($data);
   }
   private function get_overview()
   {
@@ -51,7 +65,7 @@ class OverviewController extends Controller
       'orderStatus' => $this->get_orders_count(),
       'bestSelling' => $this->get_best_selling_books(),
       'mostWish' => $this->get_most_wish_books(),
-      'income' => $this->get_income(),
+      'income' => $this->get_income()
     ]);
   }
   private function get_income()
@@ -113,31 +127,33 @@ class OverviewController extends Controller
     }
     $populars = $this->get_top_elements_from_array($bookBest);
     $best_selling_books = collect();
-    foreach($populars as $popular){
-      $books = Book::where('id',$popular)->first();
+    foreach ($populars as $popular) {
+      $books = Book::where('id', $popular)->first();
       $best_selling_books->push($books);
     }
     return $best_selling_books;
   }
 
-  private function get_most_wish_books(){
+  private function get_most_wish_books()
+  {
     $wishes = Wish::all();
     $most_wish = [];
-    foreach($wishes as $wish){
-      if($wish->book_id){
-        array_push($most_wish,$wish->book_id);
+    foreach ($wishes as $wish) {
+      if ($wish->book_id) {
+        array_push($most_wish, $wish->book_id);
       }
     }
     $populars = $this->get_top_elements_from_array($most_wish);
     $most_wish_books = collect();
-    foreach($populars as $popular){
-      $books = $wishes->where('book_id',$popular)->first();
+    foreach ($populars as $popular) {
+      $books = $wishes->where('book_id', $popular)->first();
       $most_wish_books->push($books);
     }
     return $most_wish_books;
   }
 
-  private function get_top_elements_from_array($payload_array){
+  private function get_top_elements_from_array($payload_array)
+  {
     $values = array_count_values($payload_array);
     arsort($values);
     $populars = array_slice(array_keys($values), 0, 10, true);

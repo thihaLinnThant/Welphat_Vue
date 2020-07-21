@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-row justify="center">
+
+    <v-text-field outlined v-model="bookCountsFilter"></v-text-field>
+        <p>{{users}}</p>
+    <!-- <v-row justify="center">
       <v-col cols="6" md="3">
         <v-card>
           <v-card-text>
@@ -282,7 +285,7 @@
           </template>
         </v-simple-table>
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
@@ -292,9 +295,14 @@ export default {
   components: {
     AnimatedNumber
   },
+  data(){
+    return{
+      bookCountsFilter : null
+    }
+  },
   computed: {
-    overview() {
-      return this.$store.state.overview;
+    users() {
+      return this.$store.state.overview.booksCount[this.bookCountsFilter];
     }
   },
   methods: {
