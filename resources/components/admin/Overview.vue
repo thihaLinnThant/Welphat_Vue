@@ -1,9 +1,7 @@
 <template>
   <div>
-
     <v-text-field outlined v-model="bookCountsFilter"></v-text-field>
-        <p>{{users}}</p>
-    <!-- <v-row justify="center">
+    <v-row justify="center">
       <v-col cols="6" md="3">
         <v-card>
           <v-card-text>
@@ -12,7 +10,7 @@
                 <div>Orders</div>
                 <p class="display-1 text--primary">
                   <animated-number
-                    :value="overview.ordersCount.current + overview.ordersCount.newAdded"
+                    :value="orders[orderCountsFilter]"
                     :formatValue="format"
                     :duration="2000"
                   />
@@ -23,7 +21,7 @@
                   <span style="color:green">
                     +
                     <animated-number
-                      :value="overview.ordersCount.newAdded"
+                      :value="orders[orderCountsFilter]"
                       :formatValue="format"
                       :duration="2000"
                     />
@@ -31,6 +29,7 @@
                 </p>
               </v-col>
               <v-col cols="12" md="4" class="d-none d-sm-block">
+                <v-select :items="orderItems" dense v-model="orderItems[0]"></v-select>
                 <v-icon color="secondary" size="50">mdi-briefcase</v-icon>
               </v-col>
             </v-row>
@@ -48,7 +47,7 @@
                 <div>Users</div>
                 <p class="display-1 text--primary">
                   <animated-number
-                    :value="overview.usersCount.current + overview.usersCount.newAdded"
+                    :value="users[userCountsFilter]"
                     :formatValue="format"
                     :duration="2000"
                   />
@@ -59,7 +58,7 @@
                   <span style="color:green">
                     +
                     <animated-number
-                      :value="overview.usersCount.newAdded"
+                      :value="users[userCountsFilter]"
                       :formatValue="format"
                       :duration="2000"
                     />
@@ -67,6 +66,7 @@
                 </p>
               </v-col>
               <v-col cols="12" md="4" class="d-none d-sm-block">
+                <v-select :items="userItems" dense v-model="userItems[0]" @click="userCountsFilter = items.value"></v-select>
                 <v-icon color="secondary" size="50">mdi-account</v-icon>
               </v-col>
             </v-row>
@@ -85,7 +85,7 @@
                 <v-row justify="space-between">
                   <p class="display-1 text--primary" style="margin-left:10px">
                     <animated-number
-                      :value="overview.booksCount.current+overview.booksCount.newAdded"
+                      :value="books[bookCountsFilter]"
                       :formatValue="format"
                       :duration="2000"
                     />
@@ -98,7 +98,7 @@
                   <span style="color:green">
                     +
                     <animated-number
-                      :value="overview.booksCount.newAdded"
+                      :value="books[bookCountsFilter]"
                       :formatValue="format"
                       :duration="2000"
                     />
@@ -122,7 +122,7 @@
             <v-row justify="space-between">
               <p class="display-1 text--primary" style="margin-left:10px">
                 <animated-number
-                  :value="overview.income.incomeAll+overview.income.incomeTdy"
+                  :value="income.incomeAll+income.incomeTdy"
                   :formatValue="format"
                   :duration="2000"
                 />
@@ -135,11 +135,7 @@
               <v-icon color="green">mdi-arrow-top-right</v-icon>
               <span style="color:green">
                 +
-                <animated-number
-                  :value="overview.income.incomeTdy"
-                  :formatValue="format"
-                  :duration="2000"
-                />mmk
+                <animated-number :value="income.incomeTdy" :formatValue="format" :duration="2000" />mmk
               </span>
             </p>
           </v-card-text>
@@ -149,7 +145,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <!-- <v-row justify="center">
       <v-col cols="6" md="3">
         <v-card color="#AF4926">
           <v-card-title class="headline">
@@ -231,8 +227,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
-    <v-row>
+    </v-row>-->
+    <!-- <v-row>
       <v-col cols="12" md="6">
         <h2 style="margin:5px">Best Selling Books</h2>
         <v-simple-table>
@@ -285,7 +281,7 @@
           </template>
         </v-simple-table>
       </v-col>
-    </v-row> -->
+    </v-row>-->
   </div>
 </template>
 
@@ -295,14 +291,27 @@ export default {
   components: {
     AnimatedNumber
   },
-  data(){
-    return{
-      bookCountsFilter : null
-    }
+  data() {
+    return {
+      bookCountsFilter: "current",
+      userCountsFilter: "current",
+      orderCountsFilter: "current",
+      orderItems: ["all", "last 7 days", "last 1 month", "last 30 days"],
+      userItems: ["all", "last 7 days", "last 1 month", "last 30 days"],
+    };
   },
   computed: {
+    books() {
+      return this.$store.state.overview.booksCount;
+    },
     users() {
-      return this.$store.state.overview.booksCount[this.bookCountsFilter];
+      return this.$store.state.overview.usersCount;
+    },
+    orders() {
+      return this.$store.state.overview.ordersCount;
+    },
+    income() {
+      return this.$store.state.overview.income;
     }
   },
   methods: {
