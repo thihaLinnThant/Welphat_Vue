@@ -44,7 +44,7 @@ class OverviewController extends Controller
 
     return collect([
       'newAdded' => $newAdded,
-      'current' => $current,
+      'current' => $current+$newAdded,
       'lastMonth' => count($lastMonth),
       'lastSevenDays' => $this->getDaysRecord(7,$model),
       'last30Days' => $this->getDaysRecord(30,$model)

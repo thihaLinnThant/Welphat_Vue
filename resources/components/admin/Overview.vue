@@ -12,25 +12,41 @@
                   <animated-number
                     :value="orders[orderCountsFilter]"
                     :formatValue="format"
-                    :duration="2000"
+                    :duration="500"
                   />
                 </p>
                 <p>
-                  new order
-                  <v-icon color="green">mdi-arrow-top-right</v-icon>
-                  <span style="color:green">
+                  <v-icon color="yellow">mdi-trending-up</v-icon>
+                  <span>
                     +
                     <animated-number
-                      :value="orders[orderCountsFilter]"
+                      :value="orders.newAdded"
                       :formatValue="format"
-                      :duration="2000"
-                    />
+                      :duration="500"
+                    /> new
+                  </span>
+                  <span class="styledDot">.</span>
+                  <v-icon color="green">mdi-trending-up</v-icon>
+                  <span>
+                    +
+                    <animated-number
+                      :value="(orders.newAdded/(orders.current-orders.newAdded))*100"
+                      :formatValue="format"
+                      :duration="500"
+                    />%
                   </span>
                 </p>
               </v-col>
-              <v-col cols="12" md="4" class="d-none d-sm-block">
-                <v-select :items="orderItems" dense v-model="orderItems[0]"></v-select>
-                <v-icon color="secondary" size="50">mdi-briefcase</v-icon>
+              <v-col cols="12" md="4">
+                <v-select
+                  :items="orderItems"
+                  dense
+                  v-model="orderDefaultItem"
+                  item-text="name"
+                  item-value="value"
+                  @change="changedValue($event,'orderCountsFilter')"
+                ></v-select>
+                <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-briefcase</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
@@ -49,25 +65,37 @@
                   <animated-number
                     :value="users[userCountsFilter]"
                     :formatValue="format"
-                    :duration="2000"
+                    :duration="500"
                   />
                 </p>
                 <p>
-                  new user
-                  <v-icon color="green">mdi-arrow-top-right</v-icon>
-                  <span style="color:green">
+                  <v-icon color="yellow">mdi-trending-up</v-icon>
+                  <span>
+                    +
+                    <animated-number :value="users.newAdded" :formatValue="format" :duration="500" /> new
+                  </span>
+                  <span class="styledDot">.</span>
+                  <v-icon color="green">mdi-trending-up</v-icon>
+                  <span>
                     +
                     <animated-number
-                      :value="users[userCountsFilter]"
+                      :value="(users.newAdded/(users.current-users.newAdded))*100"
                       :formatValue="format"
-                      :duration="2000"
-                    />
+                      :duration="500"
+                    />%
                   </span>
                 </p>
               </v-col>
-              <v-col cols="12" md="4" class="d-none d-sm-block">
-                <v-select :items="userItems" dense v-model="userItems[0]" @click="userCountsFilter = items.value"></v-select>
-                <v-icon color="secondary" size="50">mdi-account</v-icon>
+              <v-col cols="12" md="4">
+                <v-select
+                  :items="userItems"
+                  dense
+                  v-model="userDefaultItem"
+                  item-text="name"
+                  item-value="value"
+                  @change="changedValue($event,'userCountsFilter')"
+                ></v-select>
+                <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-account</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
@@ -94,8 +122,8 @@
 
                 <p>
                   new books
-                  <v-icon color="green">mdi-arrow-top-right</v-icon>
-                  <span style="color:green">
+                  <v-icon color="yellow">mdi-arrow-top-right</v-icon>
+                  <span style="color:yellow">
                     +
                     <animated-number
                       :value="books[bookCountsFilter]"
@@ -132,8 +160,8 @@
 
             <p>
               today income
-              <v-icon color="green">mdi-arrow-top-right</v-icon>
-              <span style="color:green">
+              <v-icon color="yellow">mdi-arrow-top-right</v-icon>
+              <span style="color:yellow">
                 +
                 <animated-number :value="income.incomeTdy" :formatValue="format" :duration="2000" />mmk
               </span>
@@ -293,11 +321,56 @@ export default {
   },
   data() {
     return {
-      bookCountsFilter: "current",
-      userCountsFilter: "current",
-      orderCountsFilter: "current",
-      orderItems: ["all", "last 7 days", "last 1 month", "last 30 days"],
-      userItems: ["all", "last 7 days", "last 1 month", "last 30 days"],
+      bookCountsFilter: "newAdded",
+      userCountsFilter: "newAdded",
+      orderCountsFilter: "newAdded",
+      orderItems: [
+        {
+          name: "Today",
+          value: "newAdded"
+        },
+        {
+          name: "all",
+          value: "current"
+        },
+        {
+          name: "last 7 days",
+          value: "lastSevenDays"
+        },
+        {
+          name: "last 1 month",
+          value: "lastMonth"
+        },
+        {
+          name: "last 30 days",
+          value: "last30Days"
+        }
+      ],
+      userItems: [
+        {
+          name: "Today",
+          value: "newAdded"
+        },
+        {
+          name: "all",
+          value: "current"
+        },
+        {
+          name: "last 7 days",
+          value: "lastSevenDays"
+        },
+        {
+          name: "last 1 month",
+          value: "lastMonth"
+        },
+        {
+          name: "last 30 days",
+          value: "last30Days"
+        }
+      ],
+
+      userDefaultItem: { name: "Today", value: "newAdded" },
+      orderDefaultItem: { name: "Today", value: "newAdded" }
     };
   },
   computed: {
@@ -315,6 +388,10 @@ export default {
     }
   },
   methods: {
+    changedValue: function(value, param) {
+      console.log(value);
+      this[param] = value;
+    },
     format(value) {
       return value.toFixed(0);
     }
@@ -323,4 +400,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.styledDot {
+  font-size: 30px;
+}
 </style>
