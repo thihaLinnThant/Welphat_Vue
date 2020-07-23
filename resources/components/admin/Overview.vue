@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-text-field outlined v-model="bookCountsFilter"></v-text-field>
     <v-row justify="center">
+      <!-- ########################################## ORDERS ############################################ -->
       <v-col cols="6" md="3">
         <v-card>
           <v-card-text>
@@ -37,6 +37,7 @@
                   </span>
                 </p>
               </v-col>
+
               <v-col cols="12" md="4">
                 <v-select
                   :items="orderItems"
@@ -55,6 +56,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <!-- ########################################## ORDERS END ############################################ -->
+      <!-- ########################################## USERS ############################################ -->
       <v-col cols="6" md="3">
         <v-card>
           <v-card-text>
@@ -72,7 +75,8 @@
                   <v-icon color="yellow">mdi-trending-up</v-icon>
                   <span>
                     +
-                    <animated-number :value="users.newAdded" :formatValue="format" :duration="500" /> new
+                    <animated-number :value="users.newAdded" :formatValue="format" :duration="500" /> 
+                    new
                   </span>
                   <span class="styledDot">.</span>
                   <v-icon color="green">mdi-trending-up</v-icon>
@@ -104,37 +108,49 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <!-- ################################################# USERS END ######################################### -->
+      <!-- ########################################## BOOK ############################################ -->
       <v-col cols="6" md="3">
         <v-card>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="8">
                 <div>Books</div>
-                <v-row justify="space-between">
-                  <p class="display-1 text--primary" style="margin-left:10px">
-                    <animated-number
-                      :value="books[bookCountsFilter]"
-                      :formatValue="format"
-                      :duration="2000"
-                    />
-                  </p>
-                </v-row>
-
+                <p class="display-1 text--primary">
+                  <animated-number
+                    :value="books[bookCountsFilter]"
+                    :formatValue="format"
+                    :duration="500"
+                  />
+                </p>
                 <p>
-                  new books
-                  <v-icon color="yellow">mdi-arrow-top-right</v-icon>
-                  <span style="color:yellow">
+                  <v-icon color="yellow">mdi-trending-up</v-icon>
+                  <span>
+                    +
+                    <animated-number :value="books.newAdded" :formatValue="format" :duration="500" /> new
+                  </span>
+                  <span class="styledDot">.</span>
+                  <v-icon color="green">mdi-trending-up</v-icon>
+                  <span>
                     +
                     <animated-number
-                      :value="books[bookCountsFilter]"
+                      :value="(books.newAdded/(books.current-books.newAdded))*100"
                       :formatValue="format"
-                      :duration="2000"
-                    />
+                      :duration="500"
+                    />%
                   </span>
                 </p>
               </v-col>
-              <v-col cols="12" md="4" class="d-none d-sm-block">
-                <v-icon color="secondary" size="50">mdi-book</v-icon>
+              <v-col cols="12" md="4">
+                <v-select
+                  :items="bookItems"
+                  dense
+                  v-model="bookDefaultItem"
+                  item-text="name"
+                  item-value="value"
+                  @change="changedValue($event,'bookCountsFilter')"
+                ></v-select>
+                <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-book</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
@@ -143,6 +159,9 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <!-- ################################# BOOK END ######################################### -->
+      <!-- ################################# INCOME ######################################### -->
+
       <v-col cols="6" md="3">
         <v-card>
           <v-card-text>
@@ -172,6 +191,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <!-- ################################# INCOME END ######################################### -->
     </v-row>
     <!-- <v-row justify="center">
       <v-col cols="6" md="3">
@@ -368,9 +388,32 @@ export default {
           value: "last30Days"
         }
       ],
+      bookItems: [
+        {
+          name: "Today",
+          value: "newAdded"
+        },
+        {
+          name: "all",
+          value: "current"
+        },
+        {
+          name: "last 7 days",
+          value: "lastSevenDays"
+        },
+        {
+          name: "last 1 month",
+          value: "lastMonth"
+        },
+        {
+          name: "last 30 days",
+          value: "last30Days"
+        }
+      ],
 
       userDefaultItem: { name: "Today", value: "newAdded" },
-      orderDefaultItem: { name: "Today", value: "newAdded" }
+      orderDefaultItem: { name: "Today", value: "newAdded" },
+      bookDefaultItem: { name: "Today", value: "newAdded" }
     };
   },
   computed: {

@@ -35,26 +35,29 @@ class OverviewController extends Controller
     foreach ($overviews as $over) {
       $over->created == Carbon::now()->format('d-m-Y') ? $newAdded++ : $current++;
     }
-    // get last month data
-    $fromDate = Carbon::now()->subMonth()->startOfMonth()->toDateString();
-    $tillDate = Carbon::now()->subMonth()->endOfMonth()->toDateString();
 
-    $lastMonth = $model::whereBetween('created_at', [$fromDate, $tillDate])->get();
 
 
     return collect([
       'newAdded' => $newAdded,
-      'current' => $current+$newAdded,
-      'lastMonth' => count($lastMonth),
-      'lastSevenDays' => $this->getDaysRecord(7,$model),
-      'last30Days' => $this->getDaysRecord(30,$model)
+      'current' => $current + $newAdded,
+      'lastMonth' => count($this->get_last_month_data($model)),
+      'lastSevenDays' => count($this->getDaysRecord(7, $model)),
+      'last30Days' => count($this->getDaysRecord(30, $model))
     ]);
   }
+      // get last month data
+  private function get_last_month_data($model, $pivot_table = null)
+  {
+    $fromDate = Carbon::now()->subMonth()->startOfMonth()->toDateString();
+    $tillDate = Carbon::now()->subMonth()->endOfMonth()->toDateString();
+    return $pivot_table ? $model::with($pivot_table)->whereBetween('created_at', [$fromDate, $tillDate])->get() : $model::whereBetween('created_at', [$fromDate, $tillDate])->get();
+  }
 
-  private function getDaysRecord($subDaysCount,$modelName){
+  private function getDaysRecord($subDaysCount, $modelName, $pivot_table = null)
+  {
     $date = Carbon::today()->subDays($subDaysCount);
-    $data = $modelName::where('created_at','>=', $date)->get();
-    return count($data);
+    return $pivot_table? $modelName::with($pivot_table)->where('created_at', '>=', $date)->get() : $modelName::where('created_at', '>=', $date)->get();
   }
   private function get_overview()
   {
@@ -73,6 +76,10 @@ class OverviewController extends Controller
     $orders = Order::with('book_orders')->get();
     $incomeAll = 0;
     $incomeTdy = 0;
+    $incomeLastMonth = 0;
+    $incomeLast7Days = 0;
+    $incomeLast30Days = 0;
+
     foreach ($orders as $order) {
       foreach ($order->book_orders as $bookOrder) {
         $bookOrder->created = Carbon::createFromFormat('Y-m-d H:i:s', $bookOrder->created_at)
@@ -80,9 +87,23 @@ class OverviewController extends Controller
         $bookOrder->created == Carbon::now()->format('d-m-Y') ? $incomeTdy += $bookOrder->book_price * $bookOrder->qty : $incomeAll += $bookOrder->book_price * $bookOrder->qty++;
       }
     }
+
+    foreach($this->get_last_month_data('\App\Order', 'book_orders') as $orderLastMonth){
+      foreach($orderLastMonth->book_orders as $order){
+        $incomeLastMonth += $order->book_price*$order->qty;
+
+      }
+    }
+
+    // foreach($this->getDaysRecord(7,))
+
+    
+    
+
     return collect([
       'incomeAll' => $incomeAll,
-      'incomeTdy' => $incomeTdy
+      'incomeTdy' => $incomeTdy,
+      'incomeLastMonth' => $incomeLastMonth
     ]);
   }
 
