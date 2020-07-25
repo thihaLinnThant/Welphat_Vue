@@ -62,9 +62,9 @@ class OverviewController extends Controller
   private function get_overview()
   {
     return collect([
-      'booksCount' => $this->get_count('Book'),
-      'usersCount' => $this->get_count('User'),
-      'ordersCount' => $this->get_count('Order'),
+      'bookCount' => $this->get_count('Book'),
+      'userCount' => $this->get_count('User'),
+      'orderCount' => $this->get_count('Order'),
       'orderStatus' => $this->get_orders_count(),
       'bestSelling' => $this->get_best_selling_books(),
       'mostWish' => $this->get_most_wish_books(),
@@ -77,36 +77,44 @@ class OverviewController extends Controller
     $incomeAll = 0;
     $incomeTdy = 0;
     $incomeLastMonth = 0;
-    $incomeLast7Days = 0;
-    $incomeLast30Days = 0;
+
 
     foreach ($orders as $order) {
       foreach ($order->book_orders as $bookOrder) {
         $bookOrder->created = Carbon::createFromFormat('Y-m-d H:i:s', $bookOrder->created_at)
           ->format('d-m-Y');
+        
         $bookOrder->created == Carbon::now()->format('d-m-Y') ? $incomeTdy += $bookOrder->book_price * $bookOrder->qty : $incomeAll += $bookOrder->book_price * $bookOrder->qty++;
       }
     }
 
     foreach($this->get_last_month_data('\App\Order', 'book_orders') as $orderLastMonth){
       foreach($orderLastMonth->book_orders as $order){
-        $incomeLastMonth += $order->book_price*$order->qty;
+        $incomeLastMonth += $order->book_price;
 
       }
     }
 
-    // foreach($this->getDaysRecord(7,))
-
-    
-    
-
     return collect([
       'incomeAll' => $incomeAll,
       'incomeTdy' => $incomeTdy,
-      'incomeLastMonth' => $incomeLastMonth
+      'incomeLastMonth' => $incomeLastMonth,
+      'incomeLast7Days' => $this->incomeByDay(7),
+      'incomeLast30Days' => $this->incomeByDay(30)
     ]);
   }
 
+
+  private function incomeByDay($day){
+    $incomeLastDays = 0;
+
+    foreach($this->getDaysRecord($day,'\App\Order','book_orders') as $orderDayRecords){
+      foreach($orderDayRecords->book_orders as $orderDayRecord){
+        $incomeLastDays += $orderDayRecord->book_price;
+      }
+    }
+    return $incomeLastDays;
+  }
   private function get_orders_count()
   {
     $orders = Order::all();
