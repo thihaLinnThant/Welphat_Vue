@@ -10,7 +10,7 @@
                 <div>{{statusTable.statusName}}</div>
                 <p class="display-1 text--primary">
                   <animated-number
-                    :value="overview[statusTable.statusTable][orderCountsFilter]"
+                    :value="overview[statusTable.statusTable][statusTable.filter]"
                     :formatValue="format"
                     :duration="500"
                   />
@@ -20,7 +20,7 @@
                   <span>
                     +
                     <animated-number
-                      :value="overview.orderCount.newAdded"
+                      :value="overview[statusTable.statusTable].newAdded"
                       :formatValue="format"
                       :duration="500"
                     />new
@@ -30,7 +30,7 @@
                   <span>
                     +
                     <animated-number
-                      :value="(overview.orderCount.newAdded/(overview.orderCount.current-overview.orderCount.newAdded))*100"
+                      :value="(overview[statusTable.statusTable].newAdded/(overview[statusTable.statusTable].current-overview[statusTable.statusTable].newAdded))*100"
                       :formatValue="format"
                       :duration="500"
                     />%
@@ -40,14 +40,14 @@
 
               <v-col cols="12" md="4">
                 <v-select
-                  :items="orderItems"
+                  :items="statusTable.selectItems"
                   dense
-                  v-model="orderDefaultItem"
+                  v-model="statusTable.defaultItem"
                   item-text="name"
                   item-value="value"
-                  @change="changedValue($event,'orderCountsFilter')"
+                  @change="changedValue($event,statusTable.filter, statusTable.statusName)"
                 ></v-select>
-                <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-briefcase</v-icon>
+                <v-icon color="secondary" size="50" class="d-none d-sm-block">{{statusTable.icon}}</v-icon>
               </v-col>
             </v-row>
           </v-card-text>
@@ -56,117 +56,6 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <!-- ########################################## ORDERS END ############################################ -->
-      <!-- ########################################## USERS ############################################ -->
-      <!-- <v-col cols="6" md="3">
-        <v-card>
-          <v-card-text>
-            <v-row>
-              <v-col cols="12" md="8">
-                <div>Users</div>
-                <p class="display-1 text--primary">
-                  <animated-number
-                    :value="overview.usersCount[userCountsFilter]"
-                    :formatValue="format"
-                    :duration="500"
-                  />
-                </p>
-                <p>
-                  <v-icon color="yellow">mdi-trending-up</v-icon>
-                  <span>
-                    +
-                    <animated-number
-                      :value="overview.usersCount.newAdded"
-                      :formatValue="format"
-                      :duration="500"
-                    />new
-                  </span>
-                  <span class="styledDot">.</span>
-                  <v-icon color="green">mdi-trending-up</v-icon>
-                  <span>
-                    +
-                    <animated-number
-                      :value="(overview.usersCount.newAdded/(overview.usersCount.current-overview.usersCount.newAdded))*100"
-                      :formatValue="format"
-                      :duration="500"
-                    />%
-                  </span>
-                </p>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-select
-                  :items="userItems"
-                  dense
-                  v-model="userDefaultItem"
-                  item-text="name"
-                  item-value="value"
-                  @change="changedValue($event,'userCountsFilter')"
-                ></v-select>
-                <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-account</v-icon>
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn block elevation="0" :to="{ name : 'users'}">view detail</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col> -->
-      <!-- ################################################# USERS END ######################################### -->
-      <!-- ########################################## BOOK ############################################ -->
-      <!-- <v-col cols="6" md="3">
-        <v-card>
-          <v-card-text>
-            <v-row>
-              <v-col cols="12" md="8">
-                <div>Books</div>
-                <p class="display-1 text--primary">
-                  <animated-number
-                    :value="overview.booksCount[bookCountsFilter]"
-                    :formatValue="format"
-                    :duration="500"
-                  />
-                </p>
-                <p>
-                  <v-icon color="yellow">mdi-trending-up</v-icon>
-                  <span>
-                    +
-                    <animated-number
-                      :value="overview.booksCount.newAdded"
-                      :formatValue="format"
-                      :duration="500"
-                    />new
-                  </span>
-                  <span class="styledDot">.</span>
-                  <v-icon color="green">mdi-trending-up</v-icon>
-                  <span>
-                    +
-                    <animated-number
-                      :value="(overview.booksCount.newAdded/(overview.booksCount.current-overview.booksCount.newAdded))*100"
-                      :formatValue="format"
-                      :duration="500"
-                    />%
-                  </span>
-                </p>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-select
-                  :items="bookItems"
-                  dense
-                  v-model="bookDefaultItem"
-                  item-text="name"
-                  item-value="value"
-                  @change="changedValue($event,'bookCountsFilter')"
-                ></v-select>
-                <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-book</v-icon>
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn block elevation="0" :to="{ name: 'books'}">view detail</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col> -->
-      <!-- ################################# BOOK END ######################################### -->
       <!-- ################################# INCOME ######################################### -->
       <v-col cols="6" md="3">
         <v-card>
@@ -212,7 +101,7 @@
                   v-model="incomeDefaultItem"
                   item-text="name"
                   item-value="value"
-                  @change="changedValue($event,'incomeCountsFilter')"
+                  @change="changedValue($event,'incomeCountsFilter', null)"
                 ></v-select>
                 <v-icon color="secondary" size="50" class="d-none d-sm-block">mdi-cash</v-icon>
               </v-col>
@@ -377,142 +266,123 @@
 import AnimatedNumber from "animated-number-vue";
 export default {
   components: {
-    AnimatedNumber
+    AnimatedNumber,
   },
   data() {
     return {
-      bookCountsFilter: "newAdded",
-      userCountsFilter: "newAdded",
-      orderCountsFilter: "newAdded",
       incomeCountsFilter: "incomeTdy",
       statusTables: [
         {
           statusName: "Orders",
-          statusTable: "orderCount"
+          statusTable: "orderCount",
+          selectItems: [
+            {
+              name: "Today",
+              value: "newAdded",
+            },
+            {
+              name: "all",
+              value: "current",
+            },
+            {
+              name: "last 7 days",
+              value: "lastSevenDays",
+            },
+            {
+              name: "last 1 month",
+              value: "lastMonth",
+            },
+            {
+              name: "last 30 days",
+              value: "last30Days",
+            },
+          ],
+          defaultItem: { name: "Today", value: "newAdded" },
+          filter: "newAdded",
+          icon : "mdi-briefcase"
         },
         {
           statusName: "Users",
-          statusTable: "userCount"
+          statusTable: "userCount",
+          selectItems: [
+            {
+              name: "Today",
+              value: "newAdded",
+            },
+            {
+              name: "all",
+              value: "current",
+            },
+            {
+              name: "last 7 days",
+              value: "lastSevenDays",
+            },
+            {
+              name: "last 1 month",
+              value: "lastMonth",
+            },
+            {
+              name: "last 30 days",
+              value: "last30Days",
+            },
+          ],
+          defaultItem: { name: "Today", value: "newAdded" },
+          filter: "newAdded",
+          icon: "mdi-account-circle"
         },
         {
           statusName: "Books",
-          statusTable: "bookCount"
-        }
-      ],
-      selectAbleItems: [
-        {
-          name: "Today",
-          value: "newAdded"
+          statusTable: "bookCount",
+          selectItems: [
+            {
+              name: "Today",
+              value: "newAdded",
+            },
+            {
+              name: "all",
+              value: "current",
+            },
+            {
+              name: "last 7 days",
+              value: "lastSevenDays",
+            },
+            {
+              name: "last 1 month",
+              value: "lastMonth",
+            },
+            {
+              name: "last 30 days",
+              value: "last30Days",
+            },
+          ],
+          defaultItem: { name: "Today", value: "newAdded" },
+          filter: "newAdded",
+          icon: "mdi-book"
         },
-        {
-          name: "all",
-          value: "current"
-        },
-        {
-          name: "last 7 days",
-          value: "lastSevenDays"
-        },
-        {
-          name: "last 1 month",
-          value: "lastMonth"
-        },
-        {
-          name: "last 30 days",
-          value: "last30Days"
-        }
-      ],
-      orderItems: [
-        {
-          name: "Today",
-          value: "newAdded"
-        },
-        {
-          name: "all",
-          value: "current"
-        },
-        {
-          name: "last 7 days",
-          value: "lastSevenDays"
-        },
-        {
-          name: "last 1 month",
-          value: "lastMonth"
-        },
-        {
-          name: "last 30 days",
-          value: "last30Days"
-        }
-      ],
-      userItems: [
-        {
-          name: "Today",
-          value: "newAdded"
-        },
-        {
-          name: "all",
-          value: "current"
-        },
-        {
-          name: "last 7 days",
-          value: "lastSevenDays"
-        },
-        {
-          name: "last 1 month",
-          value: "lastMonth"
-        },
-        {
-          name: "last 30 days",
-          value: "last30Days"
-        }
-      ],
-      bookItems: [
-        {
-          name: "Today",
-          value: "newAdded"
-        },
-        {
-          name: "all",
-          value: "current"
-        },
-        {
-          name: "last 7 days",
-          value: "lastSevenDays"
-        },
-        {
-          name: "last 1 month",
-          value: "lastMonth"
-        },
-        {
-          name: "last 30 days",
-          value: "last30Days"
-        }
       ],
       incomeItems: [
         {
           name: "Today",
-          value: "incomeTdy"
+          value: "incomeTdy",
         },
         {
           name: "all",
-          value: "incomeAll"
+          value: "incomeAll",
         },
         {
           name: "last 7 days",
-          value: "incomeLast7Days"
+          value: "incomeLast7Days",
         },
         {
           name: "last 1 month",
-          value: "incomeLastMonth"
+          value: "incomeLastMonth",
         },
         {
           name: "last 30 days",
-          value: "incomeLast30Days"
-        }
+          value: "incomeLast30Days",
+        },
       ],
-      userDefaultItem: { name: "Today", value: "newAdded" },
-      orderDefaultItem: { name: "Today", value: "newAdded" },
-      bookDefaultItem: { name: "Today", value: "newAdded" },
-      incomeDefaultItem: { name: "Today", value: "incomeTdy" }
+      incomeDefaultItem: { name: "Today", value: "incomeTdy" },
     };
   },
   computed: {
@@ -521,17 +391,22 @@ export default {
     },
     bestSelling() {
       return this.$store.state.overview.bestSelling;
-    }
+    },
   },
   methods: {
-    changedValue: function(value, param) {
-      console.log(value);
-      this[param] = value;
+    changedValue: function (value, param, name) {
+      if(name){
+      this.statusTables.filter((element) => {
+        element.filter = element.statusName == name? value : element.filter;
+      });
+      }else{
+        this[param] = value;
+      }
     },
     format(value) {
       return value.toFixed(0);
-    }
-  }
+    },
+  },
 };
 </script>
 
