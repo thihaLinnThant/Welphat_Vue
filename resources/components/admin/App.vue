@@ -7,12 +7,15 @@
             <v-icon>mdi-view-dashboard</v-icon>
           </v-list-item-icon>
 
-          <v-list-item-title>Overview</v-list-item-title>
+          <v-list-item-title>OVERVIEW</v-list-item-title>
         </v-list-item>
 
         <v-list-group value="true">
           <template v-slot:activator>
-            <v-list-item-title>Tables</v-list-item-title>
+            <v-list-item-icon>
+              <v-icon>mdi-table</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>TABLES</v-list-item-title>
           </template>
 
           <v-list-item v-for="(item, i) in items" :key="i" link :to="{ name: item.link}">
@@ -23,6 +26,14 @@
           </v-list-item>
         </v-list-group>
       </v-list>
+      <template v-slot:append>
+        <div class="pa-2">
+          <form id="logout_form" method="POST" action="/logout" sytle="display:hidden">
+            <input type="hidden" name="_token" :value="csrf_token" />
+          </form>
+          <v-btn block color="secondary" @click="logout">Logout</v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
     <v-navigation-drawer v-model="noti_drawer" width="auto" temporary app right>
       <v-list>
