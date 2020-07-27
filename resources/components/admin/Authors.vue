@@ -146,7 +146,7 @@
           <v-btn
             color="primary"
             text
-            @click="submitEdit(target_item.id)"
+            @click="submitEdit(target_item.idzz)"
             type="submit"
             outlined
           >Save</v-btn>

@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Admin;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 class AdminTableSeeder extends Seeder
 {
     /**
@@ -16,7 +18,8 @@ class AdminTableSeeder extends Seeder
             Admin::create([
                 'name' => $faker->name,
                 'email' => $faker->name.'@gmail.com',
-                'password' => Hash::make('password')
+                'password' => Hash::make('password'),
+                'api_token' => Str::random(60),
             ]);
         }
     }

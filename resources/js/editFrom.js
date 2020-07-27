@@ -1,9 +1,10 @@
+import NotificationHandler from './adminNotiHandler.js';
 export default {
-    watch() {
-        return {
-            fields: {},
-            errors: {}
-        }
+    mixins: [NotificationHandler],
+    watch: {
+        fields: {},
+        errors: {},
+        target_item: {},
     },
     methods: {
         submitEdit(id) {
@@ -39,6 +40,7 @@ export default {
                     this.$store.commit('replaceOneRecord', { route: this.statename, data, id })
                     this.alertMessage = `${this.statename} is updated with new (${data.name})  `;
 
+                    this.create_admin_noti('edit', this.target_item);
 
 
                 });

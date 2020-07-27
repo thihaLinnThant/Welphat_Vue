@@ -11,4 +11,8 @@ class Author extends Model
     public function books(){
         return $this->belongsToMany('App\Book', 'book_author');
     }
+
+    public function admin_activies(){
+        return $this->morphMany('App\AdminNotification', 'committed_item');
+    }
 }

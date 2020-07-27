@@ -15,4 +15,8 @@ class Comment extends Model
     public function book(){
         return $this->belongsTo('App\Book');
     }
+
+    public function admin_activies(){
+        return $this->morphMany('App\AdminNotification', 'committed_item');
+    }
 }

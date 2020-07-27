@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Axios from 'axios';
 import Store from './admin_store';
 Vue.use(VueRouter);
 
@@ -22,8 +21,9 @@ import CategoryView from '../components/admin/adminSingleView/CategoryView';
 import PublisherView from '../components/admin/adminSingleView/PublisherView';
 import SupplierView from '../components/admin/adminSingleView/SupplierView';
 import UserView from '../components/admin/adminSingleView/UserView';
-import Overview from '../components/admin/Overview'
-import NotFound from '../components/admin/NotFound'
+import Overview from '../components/admin/Overview';
+import NotFound from '../components/admin/NotFound';
+import AdminNotification from  '../components/admin/AdminNotifications';
 
 let router = new VueRouter({
     mode: 'history',
@@ -47,7 +47,8 @@ let router = new VueRouter({
         { path: '/admin/suppliers/:id', component: SupplierView, name: 'supplierview' },
         { path: '/admin/users/:id', component: UserView, name: 'userview' },
         { path: '/admin/overview', component: Overview, name: 'overview'},
-        { path: '/admin/404', component: NotFound, name: 'notfound'}
+        { path: '/admin/404', component: NotFound, name: 'notfound'},
+        { path: '/admin/notifications', component: AdminNotification, name: 'notifications'}
     ]
 });
 
@@ -55,13 +56,14 @@ router.beforeEach((to, from, next) => {
     let serverData = JSON.parse(window.welphat_server_data);
 
     function getApiData(path, name) {
-        Axios.get(`/api${path}`).then(({ data }) => {
+        axios.get(`/api${path}`).then(({ data }) => {
 
             Store.commit('addData', { route: name, data })
             next();
         }).catch((error)=>{
             error.response.status == '404' ? router.push({ name: 'notfound' }) : ''
         })
+        
     }
 
     if (to.path === '/admin/books') { getApiData(to.path, to.name) }
@@ -81,6 +83,8 @@ router.beforeEach((to, from, next) => {
     else if (to.path === '/admin/orders') { if (Store.state.orders.length > 0) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/admins') { if (Store.state.admins.length > 0) { next() } else { getApiData(to.path, to.name) } }
+
+    else if (to.path === '/admin/notifications') { if (Store.state.notifications.length > 10) { next() } else { getApiData(to.path, to.name) } }
 
     else if (to.path === '/admin/users') {
         if (Store.state.users.length > 0) { next() } else {

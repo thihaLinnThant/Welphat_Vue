@@ -15,7 +15,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','super_admin'
+        'name', 'email', 'password','super_admin', 'api_token'
     ];
 
     /**
@@ -35,4 +35,8 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function notifications(){
+        return $this->morphMany('App\AdminNotification', 'committer');
+    }
 }

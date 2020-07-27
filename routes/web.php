@@ -1,6 +1,8 @@
 <?php
 
+use App\Event\AdminNotificationEvent;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,10 @@ Route::post('/login/admin', 'Auth\LoginController@loginAdmin')->name('login.admi
 Route::post('/register/admin', 'Auth\RegisterController@createAdmin')->name('register.admin');
 
 Route::group(['middleware' => 'auth:admin'], function () {
+
+    Route::post('/admin/current', function(){
+        return Auth::user();
+    });
 
     Route::get('/admin/books', 'BookController@get_books_web');
     Route::post('/admin/books/create','BookController@create');
@@ -109,5 +115,15 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/overview','OverviewController@get_overview_web');
     Route::post('/admin/overview','OverviewController@get_overview_web');
 
+    Route::get('/admin/notifications', 'AdminNotificationController@get_all_notifications_web');
+    Route::post('/admin/notifications/addnotification', 'AdminNotificationController@create');
+    Route::post('/admin/notifications/markseen/{id}', 'AdminNotificationController@mark_seen');
+    
+
+    Route::get('/admin/event/notification', function(){
+        event(new AdminNotificationEvent('event activated'));
+    });
+
+    Route::post('/admin/tokenrefresh', 'ApiTokenController@update');
 
 });

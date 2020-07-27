@@ -11,4 +11,8 @@ class Publisher extends Model
     public function books() {
         return $this->hasMany('App\Book');
     }
+
+    public function admin_activies(){
+        return $this->morphMany('App\AdminNotification', 'committed_item');
+    }
 }

@@ -1,7 +1,8 @@
 import Lastrecord from './lastRecordmixin'
 import editFrom from './editFrom'
+import NotificationHandler from './adminNotiHandler.js';
 export default {
-    mixins: [Lastrecord, editFrom],
+    mixins: [Lastrecord, editFrom, NotificationHandler],
     data() {
         return {
             csrf_token: window.csrf_token,
@@ -14,7 +15,7 @@ export default {
             alert: false,
             alertMessage: '',
             alertType: '',
-            registerDialog: false
+            registerDialog: false,
         }
     },
     methods: {

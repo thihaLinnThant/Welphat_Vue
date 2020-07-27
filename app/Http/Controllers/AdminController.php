@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Admin;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 class AdminController extends Controller
@@ -36,7 +37,12 @@ class AdminController extends Controller
             'password' => 'required'
         ]);
 
-        Admin::create(['name' => $request->name, 'email' => $request->email, 'password' => Hash::make($request->password)]);
+        Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'api_token' => Str::random(60)
+        ]);
     }
     public function get_lastAdmin_api()
     {

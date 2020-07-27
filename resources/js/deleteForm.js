@@ -5,7 +5,8 @@ export default {
 
             axios.post(`/admin/${this.statename}/delete/${id}`).then(response => {
 
-                this.target_item_id = '';//empty target item id
+                create_admin_noti('delete',this.target_item);
+                this.target_item = '';//empty target item
                 this.alert = true;
                 this.alertMessage = `${this.statename} (${name}) is deleted`;
 

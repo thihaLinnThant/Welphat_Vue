@@ -23,6 +23,10 @@ class Order extends Model
         return $this->hasMany('App\Book_order');
     }
 
+    public function admin_activies(){
+        return $this->morphMany('App\AdminNotification', 'committed_item');
+    }
+
     public function totalPrice()
     {
         $available_book_price = 0;

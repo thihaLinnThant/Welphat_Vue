@@ -3,12 +3,6 @@ import Vuex from 'vuex';
 // import router from './admin_router';
 Vue.use(Vuex);
 
-import axios from 'axios';
-axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN': window.csrf_token
-};
-
 export default new Vuex.Store({
     state: {
         admins: [],
@@ -29,6 +23,8 @@ export default new Vuex.Store({
         supplierview : [],
         userview : [],
         overview : [],
+        notifications: [],
+        latest_notifications: [],
         pagination_length: 0,
         pagination_current: 0,
     },
@@ -39,7 +35,6 @@ export default new Vuex.Store({
     },
     mutations: {
         addOneRecord(state, { route, data }) {
-
             state[route].push(data);
         },
         deleteOneRecord(state, { route, id }) {
@@ -98,7 +93,7 @@ export default new Vuex.Store({
 
         },
         addData(state, { route, data }) {
-            if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview' || route === 'overview') {
+            if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview' || route === 'overview' || route === 'notifications' || route === 'latest_notifications') {
                 state[route] = data;
             } else {
                 state[route] = data[route];

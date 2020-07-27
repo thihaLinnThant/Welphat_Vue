@@ -15,4 +15,8 @@ class Rating extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+    public function admin_activies(){
+        return $this->morphMany('App\AdminNotification', 'committed_item');
+    }
 }

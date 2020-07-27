@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/admin', 'CategoryController@get_categories_api');
 
 Route::get('/admin/books', 'BookController@get_books_api');
 Route::get('/admin/books/lastrecord','BookController@get_lastBook_api');
@@ -68,6 +67,9 @@ Route::get('/admin/orders', 'OrderController@get_orders_api');
 Route::get('/admin/orders/lastrecord','OrderController@get_lastorder_api');
 Route::get('/admin/orders/onerecord/{id}', 'OrderController@get_oneRecord_api');
 
+Route::get('/admin/notifications', 'AdminNotificationController@get_all_notifications_api')->middleware('auth:admin_api');
+Route::get('/admin/notifications/latest', 'AdminNotificationController@get_latest_notifications_api')->middleware('auth:admin_api');
+Route::get('/admin/notifications/lastrecord', 'AdminNotificationController@get_lastNotification_api')->middleware('auth:admin_api');
 
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');
 

@@ -6,6 +6,7 @@ use App\User;
 use App\Book_order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -39,7 +40,14 @@ class UserController extends Controller
             'password' => 'required'
         ]);
         $hashed_password = Hash::make($request->password);
-        User::create(['name' => $request->name, 'email' => $request->email, 'password' => $hashed_password, 'ph_no' => $request->ph_no, 'address' => $request->address]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $hashed_password,
+            'ph_no' => $request->ph_no,
+            'address' => $request->address,
+            'api_token' => Str::random(60)
+        ]);
     }
     public function get_lastUser_api()
     {

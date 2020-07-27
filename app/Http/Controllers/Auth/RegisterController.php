@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Admin;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 class RegisterController extends Controller
 {
     /*
@@ -82,11 +84,13 @@ class RegisterController extends Controller
         if($request && $request->super_admin == '5up3rP@s5wrod'){
             $super_admin = 1;
         }
-         Admin::create([
+        
+        Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'super_admin' => $super_admin
+            'super_admin' => $super_admin,
+            'api_token' => Str::random(60),
         ]);
         return redirect()->intended('login/admin');
     }
@@ -103,6 +107,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'api_token' => Str::random(60),
         ]);
     }
 }

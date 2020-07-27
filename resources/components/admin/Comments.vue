@@ -13,7 +13,7 @@
           <v-spacer></v-spacer>
           <v-btn
             text
-            @click="deleteDialog = false; target_item_id = '';"
+            @click="deleteDialog = false; target_item = '';"
             color="primary" outlined
           >
             No
@@ -21,7 +21,7 @@
 
           <v-btn
             text
-            @click="deleteDialog = false; submitDelete(target_item_id);"
+            @click="deleteDialog = false; submitDelete(target_item.id);"
           >
             Yes
           </v-btn>
@@ -60,7 +60,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="deleteDialog = true; target_item_id = comment.id" class="mt-1" text icon v-on="on">
+                    <v-btn @click="deleteDialog = true; target_item = comment" class="mt-1" text icon v-on="on">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </template>
@@ -95,7 +95,7 @@ export default {
       comments: this.$store.state.comments,
       deleteDialog: false,
       statename: "comments",
-      target_item_id: '',
+      target_item: '',
     };
   }
 };

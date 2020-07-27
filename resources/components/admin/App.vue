@@ -24,13 +24,64 @@
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
+    <v-navigation-drawer v-model="noti_drawer" width="auto" temporary app right>
+      <v-list>
+        <v-list-item style="height:90px;" v-for="(noti, index) in latest_notifications" :key=index>
+          <div class="d-flex noti-style" :class="{unseen: !noti.seen }">
+            <div>
+              <dir>
+                <v-avatar color="indigo" size="36">
+                  <v-icon>mdi-account-circle</v-icon>
+                </v-avatar>
+              </dir>
+              <small>{{ noti.committer.type }}</small>
+            </div>
+            <dir class="vl"></dir>
+            <div class="noti-message">
+              <div>
+                <small><b>{{noti.committer.name}}</b></small>
+              </div>
+              <small>{{ noti.message }}</small>
+            </div>
+            <dir class="vl"></dir>
+            <div>
+              <v-btn class="mr-2" icon @click="$router.push(noti.item_link)" >
+                <v-icon>mdi-eye</v-icon>
+              </v-btn>
+              <v-btn v-if=noti.seen icon  disabled>
+                <v-icon>mdi-checkbox-marked</v-icon>
+              </v-btn>
+              <v-btn v-else icon @click="mark_seen(noti.id); noti.seen=true;">
+                <v-icon>mdi-checkbox-blank-outline</v-icon>
+              </v-btn>
+            </div>
+          </div>
+          
+        </v-list-item>
+        <v-list-item align=center justify-center>
+          <a @click="$router.push({name: 'notifications'})">show all notifications</a>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>WelPhat Admin Panel</v-toolbar-title>
       <v-spacer></v-spacer>
-      <span style="margin-right:10px">{{ admin_name }}</span>
+      
 
+      <v-btn @click.stop="noti_drawer = !noti_drawer" class="mr-2" text icon >
+        <v-badge
+          bordered
+          overlap
+          :value=unseen_noti
+          :content=unseen_noti
+          color="red"
+        >
+          <v-icon dark>mdi-bell</v-icon>
+        </v-badge>
+      </v-btn>
+      <span style="margin-right:10px">{{ admin_name }}</span>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-badge
@@ -57,6 +108,9 @@
             </form>
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
+          <!-- <v-list-item @click="refersh_token">
+            <v-list-item-title>Refresh token</v-list-item-title>
+          </v-list-item> -->
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -85,9 +139,10 @@ export default {
   // },
   data: () => ({
     drawer: null,
+    noti_drawer: null,
     menuValue: null,
     csrf_token: window.csrf_token,
-    admin_name: window.admin_name,
+    admin_name: window.current_admin.name,
     super_admin: window.super_admin,
     items: [
       { text: "Books", icon: "mdi-bookshelf", link: "books", inactive: false },
@@ -139,15 +194,81 @@ export default {
         icon: "mdi-receipt",
         link: "orders",
         inactive: false
+      },
+      {
+        text: "Notifiactions",
+        icon: "mdi-bell",
+        link: "notifications",
+        inactive: false
       }
     ]
   }),
   created() {
     this.$vuetify.theme.dark = true;
+
+    // axios.post('/admin/tokenrefresh', window.current_admin).then(({data}) => {
+    //     console.log(data);
+    //     window.current_admin.api_token = data;
+    //     window.axios.defaults.headers.common= {
+    //       'X-Requested-With': 'XMLHttpRequest',
+    //       'X-CSRF-TOKEN': window.csrf_token,
+    //       'Authorization' : 'Bearer ' + window.current_admin.api_token
+    //     };
+    // }).catch(error => {
+    //     console.log(error.response);
+    // });
+
+    axios.get('/api/admin/notifications/latest').then(({data}) => {
+        this.$store.commit('addData', { route: 'latest_notifications', data })
+    }).catch(error => {
+      console.log(error.response);
+    });
+    
+    Echo.channel('admin-channel')
+      .listen('/App/Event/AdminNotificationEvent', (e) => {
+          console.log(e);
+          console.log('event');
+          this.noti_badge = true;
+          this.noti_badge_value += 1;
+    });
   },
   methods: {
     logout() {
       document.getElementById("logout_form").submit();
+    },
+    mark_seen(id){
+      axios.post(`/admin/notifications/markseen/${id}`).catch(error => {
+        console.log(error.response);
+      });
+    }
+    // refersh_token(){
+    //   axios.post('/admin/tokenrefresh', window.current_admin).then(({data}) => {
+    //     console.log(data);
+    //     window.current_admin.api_token = data;
+    //     window.axios.defaults.headers.common= {
+    //       'X-Requested-With': 'XMLHttpRequest',
+    //       'X-CSRF-TOKEN': window.csrf_token,
+    //       'Authorization' : 'Bearer ' + window.current_admin.api_token
+    //     };
+    //   }).catch(error => {
+    //     console.log(error.response);
+    //   });
+    // },
+  },
+  computed: { 
+    latest_notifications(){
+      return this.$store.state.latest_notifications;
+    },
+    unseen_noti(){
+      var number = 0;
+      this.latest_notifications.forEach( item => {
+        console.log(item);
+        if(!item.seen){
+          number++;
+        }
+      });
+      console.log(number)
+      return number;
     }
   }
 };
@@ -171,5 +292,43 @@ export default {
   margin: auto;
   width: 600px;
   height: 550px;
+}
+.vl {
+  margin: 5px;
+  border-left: 2px solid darkgray;
+  height: 50px;
+}
+.unseen{
+  background-color: #311B92;
+}
+.noti-style{
+  border: 1px solid white;
+  padding: 10px;
+  border-radius:10px;
+}
+.noti-message{
+  width: 250px;
+}
+/* width */
+::-webkit-scrollbar {
+  background: #424242;
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #424242;
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: indigo;
 }
 </style>

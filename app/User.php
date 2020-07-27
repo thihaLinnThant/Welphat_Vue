@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'ph_no' , 'address'
+        'name', 'email', 'password', 'ph_no' , 'address', 'api_token'
     ];
 
     /**
@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function orders(){
         return $this->hasMany('App\Order');
     }  
+
+    public function admin_notification(){
+        return $this->morphMany('App\AdminNotification', 'committer');
+    }
 }

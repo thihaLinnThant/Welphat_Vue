@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RatingTableSeeder::class);
         $this->call(WishTableSeeder::class);
         $this->call(OrderTableSeeder::class);
+        $this->call(AdminNotificationTableSeeder::class);
     }
 }

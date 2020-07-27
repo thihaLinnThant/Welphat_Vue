@@ -40,6 +40,10 @@ class Book extends Model
         return $this->hasMany('App\Wish');
     }
 
+    public function admin_activies(){
+        return $this->morphMany('App\AdminNotification', 'committed_item');
+    }
+
     public function damandCount(){
         return $this->wishes()->count();
     }
