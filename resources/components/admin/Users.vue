@@ -60,7 +60,7 @@
             color="primary"
             outlined
             text
-            @click="submitEdit(target_item.id, fields)"
+            @click="submitEdit()"
             type="submit"
           >Save</v-btn>
         </v-card-actions>
@@ -97,7 +97,7 @@
     </v-snackbar>
     <v-row justify="center">
       <v-dialog v-model="addNew_Dialog" persistent max-width="600px">
-        <v-form @submit.prevent="submit">
+        <v-form @submit.prevent="submitCreate">
           <v-card>
             <v-card-title>
               <span class="headline">Add User</span>
@@ -294,13 +294,10 @@
 
 
 <script>
-import InputMixin from "../../js/RecordInputmixin";
-import EditMixin from "../../js/editFrom";
-import DeleteMixin from "../../js/deleteForm";
-import lastRecordMixin from "../../js/lastRecordmixin";
+import CrudHandler from '../../js/CRUDHandler'
 import { mapState } from "vuex";
 export default {
-  mixins: [InputMixin, lastRecordMixin, EditMixin, DeleteMixin],
+  mixins: [CrudHandler],
   data() {
     return {
       search: "",
@@ -349,7 +346,7 @@ export default {
       }
       this.addNew_Dialog = false;
 
-      this.submit();
+      this.submitCreate();
     },
     showWishList(list) {
       this.wishList_dialog = true;

@@ -7,7 +7,7 @@
           <v-spacer></v-spacer>
           <v-btn text @click="deleteDialog = false; target_item = '';">No</v-btn>
 
-          <v-btn text @click="deleteDialog = false; submitDelete(target_item.id);">Yes</v-btn>
+          <v-btn text @click="deleteDialog = false; submitDelete();">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -103,7 +103,7 @@
             color="primary"
             outlined
             text
-            @click="submitEdit(target_item.id, fields)"
+            @click="submitEdit()"
             type="submit"
           >Save</v-btn>
         </v-card-actions>
@@ -291,11 +291,9 @@
 </template>
 
 <script>
-import InputMixin from "../../js/RecordInputmixin";
-import EditMixin from "../../js/editFrom";
-import DeleteMixin from "../../js/deleteForm";
+import CrudHandler from "../../js/CRUDHandler";
 export default {
-  mixins: [InputMixin, EditMixin, DeleteMixin],
+  mixins: [CrudHandler],
   data() {
     return {
       csrf_token: window.csrf_token,
@@ -337,6 +335,7 @@ export default {
       this.fields.edit_ph_no = item.phone_no;
       this.fields.edit_books = item.book_orders;
       this.fields.edit_address = item.address;
+      this.fields.edit_books.map(book => book.removed = false);
     },
     colorStatus(status) {
       switch (status) {

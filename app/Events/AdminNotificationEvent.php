@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Event;
+namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,16 +14,16 @@ class AdminNotificationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message = '';
+    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($msg)
     {
-        $this->message = $message;
+        $this->message = $msg;
     }
 
     /**
@@ -34,6 +33,6 @@ class AdminNotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('admin-channel');
+        return new Channel('admin-noti');
     }
 }

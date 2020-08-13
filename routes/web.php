@@ -1,6 +1,6 @@
 <?php
 
-use App\Event\AdminNotificationEvent;
+use App\Events\AdminNotificationEvent;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -118,12 +118,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/notifications', 'AdminNotificationController@get_all_notifications_web');
     Route::post('/admin/notifications/addnotification', 'AdminNotificationController@create');
     Route::post('/admin/notifications/markseen/{id}', 'AdminNotificationController@mark_seen');
-    
-
-    Route::get('/admin/event/notification', function(){
-        event(new AdminNotificationEvent('event activated'));
-    });
+    Route::post('/admin/notifications/batch/markseen', 'AdminNotificationController@batch_mark_seen');
 
     Route::post('/admin/tokenrefresh', 'ApiTokenController@update');
-
+    
+    Route::post('/admin/event/notification/{$message}', function($message){
+        event(new AdminNotificationEvent($message));
+    });
 });

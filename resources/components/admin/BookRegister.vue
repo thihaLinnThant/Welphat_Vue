@@ -1,7 +1,7 @@
 <template>
   <v-form
     class="ma-10"
-    @submit.prevent="submit"
+    @submit.prevent="submitCreate"
     ref="form"
     v-model="valid"
     enctype="multipart/form-data"
@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import RecordInput from "../../js/RecordInputmixin";
+import CrudHandler from '../../js/CRUDHandler'
 import dataListMixin from '../../js/dataListMixin';
 export default {
   data() {
@@ -143,7 +143,7 @@ export default {
       previewImage: null
     };
   },
-  mixins: [RecordInput,dataListMixin],
+  mixins: [CrudHandler,dataListMixin],
   methods: {
     uploadImage(e) {
       const image = e.target.files[0];
@@ -172,7 +172,7 @@ export default {
         console.log('invalid');
         return;
       }
-      this.submit();
+      this.submitCreate();
     }
   }
 };

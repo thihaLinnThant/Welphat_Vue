@@ -1,21 +1,23 @@
 import NotificationHandler from './adminNotiHandler.js';
 export default {
     mixins: [NotificationHandler],
-    watch: {
-        fields: {},
-        errors: {},
-        target_item: {},
+    data() {
+        return {
+            fields: {},
+            errors: {},
+            target_item: {},
+        }
     },
     methods: {
         submitEdit(id) {
           console.log(this.fields);
             axios.post(`/admin/${this.statename}/update/${id}`, this.fields).then(response => {
-              console.log(response);
-            this.editDialog = false;
+            //   console.log(response);
+                this.editDialog = false;
 
                 console.log('got updated');
                 // get edited data
-                console.log(response);
+                // console.log(response);
 
                 axios.get(`/api/admin/${this.statename}/onerecord/${id}`).then(({ data }) => {
 

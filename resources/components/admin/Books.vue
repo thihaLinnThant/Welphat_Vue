@@ -15,7 +15,7 @@
 
           <v-btn
             text
-            @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);"
+            @click="deleteDialog = false; submitDelete();"
           >Yes</v-btn>
         </v-card-actions>
       </v-card>
@@ -23,7 +23,7 @@
 
 
 
-    <v-dialog v-model="editDialog" max-width="1000" persistent>
+    <v-dialog v-model="updateDialog" max-width="1000" persistent>
       <v-form @submit.prevent="save()" ref="form">
         <v-card>
           <v-card-title>
@@ -155,7 +155,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text @click="editDialog = false; target_item = ''; previewImage = null">Cancel</v-btn>
+            <v-btn text @click="updateDialog = false; target_item = ''; previewImage = null">Cancel</v-btn>
             <v-btn
               color="primary"
               text
@@ -208,7 +208,7 @@
               <v-btn>View</v-btn>
             </router-link>
             <v-btn
-              @click="openEditDialog(book)"
+              @click="openUpdateDialog(book)"
             >Edit</v-btn>
             <v-btn @click="deleteDialog = true; target_item = book">Delete</v-btn>
           </v-card-actions>
@@ -248,18 +248,16 @@
 </template>
 
 <script>
-import EditMixin from "../../js/editFrom";
-import DeleteMixin from "../../js/deleteForm";
-import lastRecordMixin from "../../js/lastRecordmixin";
+import CrudHandler from "../../js/CRUDHandler";
 import dataListMixin from "../../js/dataListMixin";
 
 export default {
-  mixins: [dataListMixin,EditMixin,DeleteMixin,lastRecordMixin],
+  mixins: [dataListMixin,CrudHandler],
   data() {
     return {
       search: "",
       progress: false,
-      editDialog: false,
+      updateDialog: false,
       fields: {},
       previewImage: null,
       statename: "books",
@@ -307,8 +305,8 @@ export default {
         });
       }
     },
-    openEditDialog(book) {
-      this.editDialog = true
+    openUpdateDialog(book) {
+      this.updateDialog = true
       this.target_item = book
       this.fields.edit_name = book.name
       this.fields.edit_authors = book.authors.map(value => value.id)
@@ -334,9 +332,10 @@ export default {
         !this.fields.edit_publisher ||
         !this.fields.edit_suppliers || !this.fields.edit_suppliers.length < 0
       ) {
+        console.log('book cant update');
         return;
       }
-      this.submitEdit(this.target_item.id)
+      this.submitEdit()
     }
   }
 };

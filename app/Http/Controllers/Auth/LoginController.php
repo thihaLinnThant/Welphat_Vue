@@ -73,7 +73,7 @@ class LoginController extends Controller
     {
 
         if ($this->guardLogin($request, Config::get('constants.guards.admin'))) {
-            return redirect()->intended('/admin/books'); // home is temporary, it must be "admin"
+            return redirect()->intended('/admin/books');
         }
         return back()->withInput($request->only('email', 'remember'));
     }

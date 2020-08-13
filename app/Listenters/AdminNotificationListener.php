@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listenter;
+namespace App\Listenters;
 
-use App\Event\AdminNotificationEvent;
+use App\Events\AdminNotificationEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -26,6 +26,6 @@ class AdminNotificationListener
      */
     public function handle(AdminNotificationEvent $event)
     {
-        return $event;
+        //
     }
 }

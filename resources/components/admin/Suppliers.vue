@@ -52,12 +52,12 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="editDialog = false; target_item = '';">Cancel</v-btn>
-          <v-btn text @click="submitEdit(target_item.id)" color="primary" outlined>Save</v-btn>
+          <v-btn text @click="submitEdit()" color="primary" outlined>Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="registerDialog" max-width="500" persistent>
+    <v-dialog v-model="addNew_Dialog" max-width="500" persistent>
       <v-card>
         <v-card-title primary-title>Register Supplier</v-card-title>
         <v-card-text>
@@ -109,8 +109,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="registerDialog = false; target_item = '';">Cancel</v-btn>
-          <v-btn text @click="submit()" color="primary" outlined>Register</v-btn>
+          <v-btn text @click="addNew_Dialog = false; target_item = '';">Cancel</v-btn>
+          <v-btn text @click="submitCreate()" color="primary" outlined>Register</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -124,7 +124,7 @@
 
           <v-btn
             text
-            @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);"
+            @click="deleteDialog = false; submitDelete();"
           >Yes</v-btn>
         </v-card-actions>
       </v-card>
@@ -138,7 +138,7 @@
       <v-card>
         <v-card-title>
           Suppliers
-          <v-btn outlined class="ml-3" @click="registerDialog = true">create new +</v-btn>
+          <v-btn outlined class="ml-3" @click="addNew_Dialog = true">create new +</v-btn>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -228,7 +228,7 @@ export default {
       target_item: "",
       target_item_value: "",
       cascade: null,
-      registerDialog: false
+      addNew_Dialog: false
     };
   },
   computed: {

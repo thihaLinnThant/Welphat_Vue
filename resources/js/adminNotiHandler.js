@@ -5,7 +5,7 @@ export default{
         create_admin_noti(type, item){
             var create_noti = {};
             create_noti.noti_type = 'admin_' + type;
-            create_noti.committer_id = 11;
+            create_noti.committer_id = window.current_admin.id;
             create_noti.committer_type = 'App\\Admin';
             
             var message_part;
@@ -48,13 +48,42 @@ export default{
             create_noti.committed_item_id = item.id;
             console.log(create_noti);
             axios.post('/admin/notifications/addnotification', create_noti).then(({data}) => {
-                this.lastrecord('notifications');
                 console.log('notification added successfully');
-                // console.log(data);
-                
             }).catch(error => {
                 console.log(error.response);
             });
+        },
+        receive_noti(event) {
+            this.lastrecord('notifications');
+            let item_id = event.message.committed_item_id;
+            switch(event.message.committed_item_type){
+                case 'App\\Admin':
+                        switch(event.message.noti_type){
+                            case 'admin_create' : this.lastrecord('admins');break;
+                            case 'admin_edit' : this.$store.commit('replaceOneRecord', { route: 'admins', data, id });break;
+                            case 'admin_delete' : this.$store.commit('deleteOneRecord', { route: 'admins', item_id });break;
+                        }
+                    break;
+                case 'App\\Book':
+                        this.lastrecord('books');
+                    break;
+                case 'App\\Tag':
+                        this.lastrecord('tags');
+                    break;
+                case 'App\\Category': 
+                        this.lastrecord('categories');
+                    break;
+
+                case 'App\\Supplier':
+                        this.lastrecord('suppliers');
+                    break;
+                case 'App\\Publisher':
+                        this.lastrecord('publishers');
+                    break;
+                case 'App\\Comment':
+                        this.lastrecord('comments');
+                    break;
+            }
         }
     }
 }

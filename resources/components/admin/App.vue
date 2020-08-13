@@ -128,6 +128,10 @@
 
     <v-content>
       <v-container fluid>
+        <v-snackbar v-model="alert" :color="alertType">
+          {{alertMessage}}
+          <v-btn text @click="alert = false">Close</v-btn>
+        </v-snackbar>
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -139,15 +143,12 @@
 </template>
 
 <script>
-// url_str = window.location.pathname;
-// import vueCustomScrollbar from "vue-custom-scrollbar";
+import NotificationHandler from '../../js/adminNotiHandler.js';
 export default {
+  mixins: [NotificationHandler],
   props: {
     source: String
   },
-  // components: {
-  //   vueCustomScrollbar
-  // },
   data: () => ({
     drawer: null,
     noti_drawer: null,
@@ -155,6 +156,9 @@ export default {
     csrf_token: window.csrf_token,
     admin_name: window.current_admin.name,
     super_admin: window.super_admin,
+    alert: false,
+    alertMessage: '',
+    alertType: '',
     items: [
       { text: "Books", icon: "mdi-bookshelf", link: "books", inactive: false },
       {
@@ -234,13 +238,11 @@ export default {
     }).catch(error => {
       console.log(error.response);
     });
-    
-    Echo.channel('admin-channel')
-      .listen('/App/Event/AdminNotificationEvent', (e) => {
-          console.log(e);
-          console.log('event');
-          this.noti_badge = true;
-          this.noti_badge_value += 1;
+  },
+  mounted() {
+    Echo.channel('admin-noti')
+      .listen('AdminNotificationEvent', (e) => {
+        this.receive_noti(e);
     });
   },
   methods: {
@@ -251,7 +253,7 @@ export default {
       axios.post(`/admin/notifications/markseen/${id}`).catch(error => {
         console.log(error.response);
       });
-    }
+    },
     // refersh_token(){
     //   axios.post('/admin/tokenrefresh', window.current_admin).then(({data}) => {
     //     console.log(data);
@@ -268,18 +270,10 @@ export default {
   },
   computed: { 
     latest_notifications(){
-      return this.$store.state.latest_notifications;
+      return this.$store.state.latest_notifications.reverse();
     },
     unseen_noti(){
-      var number = 0;
-      this.latest_notifications.forEach( item => {
-        console.log(item);
-        if(!item.seen){
-          number++;
-        }
-      });
-      console.log(number)
-      return number;
+      return this.latest_notifications.filter(noti => !noti.seen).length;
     }
   }
 };

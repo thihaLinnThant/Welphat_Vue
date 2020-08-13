@@ -29,4 +29,9 @@ mix.js('resources/js/admin_app.js', 'public/js/admin_app.js')
     .sass('resources/sass/admin.scss', 'public/css/admin_style.css')
     .styles([
       'resources/css/admin_style.css'
-    ], 'public/css/admin_style.css');
+    ], 'public/css/admin_style.css')
+    .js('resources/js/user/user_app.js', 'public/js/user_app.js')
+    .sass('resources/sass/user.scss', 'public/css/user_style.css')
+    .styles([
+      'resources/css/user_style.css'
+    ], 'public/css/user_style.css');

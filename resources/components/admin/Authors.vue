@@ -3,7 +3,7 @@
     <!-- add new dialog -->
     <v-row justify="center">
       <v-dialog v-model="addNew_Dialog" persistent max-width="600px">
-        <v-form @submit.prevent="submit" enctype="multipart/form-data">
+        <v-form @submit.prevent="submitCreate" enctype="multipart/form-data">
           <v-card>
             <v-card-title>
               <span class="headline">Add Author</span>
@@ -146,7 +146,7 @@
           <v-btn
             color="primary"
             text
-            @click="submitEdit(target_item.idzz)"
+            @click="submitEdit(target_item.id)"
             type="submit"
             outlined
           >Save</v-btn>
@@ -246,10 +246,7 @@
 </template>
 
 <script>
-import InputMixin from "../../js/RecordInputmixin";
-import EditMixin from "../../js/editFrom";
-import DeleteMixin from "../../js/deleteForm";
-import lastRecordMixin from "../../js/lastRecordmixin";
+import CrudHandler from "../../js/CRUDHandler";
 import myUpload from "vue-image-crop-upload";
 
 export default {
@@ -257,7 +254,7 @@ export default {
     // I got the cropper from here "https://vuejsexamples.com/a-beautiful-vue-component-for-image-cropping-and-uploading/"
     "my-upload": myUpload
   },
-  mixins: [InputMixin, lastRecordMixin, EditMixin, DeleteMixin],
+  mixins: [CrudHandler],
   data() {
     return {
       search: "",
@@ -269,6 +266,7 @@ export default {
       image_url: " ",
       show: false,
       statename: "authors",
+      target_item: {},
       headers: [
         {
           text: "Id",
@@ -325,7 +323,7 @@ export default {
       }
       this.addNew_Dialog = false;
 
-      this.submit();
+      this.submitCreate();
     }
   },
   computed: {

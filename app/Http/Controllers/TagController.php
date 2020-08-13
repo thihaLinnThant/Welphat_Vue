@@ -125,9 +125,9 @@ class TagController extends Controller
             'edit_name' => 'required'
         ]);
 
-        $category = Tag::find($id);
-        $category->name = $request->edit_name;
-        $category->save();
+        $tag = Tag::find($id);
+        $tag->name = $request->edit_name;
+        $tag->save();
 
         return response()->json(null,200);
     }

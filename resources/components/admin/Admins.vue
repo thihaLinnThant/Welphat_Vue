@@ -48,7 +48,7 @@
             color="blue darken-1"
             text
             type="submit"
-            @click="statename = 'admins/adminSuper';submitEdit(target_item.id, fields); updateDialog = false"
+            @click="statename = 'admins/adminSuper';submitEdit(); updateDialog = false"
           >Upgrade</v-btn>
         </v-card-actions>
       </v-card>
@@ -286,13 +286,9 @@
 
 
 <script>
-import InputMixin from "../../js/RecordInputmixin";
-import EditMixin from "../../js/editFrom";
-import DeleteMixin from "../../js/deleteForm";
-import lastRecordMixin from "../../js/lastRecordmixin";
-
+import CrudHandler from "../../js/CRUDHandler"
 export default {
-  mixins: [InputMixin, lastRecordMixin, EditMixin, DeleteMixin],
+  mixins: [CrudHandler],
 
   data() {
     return {
@@ -349,7 +345,7 @@ export default {
       }
       this.addNew_Dialog = false;
 
-      this.submit();
+      this.submitCreate();
     }
   }
 };

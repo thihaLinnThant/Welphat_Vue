@@ -21,7 +21,7 @@
 
           <v-btn
             text
-            @click="deleteDialog = false; submitDelete(target_item.id);"
+            @click="deleteDialog = false; submitDelete();"
           >
             Yes
           </v-btn>

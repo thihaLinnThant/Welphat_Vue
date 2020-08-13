@@ -14,7 +14,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="editDialog = false; target_item = ''; target_item_value = ''">Cancel</v-btn>
-          <v-btn text @click="submitEdit(target_item.id, fields)" outlined color="primary">Save</v-btn>
+          <v-btn text @click="submitEdit()" outlined color="primary">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -27,7 +27,7 @@
           <v-spacer></v-spacer>
           <v-btn text @click="deleteDialog = false; target_item = '';" outlined color="primary">No</v-btn>
 
-          <v-btn text @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);">Yes</v-btn>
+          <v-btn text @click="deleteDialog = false; submitDelete();">Yes</v-btn>
 
         </v-card-actions>
       </v-card>
@@ -42,7 +42,7 @@
         <v-card-title>
           Publishers
           <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit">
+          <v-form class="d-flex" @submit.prevent="submitCreate">
             <v-text-field
               append-icon="mdi-plus"
               label="Add new"
@@ -123,11 +123,9 @@
 </template>
 
 <script>
-import InputMixin from "../../js/RecordInputmixin";
-import EditMixin from "../../js/editFrom";
-import DeleteMixin from "../../js/deleteForm";
+import CrudHandler from "../../js/CRUDHandler";
 export default {
-  mixins: [InputMixin, EditMixin, DeleteMixin],
+  mixins: [CrudHandler],
   data() {
     return {
       csrf_token: window.csrf_token,

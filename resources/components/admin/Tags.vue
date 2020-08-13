@@ -5,35 +5,39 @@
     max-width="350"
     persistent
   >
-    <v-card>
-      <v-card-title primary-title>
-        Edit Tag title
-      </v-card-title>
-      <v-card-text>
-        <v-text-field
-          :error-messages=errors.edit_name
-          name="edit_name"
-          v-model="fields.edit_name"
-          label="tag name"
-        ></v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          text
-          @click="editDialog = false; target_item = '';"
-        >
-          Cancel
-        </v-btn>
-        <v-btn
-          text
-          @click="submitEdit(target_item.id, fields)"
-          color="primary" outlined
-        >
-          Save
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+  <v-card>
+    <v-card-title primary-title>
+      Edit Tag title
+    </v-card-title>
+    <v-card-text>
+      <v-text-field
+        :error-messages=errors.edit_name
+        name="edit_name"
+        v-model="fields.edit_name"
+        label="tag name"
+      ></v-text-field>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+        text
+        @click="editDialog = false; target_item = '';"
+      >
+        Cancel
+      </v-btn>
+      <v-btn
+        text
+        @click="submitEdit()"
+        color="primary" outlined
+      >
+        Save
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+  <v-snackbar v-model="alert" :color="alertType">
+      {{alertMessage}}
+      <v-btn text @click="alert = false">Close</v-btn>
+  </v-snackbar>
   </v-dialog>
 
   <v-dialog
@@ -57,24 +61,19 @@
 
         <v-btn
           text
-          @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);"
+          @click="deleteDialog = false; submitDelete();"
         >
           Yes
         </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
-
-      <v-snackbar v-model="alert" color="success">
-      {{alertMessage}}
-      <v-btn text @click="alert = false">Close</v-btn>
-    </v-snackbar>
     <div>
       <v-card>
         <v-card-title>
           Tags
           <v-spacer></v-spacer>
-          <v-form class="d-flex" @submit.prevent="submit">
+          <v-form class="d-flex" @submit.prevent="submitCreate">
             <v-text-field
               append-icon="mdi-plus"
               label="Add new"
@@ -133,7 +132,7 @@
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </template>
-                    <span>delete tag</span>
+                    <span>Delete tag</span>
                   </v-tooltip>
                 </td>
               </tr>
@@ -146,13 +145,9 @@
 </template>
 
 <script>
-import InputMixin from '../../js/RecordInputmixin';
-import EditMixin from '../../js/editFrom';
-import DeleteMixin from '../../js/deleteForm';
-import LastRecordMixin from '../../js/lastRecordmixin';
-
+import CrudHandler from "../../js/CRUDHandler";
 export default {
-  mixins: [InputMixin,EditMixin, DeleteMixin,LastRecordMixin],
+  mixins: [CrudHandler],
   data() {
     return {
       csrf_token: window.csrf_token,
@@ -172,7 +167,6 @@ export default {
       editDialog: false,
       deleteDialog: false,
       target_item: '',
-      target_item_value: '',
       cascade: null,
     }
   },

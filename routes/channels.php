@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Broadcast;
 
+use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -13,10 +15,14 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
+Broadcast::channel('user.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('admin-channel', function ($user, $id) {
-    return true;
+Broadcast::channel('admin.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('admin-noti', function ($user) {
+    return true;
+},['guards' => ['web']]);

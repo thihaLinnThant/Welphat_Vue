@@ -15,8 +15,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Event\AdminNotificationEvent' => [
-            'App\Listenter\AdminNotificationListener'
+        'App\Events\AdminNotificationEvent' => [
+            'App\Listenters\AdminNotificationListener'
         ]
     ];
 

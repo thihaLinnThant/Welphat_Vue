@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Admin;
+use App\Events\AdminNotificationEvent;
 use Illuminate\Database\Eloquent\Collection;
 
 class AdminNotificationController extends Controller
@@ -43,7 +44,6 @@ class AdminNotificationController extends Controller
     public function get_all_notifications_api(){
         $collection = AdminNotification::with('committer:id,name')
                         ->with('committed_item:id,name')
-                        ->orderBy('created_at', 'desc')
                         ->get();
         foreach($collection as $noti){
             $this->get_extra_data($noti);
@@ -54,8 +54,7 @@ class AdminNotificationController extends Controller
     public function get_latest_notifications_api(){
         $collection = AdminNotification::with('committer:id,name')
                         ->with('committed_item:id,name')
-                        ->orderBy('created_at', 'desc')
-                        ->latest()->get();
+                        ->latest()->take(20)->get();
         foreach($collection as $noti){
             $this->get_extra_data($noti);
         }
@@ -76,12 +75,23 @@ class AdminNotificationController extends Controller
         $this->get_extra_data($data);
         return response()->json($data);
     }
+
+    public function batch_mark_seen(Request $request){
+        foreach($request->selected as $item ){
+            $noti = AdminNotification::find($item['id']);
+            $seen_by = $noti->seen_by;
+            $noti->seen_by = $seen_by . (string)Auth::user()->id . ',';
+            $noti->save();
+        }
+
+        return response()->json(null,200);
+    }
     
     public function create(Request $request){
         
         $seen_by = (string)Auth::user()->id . ',';
         
-        AdminNotification::create([
+        $noti = AdminNotification::create([
             'noti_type' => $request->noti_type,
             'message'   => $request->message,
             'committer_id' => $request->committer_id,
@@ -89,18 +99,20 @@ class AdminNotificationController extends Controller
             'seen_by'   => $seen_by,
             'committed_item_id' => $request->committed_item_id,
             'committed_item_type' => $request->committed_item_type,
-            ]);
+        ]);
             
-            return response()->json();
-        }
-        
-        public function mark_seen($id){
-            $noti = AdminNotification::find($id);
-            $seen_by = $noti->seen_by;
-            $noti->seen_by = $seen_by . (string)Auth::user()->id . ',';
-            $noti->save();
+        event(new AdminNotificationEvent($noti));
             
-            return response()->json();
-        }
+        return response()->json();
     }
+    
+    public function mark_seen($id){
+        $noti = AdminNotification::find($id);
+        $seen_by = $noti->seen_by;
+        $noti->seen_by = $seen_by . (string)Auth::user()->id . ',';
+        $noti->save();
+        
+        return response()->json();
+    }
+}
     
