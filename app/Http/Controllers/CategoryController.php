@@ -79,10 +79,10 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-
+                
         Category::create([ 'name' => $request->name ]);
 
-        return response()->json(null, 200);
+        return response()->json(null,200);
     }
 
     /**

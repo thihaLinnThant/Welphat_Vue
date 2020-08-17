@@ -161,8 +161,32 @@
                       @click:append="password_visible = !password_visible"
                     ></v-text-field>
                   </v-col>
-
-                  <v-btn @click="reset" outlined color="error">reset</v-btn>
+                  <v-col cols="12">
+                    <v-checkbox v-model="fields.super_admin" label="Super Admin"></v-checkbox>
+                  </v-col>
+                  <v-col cols="6" sm="6">
+                    <v-btn @click="toggleShow">Upload Image</v-btn><br>
+                    <v-btn @click="reset" class="mt-4" outlined color="error">reset</v-btn>
+                  </v-col>
+                  <v-col cols="6" sm="6">
+                    <v-card width="300px" height="300px">
+                      <v-img class="white--text align-end" height="200px" :src="fields.image"></v-img>
+                      <v-card-text>{{ fields.name }}</v-card-text>
+                    </v-card>
+                    <small class="text-danger">{{ errors.image }}</small>
+                    <my-upload
+                      field="img"
+                      @crop-success="cropSuccess"
+                      @crop-upload-success="cropUploadSuccess"
+                      @crop-upload-fail="cropUploadFail"
+                      langType="en"
+                      v-model="imgup_show"
+                      :width="300"
+                      :height="300"
+                      url
+                      img-format="png"
+                    ></my-upload>
+                  </v-col>
                 </v-row>
               </v-container>
               <small>*indicates required field</small>
@@ -180,7 +204,7 @@
       <v-card-title>
         Admins
         <v-spacer></v-spacer>
-        <v-btn @click="addNew_Dialog = true" outlined>Create New +</v-btn>
+        <v-btn v-if="isSuper_admin != 1" @click="addNew_Dialog = true" outlined>Create New +</v-btn>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -194,9 +218,9 @@
         <template v-slot:body="{ items }">
           <tbody v-for="(admin,index) in items" :key="index">
             <tr>
-              <td v-if="admin.profile_image">
+              <td v-if="admin.thumb != null">
                 <v-avatar>
-                  <img :src="admin.profile_image" alt="John" />
+                  <img :src="admin.thumb" alt="John" />
                 </v-avatar>
               </td>
               <td v-else>
@@ -236,7 +260,7 @@
                             icon
                             v-on="on"
                             @click="editDialog = true; target_item = admin; fields.edit_name = admin.name;
-                      fields.edit_email = admin.email; fields.edit_password = ''; isSuper_admin = admin.super_admin"
+                            fields.edit_email = admin.email; fields.edit_password = ''; isSuper_admin = admin.super_admin"
                           >
                             <v-icon>mdi-pencil</v-icon>
                           </v-btn>
@@ -287,9 +311,12 @@
 
 <script>
 import CrudHandler from "../../js/CRUDHandler"
+import myUpload from "vue-image-crop-upload";
 export default {
+  components: {
+    "my-upload": myUpload
+  },
   mixins: [CrudHandler],
-
   data() {
     return {
       search: "",
@@ -315,10 +342,12 @@ export default {
       addNew_Dialog: false,
       deleteDialog: false,
       password_visible: false,
+      super_pass_visible: false,
       editDialog: false,
       updateDialog: false,
       act: "/admin/admins/addadmin",
       statename: "admins",
+      imgup_show: false,
 
       rules: {
         required: value => !!value || "Required."
@@ -346,7 +375,26 @@ export default {
       this.addNew_Dialog = false;
 
       this.submitCreate();
-    }
+    },
+    toggleShow() {
+      this.imgup_show = !this.imgup_show;
+    },
+    cropSuccess(imgDataUrl, field) {
+      this.fields.image = imgDataUrl;
+      console.log(imgDataUrl)
+      this.fields.edit_image = imgDataUrl;
+
+      console.log("-------- crop success --------");
+    },
+    cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+    },
+    cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
+    },
   }
 };
 </script>

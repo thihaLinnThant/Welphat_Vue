@@ -79,7 +79,7 @@
 
           <v-btn
             text
-            @click="deleteDialog = false; submitDelete(target_item.id,target_item.name);"
+            @click="deleteDialog = false; submitDelete();"
           >Yes</v-btn>
         </v-card-actions>
       </v-card>

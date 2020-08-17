@@ -2089,6 +2089,31 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/CRUDHandler */ "./resources/js/CRUDHandler.js");
+/* harmony import */ var vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-image-crop-upload */ "./node_modules/vue-image-crop-upload/upload-2.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2377,7 +2402,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    "my-upload": vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   mixins: [_js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
@@ -2409,10 +2438,12 @@ __webpack_require__.r(__webpack_exports__);
       addNew_Dialog: false,
       deleteDialog: false,
       password_visible: false,
+      super_pass_visible: false,
       editDialog: false,
       updateDialog: false,
       act: "/admin/admins/addadmin",
       statename: "admins",
+      imgup_show: false,
       rules: {
         required: function required(value) {
           return !!value || "Required.";
@@ -2441,6 +2472,24 @@ __webpack_require__.r(__webpack_exports__);
 
       this.addNew_Dialog = false;
       this.submitCreate();
+    },
+    toggleShow: function toggleShow() {
+      this.imgup_show = !this.imgup_show;
+    },
+    cropSuccess: function cropSuccess(imgDataUrl, field) {
+      this.fields.image = imgDataUrl;
+      console.log(imgDataUrl);
+      this.fields.edit_image = imgDataUrl;
+      console.log("-------- crop success --------");
+    },
+    cropUploadSuccess: function cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+    },
+    cropUploadFail: function cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
     }
   }
 });
@@ -6474,7 +6523,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?6375":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -17719,12 +17768,114 @@ var render = function() {
                                   ),
                                   _vm._v(" "),
                                   _c(
-                                    "v-btn",
-                                    {
-                                      attrs: { outlined: "", color: "error" },
-                                      on: { click: _vm.reset }
-                                    },
-                                    [_vm._v("reset")]
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-checkbox", {
+                                        attrs: { label: "Super Admin" },
+                                        model: {
+                                          value: _vm.fields.super_admin,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.fields,
+                                              "super_admin",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "fields.super_admin"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "6", sm: "6" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        { on: { click: _vm.toggleShow } },
+                                        [_vm._v("Upload Image")]
+                                      ),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "mt-4",
+                                          attrs: {
+                                            outlined: "",
+                                            color: "error"
+                                          },
+                                          on: { click: _vm.reset }
+                                        },
+                                        [_vm._v("reset")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "6", sm: "6" } },
+                                    [
+                                      _c(
+                                        "v-card",
+                                        {
+                                          attrs: {
+                                            width: "300px",
+                                            height: "300px"
+                                          }
+                                        },
+                                        [
+                                          _c("v-img", {
+                                            staticClass:
+                                              "white--text align-end",
+                                            attrs: {
+                                              height: "200px",
+                                              src: _vm.fields.image
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("v-card-text", [
+                                            _vm._v(_vm._s(_vm.fields.name))
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "small",
+                                        { staticClass: "text-danger" },
+                                        [_vm._v(_vm._s(_vm.errors.image))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("my-upload", {
+                                        attrs: {
+                                          field: "img",
+                                          langType: "en",
+                                          width: 300,
+                                          height: 300,
+                                          url: "",
+                                          "img-format": "png"
+                                        },
+                                        on: {
+                                          "crop-success": _vm.cropSuccess,
+                                          "crop-upload-success":
+                                            _vm.cropUploadSuccess,
+                                          "crop-upload-fail": _vm.cropUploadFail
+                                        },
+                                        model: {
+                                          value: _vm.imgup_show,
+                                          callback: function($$v) {
+                                            _vm.imgup_show = $$v
+                                          },
+                                          expression: "imgup_show"
+                                        }
+                                      })
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
@@ -17794,18 +17945,20 @@ var render = function() {
               _vm._v("\n      Admins\n      "),
               _c("v-spacer"),
               _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { outlined: "" },
-                  on: {
-                    click: function($event) {
-                      _vm.addNew_Dialog = true
-                    }
-                  }
-                },
-                [_vm._v("Create New +")]
-              ),
+              _vm.isSuper_admin != 1
+                ? _c(
+                    "v-btn",
+                    {
+                      attrs: { outlined: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.addNew_Dialog = true
+                        }
+                      }
+                    },
+                    [_vm._v("Create New +")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
@@ -17842,16 +17995,13 @@ var render = function() {
                   return _vm._l(items, function(admin, index) {
                     return _c("tbody", { key: index }, [
                       _c("tr", [
-                        admin.profile_image
+                        admin.thumb != null
                           ? _c(
                               "td",
                               [
                                 _c("v-avatar", [
                                   _c("img", {
-                                    attrs: {
-                                      src: admin.profile_image,
-                                      alt: "John"
-                                    }
+                                    attrs: { src: admin.thumb, alt: "John" }
                                   })
                                 ])
                               ],
@@ -19003,10 +19153,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.deleteDialog = false
-                          _vm.submitDelete(
-                            _vm.target_item.id,
-                            _vm.target_item.name
-                          )
+                          _vm.submitDelete()
                         }
                       }
                     },
@@ -24123,36 +24270,36 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: _vm.alertType },
+          model: {
+            value: _vm.alert,
+            callback: function($$v) {
+              _vm.alert = $$v
+            },
+            expression: "alert"
+          }
+        },
+        [
+          _vm._v("\n      " + _vm._s(_vm.alertMessage) + "\n      "),
           _c(
-            "v-snackbar",
+            "v-btn",
             {
-              attrs: { color: _vm.alertType },
-              model: {
-                value: _vm.alert,
-                callback: function($$v) {
-                  _vm.alert = $$v
-                },
-                expression: "alert"
+              attrs: { text: "" },
+              on: {
+                click: function($event) {
+                  _vm.alert = false
+                }
               }
             },
-            [
-              _vm._v("\n      " + _vm._s(_vm.alertMessage) + "\n      "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { text: "" },
-                  on: {
-                    click: function($event) {
-                      _vm.alert = false
-                    }
-                  }
-                },
-                [_vm._v("Close")]
-              )
-            ],
-            1
+            [_vm._v("Close")]
           )
         ],
         1
@@ -84718,7 +84865,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--7-1!../../postcss-loader/src??ref--7-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--7-1!../../postcss-loader/src??ref--7-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?6375");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -87630,10 +87777,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StateHandler_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StateHandler.js */ "./resources/js/StateHandler.js");
- // import AdminNotiHandler from './adminNotiHandler';
+/* harmony import */ var _adminNotiHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminNotiHandler */ "./resources/js/adminNotiHandler.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_StateHandler_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_StateHandler_js__WEBPACK_IMPORTED_MODULE_0__["default"], _adminNotiHandler__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       fields: {},
@@ -87654,12 +87802,13 @@ __webpack_require__.r(__webpack_exports__);
     submitCreate: function submitCreate() {
       var _this = this;
 
-      axios.post("/admin/".concat(this.statename, "/").concat(this.changeSingular(this.statename)), this.fields).then(function () {
+      axios.post("/admin/".concat(this.statename, "/add").concat(this.changeSingular(this.statename)), this.fields).then(function (response) {
         console.log('enter create');
+        axios.get("/api/admin/".concat(_this.statename, "/lastrecord")).then(function (_ref) {
+          var data = _ref.data;
 
-        _this.lastrecord(_this.statename); // this.create_admin_noti('admin_create',this.target_item);
-
-
+          _this.create_admin_noti('create', data);
+        });
         _this.alertMessage = 'Item created successfully';
         _this.alertType = "success";
         _this.alert = true;
@@ -87670,19 +87819,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log('got error in crud');
         console.log(error.response);
-        console.log(error); // if (error.response.status === 422) {
-        //   this.errors = error.response.data.errors || {};
-        // }
+        console.log(error);
+
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
+        }
       });
     },
     submitEdit: function submitEdit() {
       var _this2 = this;
 
       axios.post("/admin/".concat(this.statename, "/update/").concat(this.target_item.id), this.fields).then(function () {
-        console.log('enter edit');
+        console.log('enter edit'); // this.replacerecord(this.statename,this.target_item.id);
 
-        _this2.replacerecord(_this2.statename, _this2.target_item.id); // this.create_admin_noti('admin_edit',this.target_item)
-
+        _this2.create_admin_noti('edit', _this2.target_item);
 
         _this2.alertType = "success";
         _this2.alertMessage = _this2.target_item.name ? "".concat(_this2.changeSingular(_this2.statename), " ").concat(_this2.target_item.name, " is edited successfully") : "".concat(_this2.changeSingular(_this2.statename), " id:").concat(_this2.target_item.id, " edited successfully");
@@ -87694,20 +87844,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log('got error in crud');
         console.log(error);
-        console.log(error.response); // if (error.response.status === 422) {
-        //   this.errors = error.response.data.errors || {};
-        // }
+        console.log(error.response);
+
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors || {};
+        }
       });
-      ;
     },
     submitDelete: function submitDelete() {
       var _this3 = this;
 
       axios.post("/admin/".concat(this.statename, "/delete/").concat(this.target_item.id)).then(function () {
-        console.log('enter delete');
+        console.log('enter delete'); // this.deleterecord(this.statename,this.target_item.id);
 
-        _this3.deleterecord(_this3.statename, _this3.target_item.id); // this.create_admin_noti('admin_delete',this.target_item)
-
+        _this3.create_admin_noti('delete', _this3.target_item);
 
         _this3.alertType = "success";
         _this3.alertMessage = _this3.target_item.name ? "".concat(_this3.changeSingular(_this3.statename), " ").concat(_this3.target_item.name, " is deleted successfully") : "".concat(_this3.changeSingular(_this3.statename), " id:").concat(_this3.target_item.id, " deleted successfully");
@@ -87719,57 +87869,47 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log('got error in crud');
         console.log(error);
-        console.log(error.response); // if (error.response.status === 422) {
-        //   this.errors = error.response.data.errors || {};
-        // }
+        console.log(error.response);
+
+        if (error.response.status === 422) {
+          _this3.errors = error.response.data.errors || {};
+        }
       });
-      ;
     },
     changeSingular: function changeSingular(name) {
       switch (name) {
         case 'admins':
           return 'admin';
-          break;
 
         case 'books':
           return 'book';
-          break;
 
         case 'authors':
           return 'author';
-          break;
 
         case 'users':
           return 'user';
-          break;
 
         case 'tags':
           return 'tag';
-          break;
 
         case 'categories':
           return 'category';
-          break;
 
         case 'suppliers':
           return 'supplier';
-          break;
 
         case 'publishers':
           return 'publisher';
-          break;
 
         case 'comments':
           return 'comment';
-          break;
 
         case 'orders':
           return 'order';
-          break;
 
         case 'notifications':
           return 'notification';
-          break;
       }
     }
   }
@@ -87889,24 +88029,45 @@ __webpack_require__.r(__webpack_exports__);
     lastrecord: function lastrecord(statename) {
       var _this = this;
 
-      axios.get("/api/admin/".concat(statename, "/lastrecord")).then(function (_ref) {
-        var data = _ref.data;
+      if (statename === 'notifications') {
+        axios.get("/api/admin/".concat(statename, "/lastrecord")).then(function (_ref) {
+          var data = _ref.data;
+
+          _this.$store.commit('addOneRecord', {
+            route: 'latest_notifications',
+            data: data
+          });
+        })["catch"](function (error) {
+          console.log('got error in notifications lastrecord');
+          console.log(error);
+          console.log(error.response);
+        });
+      }
+
+      axios.get("/api/admin/".concat(statename, "/lastrecord")).then(function (_ref2) {
+        var data = _ref2.data;
 
         _this.$store.commit('addOneRecord', {
           route: statename,
           data: data
         });
       })["catch"](function (error) {
-        console.log('got error in statehandle');
+        console.log('got error in lastrecord');
         console.log(error);
         console.log(error.response);
+      });
+    },
+    returnLastrecord: function returnLastrecord(statename) {
+      return axios.get("/api/admin/".concat(statename, "/lastrecord")).then(function (_ref3) {
+        var data = _ref3.data;
+        return data;
       });
     },
     replacerecord: function replacerecord(statename, id) {
       var _this2 = this;
 
-      axios.get("/api/admin/".concat(statename, "/onerecord/").concat(id)).then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get("/api/admin/".concat(statename, "/onerecord/").concat(id)).then(function (_ref4) {
+        var data = _ref4.data;
 
         _this2.$store.commit('replaceOneRecord', {
           route: statename,
@@ -87914,7 +88075,7 @@ __webpack_require__.r(__webpack_exports__);
           id: id
         });
       })["catch"](function (error) {
-        console.log('got error in statehandle');
+        console.log('got error in replacerecord');
         console.log(error);
         console.log(error.response);
       });
@@ -87928,7 +88089,7 @@ __webpack_require__.r(__webpack_exports__);
           id: id
         });
       })["catch"](function (error) {
-        console.log('got error in statehandle');
+        console.log('got error in deleterecord');
         console.log(error);
         console.log(error.response);
       });
@@ -88166,10 +88327,10 @@ window.FontAwesomeKitConfig = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lastRecordmixin */ "./resources/js/lastRecordmixin.js");
+/* harmony import */ var _StateHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StateHandler */ "./resources/js/StateHandler.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_lastRecordmixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_StateHandler__WEBPACK_IMPORTED_MODULE_0__["default"]],
   methods: {
     create_admin_noti: function create_admin_noti(type, item) {
       var create_noti = {};
@@ -88180,116 +88341,132 @@ __webpack_require__.r(__webpack_exports__);
 
       switch (type) {
         case 'create':
-          message_part = 'created ';
+          message_part = 'created';
           break;
 
         case 'edit':
-          message_part = 'made changes to ';
+          message_part = 'made changes to';
           break;
 
         case 'delete':
-          message_part = 'deleted ';
+          message_part = 'deleted';
           break;
       }
 
-      switch (this.statename) {
-        case 'admins':
-          create_noti.message = message_part + 'admin id ' + item.id;
-          create_noti.committed_item_type = 'App\\Admin';
-          break;
+      var _this$getItemNameType = this.getItemNameType(this.statename),
+          item_name = _this$getItemNameType.item_name,
+          item_type = _this$getItemNameType.item_type;
 
-        case 'books':
-          create_noti.message = message_part + 'book id ' + item.id;
-          create_noti.committed_item_type = 'App\\Book';
-          break;
-
-        case 'tags':
-          create_noti.message = message_part + 'tag id ' + item.id;
-          create_noti.committed_item_type = 'App\\Tag';
-          break;
-
-        case 'categories':
-          create_noti.message = message_part + 'category id ' + item.id;
-          create_noti.committed_item_type = 'App\\Category';
-          break;
-
-        case 'suppliers':
-          create_noti.message = message_part + 'supplier id ' + item.id;
-          create_noti.committed_item_type = 'App\\Supplier';
-          break;
-
-        case 'publishers':
-          create_noti.message = message_part + 'publisher id ' + item.id;
-          create_noti.committed_item_type = 'App\\Publisher';
-          break;
-
-        case 'comments':
-          create_noti.message = message_part + 'comment id ' + item.id;
-          create_noti.committed_item_type = 'App\\Comment';
-          break;
-      }
-
+      create_noti.message = item.name ? "".concat(message_part, " ").concat(item_name, " ").concat(item.name) : "".concat(message_part, " ").concat(item_name, " ").concat(item.id);
+      create_noti.committed_item_type = item_type;
       create_noti.committed_item_id = item.id;
       console.log(create_noti);
       axios.post('/admin/notifications/addnotification', create_noti).then(function (_ref) {
         var data = _ref.data;
         console.log('notification added successfully');
       })["catch"](function (error) {
+        console.log('error in notificationHandler');
         console.log(error.response);
       });
+      this.lastrecord('notifications');
     },
     receive_noti: function receive_noti(event) {
       this.lastrecord('notifications');
       var item_id = event.message.committed_item_id;
+      var item_state_name = this.readStateName(event.message.committed_item_type);
 
-      switch (event.message.committed_item_type) {
-        case 'App\\Admin':
-          switch (event.message.noti_type) {
-            case 'admin_create':
-              this.lastrecord('admins');
-              break;
-
-            case 'admin_edit':
-              this.$store.commit('replaceOneRecord', {
-                route: 'admins',
-                data: data,
-                id: id
-              });
-              break;
-
-            case 'admin_delete':
-              this.$store.commit('deleteOneRecord', {
-                route: 'admins',
-                item_id: item_id
-              });
-              break;
-          }
-
+      switch (event.message.noti_type) {
+        case 'admin_create':
+          if (this.$store.state[item_state_name].length > 0) this.lastrecord(item_state_name);
           break;
+
+        case 'admin_edit':
+          if (this.$store.state[item_state_name].length > 0) this.replacerecord(item_state_name, item_id);
+          break;
+
+        case 'admin_delete':
+          this.deleterecord(item_state_name, item_id);
+          break;
+      }
+
+      console.log('noti_receive_completed');
+    },
+    readStateName: function readStateName(type) {
+      switch (type) {
+        case 'App\\Admin':
+          return 'admins';
 
         case 'App\\Book':
-          this.lastrecord('books');
-          break;
+          return 'books';
+
+        case 'App\\Author':
+          return 'authors';
 
         case 'App\\Tag':
-          this.lastrecord('tags');
-          break;
+          return 'tags';
 
         case 'App\\Category':
-          this.lastrecord('categories');
-          break;
+          return 'categories';
 
         case 'App\\Supplier':
-          this.lastrecord('suppliers');
-          break;
+          return 'suppliers';
 
         case 'App\\Publisher':
-          this.lastrecord('publishers');
-          break;
+          return 'publishers';
 
         case 'App\\Comment':
-          this.lastrecord('comments');
-          break;
+          return 'comments';
+      }
+    },
+    getItemNameType: function getItemNameType(name) {
+      switch (name) {
+        case 'admins':
+          return {
+            item_name: 'admin',
+            item_type: 'App\\Admin'
+          };
+
+        case 'books':
+          return {
+            item_name: 'book',
+            item_type: 'App\\Book'
+          };
+
+        case 'authors':
+          return {
+            item_name: 'author',
+            item_type: 'App\\Author'
+          };
+
+        case 'tags':
+          return {
+            item_name: 'tag',
+            item_type: 'App\\Tag'
+          };
+
+        case 'categories':
+          return {
+            item_name: 'category',
+            item_type: 'App\\Category'
+          };
+
+        case 'suppliers':
+          return {
+            item_name: 'supplier',
+            item_type: 'App\\Supplier'
+          };
+
+        case 'publishers':
+          return {
+            item_name: 'publisher',
+            item_type: 'App\\Publisher'
+          };
+
+        case 'comments':
+          return {
+            item_name: 'comment',
+            item_type: 'App\\Comment'
+          };
       }
     }
   }

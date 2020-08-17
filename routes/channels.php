@@ -25,4 +25,4 @@ Broadcast::channel('admin.{id}', function ($user, $id) {
 
 Broadcast::channel('admin-noti', function ($user) {
     return true;
-},['guards' => ['web']]);
+},['guards' => ['web', 'admin']]);
