@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminController extends Controller
@@ -18,6 +19,11 @@ class AdminController extends Controller
     private function get_admins_list()
     {
         $collections = Admin::all();
+        foreach($collections as $admin){
+            if(file_exists( public_path() . 'storage/images/admins/' . $admin->id . '/image_1.png')){
+                $admin->thumb = asset('storage/images/admins/' . $admin->id . '/image_1.png');
+            }
+        }
         return collect(['admins' => $collections]);
     }
     public function get_admins_web(Request $request)
@@ -34,15 +40,29 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
+
+        if(!$request->super_admin){
+            $request->super_admin = false;
+        }
 
         Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'api_token' => Str::random(60)
+            'super_admin' => $request->super_admin,
+            'api_token' => Str::random(60),
         ]);
+        
+        if(isset($request->image)){
+            $lastid = Admin::latest()->first('id')->id;
+            $file = file_get_contents($request->image);
+            $path = '/images/admins/' . $lastid . "/image_1.png";
+            Storage::disk('public')->put($path, $file);
+        }
+
+        return response()->json(null,200);
     }
     public function get_lastAdmin_api()
     {
@@ -87,6 +107,7 @@ class AdminController extends Controller
             $admin->password= $request->password;
         }
         $admin->save();
+        Storage::deleteDirectory('/images/admins/'.$id);
         return response()->json(null, 200);
     }
 }

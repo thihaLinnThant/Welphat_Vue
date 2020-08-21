@@ -33,12 +33,12 @@
         Save
       </v-btn>
     </v-card-actions>
-  </v-card>
+  </v-card>  
+  </v-dialog>
   <v-snackbar v-model="alert" :color="alertType">
       {{alertMessage}}
       <v-btn text @click="alert = false">Close</v-btn>
   </v-snackbar>
-  </v-dialog>
 
   <v-dialog
     v-model="deleteDialog"

@@ -179,6 +179,7 @@ class AuthorController extends Controller
     public function destroy($id)
     {
         Author::destroy($id);
+        Storage::deleteDirectory('/images/authors/'.$id);
         return response()->json(null, 200);
     }
 }
