@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div ref="content" style="display:none">
+      <h1>hello world</h1>
+    </div>
     <v-dialog v-model="deleteDialog" max-width="350" persistent>
       <v-card>
         <v-card-text>Do you want to delete this order?</v-card-text>
@@ -33,22 +36,25 @@
                       <v-icon>mdi-recycle</v-icon>
                     </v-btn>
                   </v-col>
-                </v-row >
+                </v-row>
                 <v-row v-else>
                   <v-col cols="7">
-                    <div >
-                      {{edit_book.book_name}}
-                    </div>
+                    <div>{{edit_book.book_name}}</div>
                   </v-col>
                   <v-col cols="1">
-                    <v-text-field v-model="edit_book.qty" label="Qty">
-                    </v-text-field>
+                    <v-text-field v-model="edit_book.qty" label="Qty"></v-text-field>
                   </v-col>
                   <v-col cols="4">
                     <v-btn text icon color="success" @click="edit_book.qty++">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
-                    <v-btn text icon color="error" v-show="edit_book.qty > 0" @click="edit_book.qty--">
+                    <v-btn
+                      text
+                      icon
+                      color="error"
+                      v-show="edit_book.qty > 0"
+                      @click="edit_book.qty--"
+                    >
                       <v-icon>mdi-minus</v-icon>
                     </v-btn>
                     <v-btn color="error" text icon @click="edit_book.removed = true">
@@ -99,13 +105,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="editDialog = false; target_item = '';">Close</v-btn>
-          <v-btn
-            color="primary"
-            outlined
-            text
-            @click="submitEdit()"
-            type="submit"
-          >Save</v-btn>
+          <v-btn color="primary" outlined text @click="submitEdit()" type="submit">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -195,13 +195,14 @@
           <template #item.user_name="{value}">{{value}}</template>
           <template #item.count="{value}">
             <p>available:({{value.available_count}})</p>
-            <p v-if=value.deleted_count style="color : red ">deleted:({{value.deleted_count}})</p>
-
+            <p v-if="value.deleted_count" style="color : red ">deleted:({{value.deleted_count}})</p>
           </template>
           <template #item.total_price="{value}">
             <p>available:({{value.available_book_price}}ks)</p>
-            <p v-if=value.deleted_book_price style="color : red ">deleted:({{value.deleted_book_price}}ks)</p>
-
+            <p
+              v-if="value.deleted_book_price"
+              style="color : red "
+            >deleted:({{value.deleted_book_price}}ks)</p>
           </template>
           <template #item.created_at="{value}">{{dateFormat(value)}}</template>
           <template #item.user.ph_no="{value}">{{value}}</template>
@@ -224,13 +225,7 @@
               </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn
-                    @click="openEditForm(item);"
-                    class="mt-1"
-                    text
-                    icon
-                    v-on="on"
-                  >
+                  <v-btn @click="openEditForm(item);" class="mt-1" text icon v-on="on">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>
@@ -250,40 +245,49 @@
                 </template>
                 <span>delete order</span>
               </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn @click="printInvoice()" class="mt-1" text icon v-on="on">
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </template>
+                <span>delete order</span>
+              </v-tooltip>
             </div>
           </template>
-          <template #expanded-item={item}>
-             <td :colspan="headers.length+1">
-               <v-container>
-                 <v-row align="start">
-                   <v-card
-                     dense
-                     v-for="(book,index) in item.book_orders"
-                     :key="index"
-                     class="ma-2"
-                   >
-                     <v-list-item>
-                       <v-list-item-avatar
-                         tile
-                         size="80"
-                       >
-                         <img
-                           :src='book.thumb'
-                         >
-                       </v-list-item-avatar>
-                       <v-list-item-subtitle>
-                         <span style="color: red" v-if="book.deleted"><s>{{book.book_name}}<br>qty:({{book.qty}})</s><br>!Deleted</span>
-                         <span v-else>{{book.book_name}}<br>qty:({{book.qty}})</span>
-                       </v-list-item-subtitle>
-                       <v-card-actions>
-                         <v-btn v-if="!book.deleted" small dense>view</v-btn>
-                       </v-card-actions>
-                     </v-list-item>
-                   </v-card>
-                 </v-row>
-               </v-container>
-             </td>
-           </template>
+          <template #expanded-item="{item}">
+            <td :colspan="headers.length+1">
+              <v-container>
+                <v-row align="start">
+                  <v-card dense v-for="(book,index) in item.book_orders" :key="index" class="ma-2">
+                    <v-list-item>
+                      <v-list-item-avatar tile size="80">
+                        <img :src="book.thumb" />
+                      </v-list-item-avatar>
+                      <v-list-item-subtitle>
+                        <span style="color: red" v-if="book.deleted">
+                          <s>
+                            {{book.book_name}}
+                            <br />
+                            qty:({{book.qty}})
+                          </s>
+                          <br />!Deleted
+                        </span>
+                        <span v-else>
+                          {{book.book_name}}
+                          <br />
+                          qty:({{book.qty}})
+                        </span>
+                      </v-list-item-subtitle>
+                      <v-card-actions>
+                        <v-btn v-if="!book.deleted" small dense>view</v-btn>
+                      </v-card-actions>
+                    </v-list-item>
+                  </v-card>
+                </v-row>
+              </v-container>
+            </td>
+          </template>
         </v-data-table>
       </v-card>
     </div>
@@ -292,6 +296,10 @@
 
 <script>
 import CrudHandler from "../../js/CRUDHandler";
+import jsPDF from "jspdf";
+import html2canvas from 'html2canvas';
+  const doc = new jsPDF();
+
 export default {
   mixins: [CrudHandler],
   data() {
@@ -303,7 +311,7 @@ export default {
         {
           text: "Id",
           align: "start",
-          value: "id"
+          value: "id",
         },
         { text: "Status", value: "status" },
         { text: "User name", value: "user_name" },
@@ -312,22 +320,76 @@ export default {
         { text: "Date", value: "created_at" },
         { text: "Phone no.", value: "phone_no" },
         { text: "Address", value: "address" },
-        { text: "Actions", value: "actions" }
+        { text: "Actions", value: "actions" },
       ],
       act: "/admin/orders/addorder",
       statename: "orders",
       editDialog: false,
       deleteDialog: false,
       target_item: "",
-      cascade: null
+      cascade: null,
     };
   },
   computed: {
     orders() {
       return this.$store.state.orders;
-    }
+    },
   },
   methods: {
+    printInvoice(){
+  const contentHtml = this.$refs.content.innerHTML;
+  new jsPDF().fromHTML(contentHtml, 15, 15, {
+    width: 170
+  });
+  doc.save("sample.pdf");
+    },
+    // printInvoice() {
+    //   var headers = this.createHeaders([
+    //     "id",
+    //     "coin",
+    //     "game_group",
+    //     "game_name",
+    //     "game_version",
+    //     "machine",
+    //     "vlt",
+    //   ]);
+    //   var doc = new jsPDF({ putOnlyUsedFonts: true, orientation: "landscape" });
+    //   doc.table(1, 1, this.generateData(100), headers, { autoSize: true });
+    //   doc.save("test.pdf")
+    // },
+    // generateData(amount) {
+    //   var result = [];
+
+    //   var data = {
+    //     coin: "100",
+    //     game_group: "GameGroup",
+    //     game_name: "XPTO2",
+    //     game_version: "25",
+    //     machine: "20485861",
+    //     vlt: "0",
+    //   };
+
+    //   for (var i = 0; i < amount; i += 1) {
+    //     data.id = (i + 1).toString();
+    //     result.push(Object.assign({}, data));
+    //   }
+    //   return result;
+    // },
+    // createHeaders(keys) {
+    //   var result = [];
+    //   for (var i = 0; i < keys.length; i += 1) {
+    //     result.push({
+    //       id: keys[i],
+    //       name: keys[i],
+    //       prompt: keys[i],
+    //       width: 65,
+    //       align: "center",
+    //       padding: 0,
+    //     });
+    //   }
+    //   console.log(result);
+    //   return result;
+    // },
     openEditForm(item) {
       this.editDialog = true;
       this.target_item = item;
@@ -335,7 +397,7 @@ export default {
       this.fields.edit_ph_no = item.phone_no;
       this.fields.edit_books = item.book_orders;
       this.fields.edit_address = item.address;
-      this.fields.edit_books.map(book => book.removed = false);
+      this.fields.edit_books.map((book) => (book.removed = false));
     },
     colorStatus(status) {
       switch (status) {
@@ -374,18 +436,18 @@ export default {
       this.fields.code = status;
       axios
         .post(`/admin/orders/updateStatus/${item.id}`, this.fields)
-        .then(response => {
+        .then((response) => {
           this.alert = true;
           this.alertType = "success";
           this.alertMessage = "Status updated";
           this.statusDialog = false;
           item.status = status;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

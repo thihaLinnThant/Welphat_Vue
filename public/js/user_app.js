@@ -57161,7 +57161,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/WelphatVue/Welphat_Vue/resources/js/user/user_app.js */"./resources/js/user/user_app.js");
+module.exports = __webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/js/user/user_app.js */"./resources/js/user/user_app.js");
 
 
 /***/ })
