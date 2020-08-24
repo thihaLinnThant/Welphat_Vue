@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use Illuminate\Http\Request;
 
+
 class OrderController extends Controller
 {
 
@@ -61,6 +62,11 @@ class OrderController extends Controller
         $order->status = $request->code;
         $order->save();
         return response()->json(null, 200);
+    }
+
+    public function oneRecord(Request $request){
+        $data = $this->add_meta_data($request);
+        return view('admin.app', ['data' => $data]);
     }
     /**
      * Display a listing of the resource.
@@ -154,5 +160,9 @@ class OrderController extends Controller
     {
         Order::destroy($id);
         return response()->json(null, 200);
+    }
+
+    public function generateInvoice(){
+
     }
 }

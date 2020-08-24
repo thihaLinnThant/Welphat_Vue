@@ -24,6 +24,7 @@ import UserView from '../components/admin/adminSingleView/UserView';
 import Overview from '../components/admin/Overview';
 import NotFound from '../components/admin/NotFound';
 import AdminNotification from  '../components/admin/AdminNotifications';
+import InvoiceTemplate from '../components/admin/InvoiceTemplate';
 
 let router = new VueRouter({
     mode: 'history',
@@ -48,7 +49,8 @@ let router = new VueRouter({
         { path: '/admin/users/:id', component: UserView, name: 'userview' },
         { path: '/admin/overview', component: Overview, name: 'overview'},
         { path: '/admin/404', component: NotFound, name: 'notfound'},
-        { path: '/admin/notifications', component: AdminNotification, name: 'notifications'}
+        { path: '/admin/notifications', component: AdminNotification, name: 'notifications'},
+        { path: '/admin/orders/:id', component: InvoiceTemplate, name: 'invoicetemplate'}
     ]
 });
 
@@ -117,7 +119,9 @@ router.beforeEach((to, from, next) => {
     else if (to.path === `/admin/users/${to.params.id}`) {
         if (Store.state.userview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
-
+    else if (to.path === `/admin/orders/${to.params.id}`){
+        if(Store.state.invoicetemplate.length > 0 ){ next() } else {getApiData(to.path, to.name)}
+    }
     else if (to.path === '/admin' ) { next(); }
 
 

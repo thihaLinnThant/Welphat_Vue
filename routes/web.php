@@ -110,6 +110,13 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/admin/orders/updateStatus/{id}', 'OrderController@updateStatus');
     Route::get('/admin/orders/updateStatus/{id}', 'OrderController@updateStatus');
 
+    Route::get('/admin/orders/{id}', 'OrderController@oneRecord');
+    Route::post('/admin/orders/{id}', 'OrderController@oneRecord');
+
+
+
+
+
 
     Route::get('/admin/dummy', 'CategoryController@get_home_web');
     Route::get('/admin/overview','OverviewController@get_overview_web');

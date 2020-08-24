@@ -23,6 +23,7 @@ export default new Vuex.Store({
         supplierview : [],
         userview : [],
         overview : [],
+        invoicetemplate : [],
         notifications: [],
         latest_notifications: [],
         pagination_length: 0,
@@ -93,8 +94,9 @@ export default new Vuex.Store({
 
         },
         addData(state, { route, data }) {
-            if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview' || route === 'overview' || route === 'notifications' || route === 'latest_notifications') {
+            if (route === 'authorview' || route === 'bookview' || route === 'tagview' || route === 'categoryview' || route === 'publisherview' || route === 'supplierview' || route === 'userview' || route === 'overview' || route === 'notifications' || route === 'latest_notifications' || route === 'invoicetemplate') {
                 state[route] = data;
+                console.log(state[route]);
             } else {
                 state[route] = data[route];
                 if (data.current_page && data.total_pages) {

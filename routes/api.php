@@ -66,6 +66,8 @@ Route::get('/admin/suppliers/{id}', 'SupplierController@get_oneRecord_api');
 Route::get('/admin/orders', 'OrderController@get_orders_api');
 Route::get('/admin/orders/lastrecord','OrderController@get_lastorder_api');
 Route::get('/admin/orders/onerecord/{id}', 'OrderController@get_oneRecord_api');
+Route::get('/admin/orders/{id}', 'OrderController@get_oneRecord_api');
+
 
 Route::get('/admin/notifications', 'AdminNotificationController@get_all_notifications_api')->middleware('auth:admin_api');
 Route::get('/admin/notifications/latest', 'AdminNotificationController@get_latest_notifications_api')->middleware('auth:admin_api');

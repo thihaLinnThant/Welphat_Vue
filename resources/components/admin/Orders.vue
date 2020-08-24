@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div ref="content" style="display:none">
-      <h1>hello world</h1>
-    </div>
     <v-dialog v-model="deleteDialog" max-width="350" persistent>
       <v-card>
         <v-card-text>Do you want to delete this order?</v-card-text>
@@ -245,14 +242,16 @@
                 </template>
                 <span>delete order</span>
               </v-tooltip>
+              <router-link :to="{name : 'invoicetemplate', params: {id : item.id}}">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn @click="printInvoice()" class="mt-1" text icon v-on="on">
+                  <v-btn class="mt-1" text icon v-on="on">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </template>
                 <span>delete order</span>
               </v-tooltip>
+              </router-link>
             </div>
           </template>
           <template #expanded-item="{item}">
@@ -296,9 +295,7 @@
 
 <script>
 import CrudHandler from "../../js/CRUDHandler";
-import jsPDF from "jspdf";
-import html2canvas from 'html2canvas';
-  const doc = new jsPDF();
+
 
 export default {
   mixins: [CrudHandler],
@@ -336,60 +333,7 @@ export default {
     },
   },
   methods: {
-    printInvoice(){
-  const contentHtml = this.$refs.content.innerHTML;
-  new jsPDF().fromHTML(contentHtml, 15, 15, {
-    width: 170
-  });
-  doc.save("sample.pdf");
-    },
-    // printInvoice() {
-    //   var headers = this.createHeaders([
-    //     "id",
-    //     "coin",
-    //     "game_group",
-    //     "game_name",
-    //     "game_version",
-    //     "machine",
-    //     "vlt",
-    //   ]);
-    //   var doc = new jsPDF({ putOnlyUsedFonts: true, orientation: "landscape" });
-    //   doc.table(1, 1, this.generateData(100), headers, { autoSize: true });
-    //   doc.save("test.pdf")
-    // },
-    // generateData(amount) {
-    //   var result = [];
 
-    //   var data = {
-    //     coin: "100",
-    //     game_group: "GameGroup",
-    //     game_name: "XPTO2",
-    //     game_version: "25",
-    //     machine: "20485861",
-    //     vlt: "0",
-    //   };
-
-    //   for (var i = 0; i < amount; i += 1) {
-    //     data.id = (i + 1).toString();
-    //     result.push(Object.assign({}, data));
-    //   }
-    //   return result;
-    // },
-    // createHeaders(keys) {
-    //   var result = [];
-    //   for (var i = 0; i < keys.length; i += 1) {
-    //     result.push({
-    //       id: keys[i],
-    //       name: keys[i],
-    //       prompt: keys[i],
-    //       width: 65,
-    //       align: "center",
-    //       padding: 0,
-    //     });
-    //   }
-    //   console.log(result);
-    //   return result;
-    // },
     openEditForm(item) {
       this.editDialog = true;
       this.target_item = item;
