@@ -4013,6 +4013,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4022,7 +4053,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       csrf_token: window.csrf_token,
-      todos: []
+      todos: [],
+      imageURL: null
     };
   },
   computed: {
@@ -4031,66 +4063,88 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    exportPDF: function exportPDF() {
-      var _this = this;
-
-      var subTotal = 0;
-      this.order.book_orders.forEach(function (element, index) {
-        subTotal += element.book_price * element.qty;
-
-        _this.todos.push({
-          number: index + 1,
-          bookname: element.book_name,
-          quantity: element.qty,
-          unitcost: element.book_price,
-          amount: element.book_price * element.qty
+    generateBookName: function generateBookName() {
+      try {
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.font = "90px Arial";
+        this.order.book_orders.forEach(function (element, index) {
+          ctx.fillText(element.book_name, 10, 110);
+          document.getElementById("myImage".concat(index)).src = canvas.toDataURL("image/png");
+          ctx.clearRect(0, 0, 300, 200);
+          console.log(document);
         });
-      });
-      var vm = this;
-      var columns = [{
-        title: "No",
-        dataKey: "number"
-      }, {
-        title: "Book Name",
-        dataKey: "bookname"
-      }, {
-        title: "Quantity",
-        dataKey: "quantity"
-      }, {
-        title: "UnitCost",
-        dataKey: "unitcost"
-      }, {
-        title: "Amount",
-        dataKey: "amount"
-      }];
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.exportPDF();
+      }
+    },
+    exportPDF: function exportPDF() {
       var doc = new jspdf__WEBPACK_IMPORTED_MODULE_2___default.a("letter");
-      console.log(doc); // user name
+      doc.autoTable({
+        html: "#mytable",
+        bodyStyles: {
+          minCellHeight: 15
+        },
+        didDrawCell: function didDrawCell(data) {
+          console.log(data.column.index);
 
-      doc.setFontSize(22);
-      doc.text(20, 20, this.order.user_name); // order id
-
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(20, 30, "OrderID : ".concat(this.order.id)); //address
-
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(20, 40, "Address : ".concat(this.order.address)); // date
-
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(250, 40, "Address : ".concat(this.order.address), "right");
-      doc.autoTable(columns, vm.todos, {
-        margin: {
-          top: 60
+          if (data.column.index === 1 && data.cell.section === "body") {
+            var td = data.cell.raw;
+            var img = td.getElementsByTagName("img")[0];
+            var dim = data.cell.height - data.cell.padding("vertical");
+            var textPos = data.cell;
+            console.log(textPos);
+            doc.addImage(img.src, textPos.x, textPos.y, dim, dim);
+          }
         }
-      });
-      doc.setLineWidth(1.5);
-      doc.line(200, 95, 283, 95);
-      doc.setFontSize(15);
-      doc.setTextColor(150);
-      doc.text(230, 105, "SubTotal                  ".concat(subTotal, " mmk"), 'right');
-      doc.save("todos.pdf");
+      }); // var subTotal = 0;
+      // this.order.book_orders.forEach((element, index) => {
+      //   this.generateBookName(element.bookname);
+      //   subTotal += element.book_price * element.qty;
+      //   this.todos.push({
+      //     number: index + 1,
+      //     bookname: doc.addImage(this.imageURL, 'JPEG', 10, 10, 50, 50, 'invoice_book'),
+      //     quantity: element.qty,
+      //     unitcost: element.book_price,
+      //     amount: element.book_price * element.qty,
+      //   });
+      // });
+      // var vm = this;
+      // var columns = [
+      //   { title: "No", dataKey: "number" },
+      //   { title: "Book Name", dataKey: "bookname" },
+      //   { title: "Quantity", dataKey: "quantity" },
+      //   { title: "UnitCost", dataKey: "unitcost" },
+      //   { title: "Amount", dataKey: "amount" },
+      // ];
+      // doc.addImage(this.imageURL, 'JPEG', 10, 10, 50, 50, 'invoice_book');
+      // // user name
+      // doc.setFontSize(22);
+      // doc.text(20, 20, this.order.user_name);
+      // // order id
+      // doc.setTextColor(150);
+      // doc.setFontSize(10);
+      // doc.text(20, 30, `OrderID : ${this.order.id}`);
+      // //address
+      // doc.setTextColor(150);
+      // doc.setFontSize(10);
+      // doc.text(20, 40, `Address : ${this.order.address}`);
+      // // date
+      // doc.setTextColor(150);
+      // doc.setFontSize(10);
+      // doc.text(250, 40, `Address : ${this.order.address}`, "right");
+      // doc.autoTable(columns, vm.todos, {
+      //   margin: { top: 60 },
+      // });
+      // doc.setLineWidth(1.5);
+      // doc.line(200, 95, 283, 95);
+      // doc.setFontSize(15);
+      // doc.setTextColor(150);
+      // doc.text(230, 105, `SubTotal                  ${subTotal} mmk`, "right");
+
+      doc.save("".concat(this.order.user_name, " - ").concat(this.order.id, ".pdf"));
     }
   }
 });
@@ -24534,16 +24588,84 @@ var render = function() {
   return _c(
     "div",
     [
+      _c(
+        "table",
+        { staticStyle: { display: "none" }, attrs: { id: "mytable" } },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _vm._l(_vm.order.book_orders, function(singleOrder, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", [_vm._v("index+1")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("img", { attrs: { id: "myImage" + index, src: "" } })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("1000")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("1")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("90-000")])
+                ])
+              }),
+              _vm._v(" "),
+              _vm._m(1)
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("canvas", {
+            staticStyle: { border: "1px solid #d3d3d3" },
+            attrs: { id: "myCanvas", width: "300", height: "200" }
+          })
+        ]
+      ),
+      _vm._v(" "),
       _c("p", [_vm._v("hello " + _vm._s(_vm.order))]),
       _vm._v(" "),
-      _c("v-btn", { on: { click: _vm.exportPDF } }, [_vm._v("print")]),
+      _vm.imageURL
+        ? _c("img", { attrs: { src: _vm.imageURL, alt: "" } })
+        : _vm._e(),
       _vm._v(" "),
-      _c("table", { attrs: { id: "mytable" } })
+      _c("v-btn", { on: { click: _vm.generateBookName } }, [_vm._v("print")])
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Book Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Quantity")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unit Count")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Amount")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "4" } }, [_vm._v("SubTotal")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("90000")])
+    ])
+  }
+]
 render._withStripped = true
 
 
