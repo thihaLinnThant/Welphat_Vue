@@ -4044,6 +4044,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4054,13 +4062,21 @@ __webpack_require__.r(__webpack_exports__);
     return {
       csrf_token: window.csrf_token,
       todos: [],
-      imageURL: null
+      imageURL: null,
+      subTotal: 0
     };
   },
   computed: {
     order: function order() {
       return this.$store.state.invoicetemplate;
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    this.order.book_orders.forEach(function (element, index) {
+      _this.subTotal += element.book_price * element.qty;
+    });
   },
   methods: {
     generateBookName: function generateBookName() {
@@ -4071,7 +4087,7 @@ __webpack_require__.r(__webpack_exports__);
         this.order.book_orders.forEach(function (element, index) {
           ctx.fillText(element.book_name, 10, 110);
           document.getElementById("myImage".concat(index)).src = canvas.toDataURL("image/png");
-          ctx.clearRect(0, 0, 300, 200);
+          ctx.clearRect(0, 0, 450, 200);
           console.log(document);
         });
       } catch (error) {
@@ -4081,9 +4097,44 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     exportPDF: function exportPDF() {
-      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_2___default.a("letter");
+      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_2___default.a('a4'); // title
+
+      doc.setFontSize(25);
+      doc.text("Welphat.com Online Book Store", 100, 20, "center"); // book shop address info
+
+      doc.setTextColor(150);
+      doc.setFontSize(13);
+      doc.text("No 199, dummy road, lorem Township, Yangon, Myanmar", 100, 30, "center"); // book shop phnumber info
+
+      doc.setTextColor(150);
+      doc.setFontSize(13);
+      doc.text("tel : 09-256831429, 09-254272220", 100, 35, "center"); // book shop phnumber info
+
+      doc.setTextColor(150);
+      doc.setFontSize(13);
+      doc.text("email : customercare@welphat.com", 100, 40, "center");
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(15, 60, "Customer : ".concat(this.order.user_name));
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(150, 60, "OrderID : ".concat(this.order.id));
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(15, 70, "Pay Type : Cash On Deli");
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(150, 70, "Date : ".concat(this.order.created_at)); //address
+
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(15, 80, "Address : ".concat(this.order.address));
+      doc.line(15, 50, 280, 50);
       doc.autoTable({
         html: "#mytable",
+        margin: {
+          top: 100
+        },
         bodyStyles: {
           minCellHeight: 15
         },
@@ -4099,51 +4150,7 @@ __webpack_require__.r(__webpack_exports__);
             doc.addImage(img.src, textPos.x, textPos.y, dim, dim);
           }
         }
-      }); // var subTotal = 0;
-      // this.order.book_orders.forEach((element, index) => {
-      //   this.generateBookName(element.bookname);
-      //   subTotal += element.book_price * element.qty;
-      //   this.todos.push({
-      //     number: index + 1,
-      //     bookname: doc.addImage(this.imageURL, 'JPEG', 10, 10, 50, 50, 'invoice_book'),
-      //     quantity: element.qty,
-      //     unitcost: element.book_price,
-      //     amount: element.book_price * element.qty,
-      //   });
-      // });
-      // var vm = this;
-      // var columns = [
-      //   { title: "No", dataKey: "number" },
-      //   { title: "Book Name", dataKey: "bookname" },
-      //   { title: "Quantity", dataKey: "quantity" },
-      //   { title: "UnitCost", dataKey: "unitcost" },
-      //   { title: "Amount", dataKey: "amount" },
-      // ];
-      // doc.addImage(this.imageURL, 'JPEG', 10, 10, 50, 50, 'invoice_book');
-      // // user name
-      // doc.setFontSize(22);
-      // doc.text(20, 20, this.order.user_name);
-      // // order id
-      // doc.setTextColor(150);
-      // doc.setFontSize(10);
-      // doc.text(20, 30, `OrderID : ${this.order.id}`);
-      // //address
-      // doc.setTextColor(150);
-      // doc.setFontSize(10);
-      // doc.text(20, 40, `Address : ${this.order.address}`);
-      // // date
-      // doc.setTextColor(150);
-      // doc.setFontSize(10);
-      // doc.text(250, 40, `Address : ${this.order.address}`, "right");
-      // doc.autoTable(columns, vm.todos, {
-      //   margin: { top: 60 },
-      // });
-      // doc.setLineWidth(1.5);
-      // doc.line(200, 95, 283, 95);
-      // doc.setFontSize(15);
-      // doc.setTextColor(150);
-      // doc.text(230, 105, `SubTotal                  ${subTotal} mmk`, "right");
-
+      });
       doc.save("".concat(this.order.user_name, " - ").concat(this.order.id, ".pdf"));
     }
   }
@@ -24599,28 +24606,46 @@ var render = function() {
             [
               _vm._l(_vm.order.book_orders, function(singleOrder, index) {
                 return _c("tr", { key: index }, [
-                  _c("td", [_vm._v("index+1")]),
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
                   _vm._v(" "),
                   _c("td", [
                     _c("img", { attrs: { id: "myImage" + index, src: "" } })
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("1000")]),
+                  _c("td", [_vm._v(_vm._s(singleOrder.qty))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("1")]),
+                  _c("td", [_vm._v(_vm._s(singleOrder.book_price))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("90-000")])
+                  _c("td", [
+                    _vm._v(_vm._s(singleOrder.qty * singleOrder.book_price))
+                  ])
                 ])
               }),
               _vm._v(" "),
-              _vm._m(1)
+              _c("tr", [
+                _c("td", { attrs: { colspan: "4" } }, [_vm._v("SubTotal")]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.subTotal))])
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", { attrs: { colspan: "4" } }, [_vm._v("Net Amount")]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.subTotal + 1000))])
+              ])
             ],
             2
           ),
           _vm._v(" "),
           _c("canvas", {
             staticStyle: { border: "1px solid #d3d3d3" },
-            attrs: { id: "myCanvas", width: "300", height: "200" }
+            attrs: { id: "myCanvas", width: "450", height: "200" }
           })
         ]
       ),
@@ -24660,9 +24685,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [_vm._v("SubTotal")]),
+      _c("td", { attrs: { colspan: "4" } }, [_vm._v("Delivery Fee( guess ) ")]),
       _vm._v(" "),
-      _c("td", [_vm._v("90000")])
+      _c("td", [_vm._v("1000")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "4" } }, [_vm._v("Discount")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("0")])
     ])
   }
 ]
@@ -25684,7 +25719,7 @@ var render = function() {
                                                 ),
                                                 [
                                                   _c("v-icon", [
-                                                    _vm._v("mdi-delete")
+                                                    _vm._v("mdi-printer")
                                                   ])
                                                 ],
                                                 1
@@ -25699,7 +25734,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(" "),
-                                    _c("span", [_vm._v("delete order")])
+                                    _c("span", [_vm._v("print invoice")])
                                   ]
                                 )
                               ],

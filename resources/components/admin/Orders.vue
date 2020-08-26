@@ -246,10 +246,10 @@
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-btn class="mt-1" text icon v-on="on">
-                    <v-icon>mdi-delete</v-icon>
+                    <v-icon>mdi-printer</v-icon>
                   </v-btn>
                 </template>
-                <span>delete order</span>
+                <span>print invoice</span>
               </v-tooltip>
               </router-link>
             </div>
