@@ -3999,10 +3999,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/CRUDHandler */ "./resources/js/CRUDHandler.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.umd.min.js");
-/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jspdf__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
-/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _invoicePreview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./invoicePreview */ "./resources/components/admin/invoicePreview.vue");
+/* harmony import */ var _js_exportPdfMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../js/exportPdfMixin */ "./resources/js/exportPdfMixin.js");
 //
 //
 //
@@ -4051,13 +4051,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__["default"], _js_exportPdfMixin__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
       csrf_token: window.csrf_token,
@@ -4065,6 +4065,9 @@ __webpack_require__.r(__webpack_exports__);
       imageURL: null,
       subTotal: 0
     };
+  },
+  components: {
+    invoicePreview: _invoicePreview__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   computed: {
     order: function order() {
@@ -4095,63 +4098,6 @@ __webpack_require__.r(__webpack_exports__);
       } finally {
         this.exportPDF();
       }
-    },
-    exportPDF: function exportPDF() {
-      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_2___default.a('a4'); // title
-
-      doc.setFontSize(25);
-      doc.text("Welphat.com Online Book Store", 100, 20, "center"); // book shop address info
-
-      doc.setTextColor(150);
-      doc.setFontSize(13);
-      doc.text("No 199, dummy road, lorem Township, Yangon, Myanmar", 100, 30, "center"); // book shop phnumber info
-
-      doc.setTextColor(150);
-      doc.setFontSize(13);
-      doc.text("tel : 09-256831429, 09-254272220", 100, 35, "center"); // book shop phnumber info
-
-      doc.setTextColor(150);
-      doc.setFontSize(13);
-      doc.text("email : customercare@welphat.com", 100, 40, "center");
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(15, 60, "Customer : ".concat(this.order.user_name));
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(150, 60, "OrderID : ".concat(this.order.id));
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(15, 70, "Pay Type : Cash On Deli");
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(150, 70, "Date : ".concat(this.order.created_at)); //address
-
-      doc.setTextColor(150);
-      doc.setFontSize(10);
-      doc.text(15, 80, "Address : ".concat(this.order.address));
-      doc.line(15, 50, 280, 50);
-      doc.autoTable({
-        html: "#mytable",
-        margin: {
-          top: 100
-        },
-        bodyStyles: {
-          minCellHeight: 15
-        },
-        didDrawCell: function didDrawCell(data) {
-          console.log(data.column.index);
-
-          if (data.column.index === 1 && data.cell.section === "body") {
-            var td = data.cell.raw;
-            var img = td.getElementsByTagName("img")[0];
-            var dim = data.cell.height - data.cell.padding("vertical");
-            var textPos = data.cell;
-            console.log(textPos);
-            doc.addImage(img.src, textPos.x, textPos.y, dim, dim);
-          }
-        }
-      });
-      doc.save("".concat(this.order.user_name, " - ").concat(this.order.id, ".pdf"));
     }
   }
 });
@@ -6519,6 +6465,93 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     user: function user() {
       return this.$store.state.userview;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/invoicePreview.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/invoicePreview.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    order: {
+      required: true
+    },
+    subTotal: {
+      required: true,
+      type: Number
     }
   }
 });
@@ -24595,6 +24628,10 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("invoicePreview", {
+        attrs: { order: _vm.order, subTotal: _vm.subTotal }
+      }),
+      _vm._v(" "),
       _c(
         "table",
         { staticStyle: { display: "none" }, attrs: { id: "mytable" } },
@@ -24650,13 +24687,15 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("p", [_vm._v("hello " + _vm._s(_vm.order))]),
-      _vm._v(" "),
-      _vm.imageURL
-        ? _c("img", { attrs: { src: _vm.imageURL, alt: "" } })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("v-btn", { on: { click: _vm.generateBookName } }, [_vm._v("print")])
+      _c(
+        "v-btn",
+        {
+          staticClass: "mt-3",
+          attrs: { block: "" },
+          on: { click: _vm.generateBookName }
+        },
+        [_vm._v("print")]
+      )
     ],
     1
   )
@@ -24685,7 +24724,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [_vm._v("Delivery Fee( guess ) ")]),
+      _c("td", { attrs: { colspan: "4" } }, [_vm._v("Delivery Fee( guess )")]),
       _vm._v(" "),
       _c("td", [_vm._v("1000")])
     ])
@@ -25686,6 +25725,7 @@ var render = function() {
                             _c(
                               "router-link",
                               {
+                                staticStyle: { "text-decoration": "none" },
                                 attrs: {
                                   to: {
                                     name: "invoicetemplate",
@@ -30796,6 +30836,201 @@ var render = function() {
         ],
         1
       )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/invoicePreview.vue?vue&type=template&id=7e88796c&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/admin/invoicePreview.vue?vue&type=template&id=7e88796c& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { staticClass: "white darken-2" },
+    [
+      _c("div", { staticClass: "text-center" }, [
+        _c("span", { staticClass: "headline black--text" }, [
+          _vm._v("WelPhat.com Online Book Store")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "subtitle grey--text" }, [
+          _vm._v(
+            "\n      No,199, dummy road, blah blah township, Yangon, Myanmar\n      "
+          ),
+          _c("br"),
+          _vm._v("Tel: 09256831429, 09254272220\n      "),
+          _c("br"),
+          _vm._v("Email : customercare@welphat.com\n    ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { staticClass: "black--text text-center" },
+        [
+          _c("v-col", { attrs: { cols: "col-6" } }, [
+            _c("p", [_vm._v("Customer Name - " + _vm._s(_vm.order.user_name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Pay Type - Cash On Deli")]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Address - " + _vm._s(_vm.order.address))])
+          ]),
+          _vm._v(" "),
+          _c("v-col", { attrs: { cols: "col-6" } }, [
+            _c("p", [_vm._v("Order ID - wp-" + _vm._s(_vm.order.id))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Date - " + _vm._s(_vm.order.created_at))])
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-simple-table", {
+        staticClass: "white",
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function() {
+              return [
+                _c("thead", { staticClass: "light-blue" }, [
+                  _c("tr", [
+                    _c("th", { staticClass: "text-left black--text" }, [
+                      _vm._v("No")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-left black--text" }, [
+                      _vm._v("Book Name")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-left black--text" }, [
+                      _vm._v("Quantity")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-left black--text" }, [
+                      _vm._v("Unit Count")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-left black--text" }, [
+                      _vm._v("Amount")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  [
+                    _vm._l(_vm.order.book_orders, function(item, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", { staticClass: "black--text" }, [
+                          _vm._v(_vm._s(index + 1))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "black--text" }, [
+                          _vm._v(_vm._s(item.book_name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "black--text" }, [
+                          _vm._v(_vm._s(item.qty))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "black--text" }, [
+                          _vm._v(_vm._s(item.book_price))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "black--text" }, [
+                          _vm._v(_vm._s(item.qty * item.book_price))
+                        ])
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "black--text text-center title",
+                          attrs: { colspan: "4" }
+                        },
+                        [_vm._v("SubTotal -")]
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "black--text title" }, [
+                        _vm._v(_vm._s(_vm.subTotal))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "black--text text-center title",
+                          attrs: { colspan: "4" }
+                        },
+                        [_vm._v("Delivery Fee (guess)-")]
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "black--text title" }, [
+                        _vm._v("1000")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "black--text text-center title",
+                          attrs: { colspan: "4" }
+                        },
+                        [_vm._v("Discount")]
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "black--text title" }, [
+                        _vm._v("0")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "black--text text-center title",
+                          attrs: { colspan: "4" }
+                        },
+                        [_vm._v("Net Amount")]
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "black--text title" }, [
+                        _vm._v(_vm._s(_vm.subTotal + 1000))
+                      ])
+                    ])
+                  ],
+                  2
+                )
+              ]
+            },
+            proxy: true
+          }
+        ])
+      })
     ],
     1
   )
@@ -90952,6 +91187,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/components/admin/invoicePreview.vue":
+/*!*******************************************************!*\
+  !*** ./resources/components/admin/invoicePreview.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _invoicePreview_vue_vue_type_template_id_7e88796c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./invoicePreview.vue?vue&type=template&id=7e88796c& */ "./resources/components/admin/invoicePreview.vue?vue&type=template&id=7e88796c&");
+/* harmony import */ var _invoicePreview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./invoicePreview.vue?vue&type=script&lang=js& */ "./resources/components/admin/invoicePreview.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _invoicePreview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _invoicePreview_vue_vue_type_template_id_7e88796c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _invoicePreview_vue_vue_type_template_id_7e88796c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/components/admin/invoicePreview.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/components/admin/invoicePreview.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/components/admin/invoicePreview.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_invoicePreview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./invoicePreview.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/invoicePreview.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_invoicePreview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/components/admin/invoicePreview.vue?vue&type=template&id=7e88796c&":
+/*!**************************************************************************************!*\
+  !*** ./resources/components/admin/invoicePreview.vue?vue&type=template&id=7e88796c& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_invoicePreview_vue_vue_type_template_id_7e88796c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./invoicePreview.vue?vue&type=template&id=7e88796c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/admin/invoicePreview.vue?vue&type=template&id=7e88796c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_invoicePreview_vue_vue_type_template_id_7e88796c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_invoicePreview_vue_vue_type_template_id_7e88796c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/components/admin/publishers.vue":
 /*!***************************************************!*\
   !*** ./resources/components/admin/publishers.vue ***!
@@ -92433,6 +92737,82 @@ __webpack_require__.r(__webpack_exports__);
           _this.errors = error.response.data.errors || {}; //get error json file from controller
         }
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/exportPdfMixin.js":
+/*!****************************************!*\
+  !*** ./resources/js/exportPdfMixin.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.umd.min.js");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jspdf__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    exportPDF: function exportPDF() {
+      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_0___default.a("a4"); // title
+
+      doc.setFontSize(25);
+      doc.text("Welphat.com Online Book Store", 100, 20, "center"); // book shop address info
+
+      doc.setTextColor(150);
+      doc.setFontSize(13);
+      doc.text("No 199, dummy road, lorem Township, Yangon, Myanmar", 100, 30, "center"); // book shop phnumber info
+
+      doc.setTextColor(150);
+      doc.setFontSize(13);
+      doc.text("tel : 09-256831429, 09-254272220", 100, 35, "center"); // book shop phnumber info
+
+      doc.setTextColor(150);
+      doc.setFontSize(13);
+      doc.text("email : customercare@welphat.com", 100, 40, "center");
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(15, 60, "Customer : ".concat(this.order.user_name));
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(150, 60, "OrderID : ".concat(this.order.id));
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(15, 70, "Pay Type : Cash On Deli");
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(150, 70, "Date : ".concat(this.order.created_at)); //address
+
+      doc.setTextColor(150);
+      doc.setFontSize(10);
+      doc.text(15, 80, "Address : ".concat(this.order.address));
+      doc.line(15, 50, 280, 50);
+      doc.autoTable({
+        html: "#mytable",
+        margin: {
+          top: 100
+        },
+        bodyStyles: {
+          minCellHeight: 15
+        },
+        didDrawCell: function didDrawCell(data) {
+          console.log(data.column.index);
+
+          if (data.column.index === 1 && data.cell.section === "body") {
+            var td = data.cell.raw;
+            var img = td.getElementsByTagName("img")[0];
+            var dim = data.cell.height - data.cell.padding("vertical");
+            var textPos = data.cell;
+            console.log(textPos);
+            doc.addImage(img.src, textPos.x, textPos.y, dim, dim);
+          }
+        }
+      });
+      doc.save("".concat(this.order.user_name, " - ").concat(this.order.id, ".pdf"));
     }
   }
 });

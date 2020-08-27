@@ -242,7 +242,7 @@
                 </template>
                 <span>delete order</span>
               </v-tooltip>
-              <router-link :to="{name : 'invoicetemplate', params: {id : item.id}}">
+              <router-link :to="{name : 'invoicetemplate', params: {id : item.id}}" style="text-decoration: none;">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-btn class="mt-1" text icon v-on="on">
