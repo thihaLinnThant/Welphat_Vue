@@ -2783,7 +2783,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     latest_notifications: function latest_notifications() {
-      return this.$store.state.latest_notifications.reverse();
+      return this.$store.state.latest_notifications;
     },
     unseen_noti: function unseen_noti() {
       return this.latest_notifications.filter(function (noti) {

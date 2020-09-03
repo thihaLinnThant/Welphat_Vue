@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateSuppliersTable extends Migration
 {
@@ -30,6 +31,8 @@ class CreateSuppliersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('suppliers');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
