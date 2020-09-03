@@ -120,6 +120,7 @@ router.beforeEach((to, from, next) => {
         if (Store.state.userview.length > 0) { next() } else { getApiData(to.path, to.name) }
     }
     else if (to.path === `/admin/orders/${to.params.id}`){
+        console.log("it works");
         if(Store.state.invoicetemplate.length > 0 ){ next() } else {getApiData(to.path, to.name)}
     }
     else if (to.path === '/admin' ) { next(); }

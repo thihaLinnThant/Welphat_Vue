@@ -34,7 +34,7 @@
         "@fortawesome/fontawesome-free": "^5.13.0",
         "animated-number-vue": "^1.0.0",
         "html2canvas": "^1.0.0-rc.7",
-        "jspdf": "^2.0.0",
+        "jspdf": "^1.5.3",
         "jspdf-autotable": "^3.5.9",
         "laravel-echo": "^1.8.0",
         "pusher-js": "^6.0.3",

@@ -270,7 +270,8 @@ export default {
   },
   computed: { 
     latest_notifications(){
-      return this.$store.state.latest_notifications;
+      console.log(this.$store.state)
+      return this.$store.state.latest_notifications.reverse();
     },
     unseen_noti(){
       return this.latest_notifications.filter(noti => !noti.seen).length;
