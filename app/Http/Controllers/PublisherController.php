@@ -9,7 +9,7 @@ class PublisherController extends Controller
 {
 
     private function get_publishers() {
-        $collection = Publisher::all([ 'id', 'name' ]);
+        $collection = Publisher::all([ 'id', 'name' , 'ph_no', 'address', 'email']);
         $publishers = collect();
         foreach($collection as $publisher) {
             $publisher->count = $publisher->books()->count();

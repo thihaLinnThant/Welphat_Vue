@@ -239,7 +239,7 @@
               <td>{{admin.name}}</td>
               <td>{{admin.email}}</td>
               <td>
-                <row class="d-flex" justify="space-between">
+                <v-row class="d-flex" justify="space-between">
                   <a :href="'mailto:'+admin.email" style="text-decoration: none">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
@@ -298,7 +298,7 @@
                       </v-tooltip>
                     </span>
                   </span>
-                </row>
+                </v-row>
               </td>
             </tr>
           </tbody>

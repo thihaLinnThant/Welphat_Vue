@@ -70,7 +70,7 @@ Route::get('/admin/orders/{id}', 'OrderController@get_oneRecord_api');
 
 
 Route::get('/admin/notifications', 'AdminNotificationController@get_all_notifications_api')->middleware('auth:admin_api');
-Route::get('/admin/notifications/latest', 'AdminNotificationController@get_latest_notifications_api')->middleware('auth:admin_api');
+Route::get('/admin/notifications/latest', 'AdminNotificationController@get_latest_notifications_api');
 Route::get('/admin/notifications/lastrecord', 'AdminNotificationController@get_lastNotification_api')->middleware('auth:admin_api');
 
 Route::get('/admin/dummy', 'CategoryController@get_categories_api');

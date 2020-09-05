@@ -217,7 +217,7 @@
               <td v-if="user.address">{{user.address}}</td>
               <td v-else>not available</td>
               <td>
-                <row class="d-flex" justify="space-between">
+                <div class="d-flex" justify="space-between">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn @click="showWishList(user.wishes)" class="mt-1" text icon v-on="on">
@@ -282,7 +282,7 @@
                       <span>view</span>
                     </v-tooltip>
                   </router-link>
-                </row>
+                </div>
               </td>
             </tr>
           </tbody>

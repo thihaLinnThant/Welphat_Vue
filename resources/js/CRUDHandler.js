@@ -1,5 +1,6 @@
 import StateHandler from './StateHandler.js';
 import AdminNotiHandler from './adminNotiHandler';
+import VueRouter from 'vue-router';
 export default {
   mixins: [StateHandler, AdminNotiHandler],
   data() {
@@ -18,11 +19,28 @@ export default {
       deleteDialog: false,
     }
   },
+  watch: {
+    loading : function(value){
+      console.log(value);
+    }
+  },
   methods: {
+    //test function to wait response from server .. use like this -> .then(this.sleeper(5000))
+    // sleeper(ms) {
+    //   return function(x) {
+    //     return new Promise(resolve => setTimeout(() => resolve(x), ms));
+    //   };
+    // },
     submitCreate() {
+      this.loading = true;
       axios.post(`/admin/${this.statename}/add${this.changeSingular(this.statename)}`, this.fields).then(response => {
-        console.log('enter create');
-        axios.get(`/api/admin/${this.statename}/lastrecord`).then(({data}) => {this.create_admin_noti('create', data);});
+        
+        this.loading = false;
+        axios.get(`/api/admin/${this.statename}/lastrecord`).then(({data}) => {
+          // ############################### current off cuz of pusher error ##############################
+          // this.create_admin_noti('create', data);
+          this.$router.push({name: 'bookview', params: {id : data.id}})
+        });
         this.alertMessage = 'Item created successfully';
         this.alertType = "success";
         this.alert = true;
