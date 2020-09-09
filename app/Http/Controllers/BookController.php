@@ -199,9 +199,11 @@ class BookController extends Controller
         $book->description = $request->edit_book_description;
         $book->published_date = $request->edit_book_published_date;
         
-        $file = file_get_contents($request->edit_image);
-        $path = '/images/books/' . $id . "/thumb_nail.png";
-        Storage::disk('public')->put($path, $file);
+        if (!strpos($request->edit_image, '/storage/images/')){
+            $file = file_get_contents($request->edit_image);
+            $path = '/images/books/' . $id . "/thumb_nail.png";
+            Storage::disk('public')->put($path, $file);
+        }
         
         $book->save();
         return response()->json(null, 200);
