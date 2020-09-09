@@ -129,27 +129,27 @@
                   ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <input
-                    type="file"
-                    @change="uploadImage"
-                    requried
-                    :rules="[v => !!v || 'Date is required']"
-                  />
+                  <v-btn @click="toggleImageUpShow">Upload Image</v-btn>
                 </v-col>
 
-                <v-card width="250px">
-                  <v-img
-                    class="white--text align-end"
-                    height="200px"
-                    v-if="previewImage"
-                    :src="previewImage"
-                  >
-                    <v-card-title>{{ fields.edit_name }}</v-card-title>
-                  </v-img>
-                  <v-img class="white--text align-end" height="200px" :src="fields.edit_image" v-else>
-                    <v-card-title>{{ fields.edit_name }}</v-card-title>
-                  </v-img>
+                <v-card width="200px" height="250px">
+                  <v-img class="white--text align-end" height="200px" :src="fields.edit_image"></v-img>
+                  <v-card-text>{{ fields.edit_name }}</v-card-text>
                 </v-card>
+                <small class="text-danger">{{ errors.image }}</small>
+                <my-upload
+                  field="img"
+                  @crop-success="cropSuccess"
+                  @crop-upload-success="cropUploadSuccess"
+                  @crop-upload-fail="cropUploadFail"
+                  langType="en"
+                  v-model="imageUp"
+                  :width="150"
+                  :height="200"
+                  url
+                  noCircle
+                  img-format="png"
+                ></my-upload>
               </v-row>
             </v-container>
           </v-card-text>
@@ -250,9 +250,13 @@
 <script>
 import CrudHandler from "../../js/CRUDHandler";
 import dataListMixin from "../../js/dataListMixin";
+import myUpload from "vue-image-crop-upload";
 
 export default {
   mixins: [dataListMixin,CrudHandler],
+  components: {
+    "my-upload": myUpload
+  },
   data() {
     return {
       search: "",
@@ -261,8 +265,8 @@ export default {
       fields: {},
       previewImage: null,
       statename: "books",
-      deleteDialog : false
-
+      deleteDialog : false,
+      imageUp : false,
     };
   },
 
@@ -318,6 +322,25 @@ export default {
       this.fields.edit_publisher = book.publisher.id
       this.fields.edit_suppliers = book.suppliers.map(value => value.id)
       this.fields.edit_image = book.thumb
+    },
+    toggleImageUpShow() {
+      this.imageUp = !this.imageUp;
+    },
+    cropSuccess(imgDataUrl, field) {
+      this.fields.image = imgDataUrl;
+      console.log(imgDataUrl)
+      this.fields.edit_image = imgDataUrl;
+
+      console.log("-------- crop success --------");
+    },
+    cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+    },
+    cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
     },
     save() {
       this.$refs.form.validate();

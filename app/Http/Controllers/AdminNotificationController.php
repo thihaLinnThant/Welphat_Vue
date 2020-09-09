@@ -55,7 +55,6 @@ class AdminNotificationController extends Controller
         $collection = AdminNotification::with('committer:id,name')
                         ->with('committed_item:id,name')
                         ->latest()->take(20)->get();
-                        dd($collection);
         foreach($collection as $noti){
             $this->get_extra_data($noti);
         }

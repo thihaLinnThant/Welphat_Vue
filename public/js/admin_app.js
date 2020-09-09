@@ -3339,6 +3339,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/CRUDHandler */ "./resources/js/CRUDHandler.js");
 /* harmony import */ var _js_dataListMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../js/dataListMixin */ "./resources/js/dataListMixin.js");
+/* harmony import */ var vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-image-crop-upload */ "./node_modules/vue-image-crop-upload/upload-2.vue");
 //
 //
 //
@@ -3588,10 +3589,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_js_dataListMixin__WEBPACK_IMPORTED_MODULE_1__["default"], _js_CRUDHandler__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  components: {
+    "my-upload": vue_image_crop_upload__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   data: function data() {
     return {
       search: "",
@@ -3600,7 +3605,8 @@ __webpack_require__.r(__webpack_exports__);
       fields: {},
       previewImage: null,
       statename: "books",
-      deleteDialog: false
+      deleteDialog: false,
+      imageUp: false
     };
   },
   computed: {
@@ -3680,6 +3686,24 @@ __webpack_require__.r(__webpack_exports__);
         return value.id;
       });
       this.fields.edit_image = book.thumb;
+    },
+    toggleImageUpShow: function toggleImageUpShow() {
+      this.imageUp = !this.imageUp;
+    },
+    cropSuccess: function cropSuccess(imgDataUrl, field) {
+      this.fields.image = imgDataUrl;
+      console.log(imgDataUrl);
+      this.fields.edit_image = imgDataUrl;
+      console.log("-------- crop success --------");
+    },
+    cropUploadSuccess: function cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+    },
+    cropUploadFail: function cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
     },
     save: function save() {
       this.$refs.form.validate();
@@ -23233,61 +23257,65 @@ var render = function() {
                                 1
                               ),
                               _vm._v(" "),
-                              _c("v-col", { attrs: { cols: "12", md: "6" } }, [
-                                _c("input", {
-                                  attrs: {
-                                    type: "file",
-                                    requried: "",
-                                    rules: [
-                                      function(v) {
-                                        return !!v || "Date is required"
-                                      }
-                                    ]
-                                  },
-                                  on: { change: _vm.uploadImage }
-                                })
-                              ]),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    { on: { click: _vm.toggleImageUpShow } },
+                                    [_vm._v("Upload Image")]
+                                  )
+                                ],
+                                1
+                              ),
                               _vm._v(" "),
                               _c(
                                 "v-card",
-                                { attrs: { width: "250px" } },
+                                { attrs: { width: "200px", height: "250px" } },
                                 [
-                                  _vm.previewImage
-                                    ? _c(
-                                        "v-img",
-                                        {
-                                          staticClass: "white--text align-end",
-                                          attrs: {
-                                            height: "200px",
-                                            src: _vm.previewImage
-                                          }
-                                        },
-                                        [
-                                          _c("v-card-title", [
-                                            _vm._v(_vm._s(_vm.fields.edit_name))
-                                          ])
-                                        ],
-                                        1
-                                      )
-                                    : _c(
-                                        "v-img",
-                                        {
-                                          staticClass: "white--text align-end",
-                                          attrs: {
-                                            height: "200px",
-                                            src: _vm.fields.edit_image
-                                          }
-                                        },
-                                        [
-                                          _c("v-card-title", [
-                                            _vm._v(_vm._s(_vm.fields.edit_name))
-                                          ])
-                                        ],
-                                        1
-                                      )
+                                  _c("v-img", {
+                                    staticClass: "white--text align-end",
+                                    attrs: {
+                                      height: "200px",
+                                      src: _vm.fields.edit_image
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-card-text", [
+                                    _vm._v(_vm._s(_vm.fields.edit_name))
+                                  ])
                                 ],
                                 1
-                              )
+                              ),
+                              _vm._v(" "),
+                              _c("small", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.image))
+                              ]),
+                              _vm._v(" "),
+                              _c("my-upload", {
+                                attrs: {
+                                  field: "img",
+                                  langType: "en",
+                                  width: 150,
+                                  height: 200,
+                                  url: "",
+                                  noCircle: "",
+                                  "img-format": "png"
+                                },
+                                on: {
+                                  "crop-success": _vm.cropSuccess,
+                                  "crop-upload-success": _vm.cropUploadSuccess,
+                                  "crop-upload-fail": _vm.cropUploadFail
+                                },
+                                model: {
+                                  value: _vm.imageUp,
+                                  callback: function($$v) {
+                                    _vm.imageUp = $$v
+                                  },
+                                  expression: "imageUp"
+                                }
+                              })
                             ],
                             1
                           )
@@ -92620,9 +92648,9 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
-__webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
-module.exports = __webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/sass/user.scss */"./resources/sass/user.scss");
+__webpack_require__(/*! /home/thihalinnthant/Documents/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+__webpack_require__(/*! /home/thihalinnthant/Documents/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
+module.exports = __webpack_require__(/*! /home/thihalinnthant/Documents/Welphat_Vue/resources/sass/user.scss */"./resources/sass/user.scss");
 
 
 /***/ })
