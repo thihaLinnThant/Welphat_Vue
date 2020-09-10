@@ -43,6 +43,7 @@
         "vue-custom-scrollbar": "^1.2.0",
         "vue-image-crop-upload": "^2.5.0",
         "vue-router": "^3.1.6",
+        "vuelidate": "^0.7.5",
         "vuetify": "^2.2.28"
     },
     "husky": {

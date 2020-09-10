@@ -1,6 +1,6 @@
 import StateHandler from './StateHandler.js';
 import AdminNotiHandler from './adminNotiHandler';
-import VueRouter from 'vue-router';
+
 export default {
     mixins: [StateHandler, AdminNotiHandler],
     data() {
@@ -26,11 +26,11 @@ export default {
     },
     methods: {
         //test function to wait response from server .. use like this -> .then(this.sleeper(5000))
-        // sleeper(ms) {
-        //   return function(x) {
-        //     return new Promise(resolve => setTimeout(() => resolve(x), ms));
-        //   };
-        // },
+        sleeper(ms) {
+          return function(x) {
+            return new Promise(resolve => setTimeout(() => resolve(x), ms));
+          };
+        },
         submitCreate() {
             this.loading = true;
             axios.post(`/admin/${this.statename}/add${this.changeSingular(this.statename)}`, this.fields).then(response => {
@@ -69,14 +69,17 @@ export default {
             });
         },
         submitEdit() {
-            axios.post(`/admin/${this.statename}/update/${this.target_item.id}`, this.fields).then(() => {
-                console.log('enter edit');
+            this.loading = true;
+            this.editDialog = false;
+
+            axios.post(`/admin/${this.statename}/update/${this.target_item.id}`, this.fields).then(this.sleeper(5000)).then(() => {
                 // this.replacerecord(this.statename,this.target_item.id);
                 this.create_admin_noti('edit', this.target_item)
                 this.alertType = "success";
                 this.alertMessage = (this.target_item.name) ? `${this.changeSingular(this.statename)} ${this.target_item.name} is edited successfully` : `${this.changeSingular(this.statename)} id:${this.target_item.id} edited successfully`;
                 this.alert = true;
-                this.editDialog = false;
+                this.loading = false;
+
                 this.target_item = null;
                 this.fields = {};
                 this.errors = {};

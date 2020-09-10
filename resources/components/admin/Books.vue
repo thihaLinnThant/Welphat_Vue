@@ -1,6 +1,8 @@
 <template>
   <v-container fluid>
-
+        <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
     <v-snackbar v-model="alert" color="success">
       {{alertMessage}}
       <v-btn text @click="alert = false">Close</v-btn>
@@ -13,17 +15,12 @@
           <v-spacer></v-spacer>
           <v-btn text @click="deleteDialog = false; target_item = '';" color="primary" outlined>No</v-btn>
 
-          <v-btn
-            text
-            @click="deleteDialog = false; submitDelete();"
-          >Yes</v-btn>
+          <v-btn text @click="deleteDialog = false; submitDelete();">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-
-
-    <v-dialog v-model="updateDialog" max-width="1000" persistent>
+    <v-dialog v-model="editDialog" max-width="1000" persistent>
       <v-form @submit.prevent="save()" ref="form">
         <v-card>
           <v-card-title>
@@ -33,100 +30,116 @@
             <v-container>
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-text-field label="Name" requried v-model="fields.edit_name" :rules="[v => !!v || 'Name is required']" outlined></v-text-field>
+                  <v-text-field
+                    label="Name"
+                    requried
+                    v-model="$v.fields.edit_name.$model"
+                    outlined
+                  ></v-text-field>
+                  <small class="red--text" v-if="!$v.fields.edit_name.required">Book Name is required.</small>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-autocomplete
-                    v-model="fields.edit_authors"
+                    v-model="$v.fields.edit_authors.$model"
                     outlined
                     :items="author_list"
                     item-text="name"
                     item-value="id"
                     multiple
                     label="Authors"
-                    :rules="[v => v.length > 0 || 'Author is required']"
                     required
                   ></v-autocomplete>
+                  <small class="red--text" v-if="!$v.fields.edit_authors.required">Author is required.</small>
+
                 </v-col>
                 <v-col cols="12">
                   <v-textarea
-                    v-model="fields.edit_book_description"
+                    v-model="$v.fields.edit_book_description.$model"
                     required
                     outlined
                     label="Description"
-                    :rules="[v => v.length > 0 || 'Description is required']"
                   ></v-textarea>
+                  <small class="red--text" v-if="!$v.fields.edit_book_description.required">Description is required.</small>
+
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-text-field
-                    v-model="fields.edit_book_price"
+                    v-model="$v.fields.edit_book_price.$model"
                     required
                     outlined
                     label="Price"
                     suffix="ks"
-                    :rules="[v => !!v || 'Price is required']"
                   ></v-text-field>
+                  <small class="red--text" v-if="!$v.fields.edit_book_price.required">Price is required.</small>
+
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-text-field
-                    v-model="fields.edit_book_published_date"
+                    v-model="$v.fields.edit_book_published_date.$model"
                     outlined
                     label="Publish date"
                     placeholder="2020/05/29"
                     requried
-                    :rules="[v => !!v || 'Date is required']"
                   ></v-text-field>
+                  <small class="red--text" v-if="!$v.fields.edit_book_published_date.required">Published date is required.</small>
+
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-autocomplete
-                    v-model="fields.edit_categories"
+                    v-model="$v.fields.edit_categories.$model"
                     outlined
                     :items="category_list"
                     item-text="name"
                     item-value="id"
                     multiple
                     label="Categories"
-                    :rules="[v => v.length > 0 || 'Category is required']"
                     required
                   ></v-autocomplete>
+                  <small class="red--text" v-if="!$v.fields.edit_categories.required">Category is required.</small>
+0 
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-autocomplete
-                    v-model="fields.edit_tags"
+                    v-model="$v.fields.edit_tags.$model"
                     outlined
                     :items="tag_list"
                     item-text="name"
                     item-value="id"
                     multiple
                     label="Tags"
-                    :rules="[v => v.length > 0 || 'Tag is required']"
                     required
                   ></v-autocomplete>
+                  <small class="red--text" v-if="!$v.fields.edit_tags.required">Tag is required.</small>
+
                 </v-col>
+
                 <v-col cols="12" md="6">
                   <v-autocomplete
-                    v-model="fields.edit_publisher"
+                    v-model="$v.fields.edit_publisher.$model"
                     :items="publisher_list"
                     item-text="name"
                     item-value="id"
                     outlined
                     label="Publisher"
                     requried
-                    :rules="[v => !!v || 'Publisher is required']"
                   ></v-autocomplete>
+                  <small class="red--text" v-if="!$v.fields.edit_publisher.required">Publisher is required.</small>
+
                 </v-col>
+                
                 <v-col cols="12" md="6">
                   <v-autocomplete
-                    v-model="fields.edit_suppliers"
+                    v-model="$v.fields.edit_suppliers.$model"
                     outlined
                     :items="supplier_list"
                     item-text="name"
                     item-value="id"
                     multiple
                     label="Suppliers"
-                    :rules="[v => v.length > 0 || 'Supplier is required']"
                     required
                   ></v-autocomplete>
+                  <small class="red--text" v-if="!$v.fields.edit_suppliers.required">Supplier is required.</small>
+
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-btn @click="toggleImageUpShow">Upload Image</v-btn>
@@ -154,18 +167,16 @@
             </v-container>
           </v-card-text>
           <v-card-actions>
+            <p v-if="validationStatus == 'error'" class="red--text">Complete your information!</p>
+
             <v-spacer></v-spacer>
-            <v-btn text @click="updateDialog = false; target_item = ''; previewImage = null">Cancel</v-btn>
-            <v-btn
-              color="primary"
-              text
-              type="submit"
-              outlined
-            >Save</v-btn>
+            <v-btn text @click="editDialog = false; target_item = ''; previewImage = null">Cancel</v-btn>
+            <v-btn color="primary" text type="submit" outlined>Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
     </v-dialog>
+
     <v-row class="d-flex">
       <h2>Books</h2>
       <v-spacer></v-spacer>
@@ -207,9 +218,7 @@
             <router-link :to="'/admin/books/'+book.id" style="text-decoration:none">
               <v-btn>View</v-btn>
             </router-link>
-            <v-btn
-              @click="openUpdateDialog(book)"
-            >Edit</v-btn>
+            <v-btn @click="openUpdateDialog(book)">Edit</v-btn>
             <v-btn @click="deleteDialog = true; target_item = book">Delete</v-btn>
           </v-card-actions>
 
@@ -251,22 +260,25 @@
 import CrudHandler from "../../js/CRUDHandler";
 import dataListMixin from "../../js/dataListMixin";
 import myUpload from "vue-image-crop-upload";
+import formValidation from "../../js/formValidation";
 
 export default {
-  mixins: [dataListMixin,CrudHandler],
+  mixins: [dataListMixin, CrudHandler, formValidation],
+
   components: {
-    "my-upload": myUpload
+    "my-upload": myUpload,
   },
   data() {
     return {
+      loading: false,
       search: "",
       progress: false,
-      updateDialog: false,
-      fields: {},
+      editDialog: false,
+      validationStatus: "",
       previewImage: null,
       statename: "books",
-      deleteDialog : false,
-      imageUp : false,
+      deleteDialog: false,
+      imageUp: false,
     };
   },
 
@@ -279,14 +291,17 @@ export default {
     },
     current_page() {
       return this.$store.state.pagination_current;
-    }
+    },
+  },
+  created() {
+    console.log(this.$v);
   },
   methods: {
     uploadImage(e) {
       const image = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.previewImage = e.target.result;
         this.fields.edit_image = e.target.result;
       };
@@ -310,25 +325,25 @@ export default {
       }
     },
     openUpdateDialog(book) {
-      this.updateDialog = true
-      this.target_item = book
-      this.fields.edit_name = book.name
-      this.fields.edit_authors = book.authors.map(value => value.id)
-      this.fields.edit_book_description = book.description
-      this.fields.edit_book_price = book.price
-      this.fields.edit_book_published_date = book.published_date
-      this.fields.edit_categories = book.categories.map(value => value.id)
-      this.fields.edit_tags = book.tags.map(value => value.id)
-      this.fields.edit_publisher = book.publisher.id
-      this.fields.edit_suppliers = book.suppliers.map(value => value.id)
-      this.fields.edit_image = book.thumb
+      this.editDialog = true;
+      this.target_item = book;
+      this.fields.edit_name = book.name;
+      this.fields.edit_authors = book.authors.map((value) => value.id);
+      this.fields.edit_book_description = book.description;
+      this.fields.edit_book_price = book.price;
+      this.fields.edit_book_published_date = book.published_date;
+      this.fields.edit_categories = book.categories.map((value) => value.id);
+      this.fields.edit_tags = book.tags.map((value) => value.id);
+      this.fields.edit_publisher = book.publisher.id;
+      this.fields.edit_suppliers = book.suppliers.map((value) => value.id);
+      this.fields.edit_image = book.thumb;
     },
     toggleImageUpShow() {
       this.imageUp = !this.imageUp;
     },
     cropSuccess(imgDataUrl, field) {
       this.fields.image = imgDataUrl;
-      console.log(imgDataUrl)
+      console.log(imgDataUrl);
       this.fields.edit_image = imgDataUrl;
 
       console.log("-------- crop success --------");
@@ -343,25 +358,18 @@ export default {
       console.log(status);
     },
     save() {
-      this.$refs.form.validate();
-      console.log("here")
-      if (
-        !this.fields.edit_name ||
-        !this.fields.edit_book_description ||
-        !this.fields.edit_authors || this.fields.edit_authors.length < 0 ||
-        !this.fields.edit_book_price ||
-        !this.fields.edit_book_published_date ||
-        !this.fields.edit_tags || this.fields.edit_tags.length < 0 ||
-        !this.fields.edit_categories || this.fields.edit_categories.length < 0 ||
-        !this.fields.edit_publisher ||
-        !this.fields.edit_suppliers || !this.fields.edit_suppliers.length < 0
-      ) {
-        console.log('book cant update');
+      this.$v.$touch();
+      this.$v.$invalid
+        ? (this.validationStatus = "error")
+        : (this.validationStatus = "success");
+
+      if (!this.$v.$invalid) {
+        this.submitEdit();
+      } else {
         return;
       }
-      this.submitEdit()
-    }
-  }
+    },
+  },
 };
 </script>
 
