@@ -3686,6 +3686,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       this.$refs.form.validate();
+      console.log("here");
 
       if (!this.fields.edit_name || !this.fields.edit_book_description || !this.fields.edit_authors || this.fields.edit_authors.length < 0 || !this.fields.edit_book_price || !this.fields.edit_book_published_date || !this.fields.edit_tags || this.fields.edit_tags.length < 0 || !this.fields.edit_categories || this.fields.edit_categories.length < 0 || !this.fields.edit_publisher || !this.fields.edit_suppliers || !this.fields.edit_suppliers.length < 0) {
         console.log('book cant update');
@@ -22247,175 +22248,162 @@ var render = function() {
                           _vm._v(_vm._s(_vm.sliceWord(author.bio, 300, "...")))
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c(
-                              "row",
-                              {
-                                staticClass: "d-flex",
-                                attrs: { justify: "space-between" }
-                              },
-                              [
-                                _c(
-                                  "v-tooltip",
-                                  {
-                                    attrs: { bottom: "" },
-                                    scopedSlots: _vm._u(
-                                      [
-                                        {
-                                          key: "activator",
-                                          fn: function(ref) {
-                                            var on = ref.on
-                                            return [
-                                              _c(
-                                                "v-btn",
-                                                _vm._g(
-                                                  {
-                                                    staticClass: "mt-1",
-                                                    attrs: {
-                                                      text: "",
-                                                      icon: ""
-                                                    },
-                                                    on: {
-                                                      click: function($event) {
-                                                        _vm.editDialog = true
-                                                        _vm.target_item = author
-                                                        _vm.fields.edit_name =
-                                                          author.name
-                                                        _vm.fields.edit_bio =
-                                                          author.bio
-                                                        _vm.fields.edit_image =
-                                                          author.thumb
-                                                      }
-                                                    }
-                                                  },
-                                                  on
-                                                ),
-                                                [
-                                                  _c("v-icon", [
-                                                    _vm._v("mdi-pencil")
-                                                  ])
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          }
-                                        }
-                                      ],
-                                      null,
-                                      true
-                                    )
-                                  },
-                                  [_vm._v(" "), _c("span", [_vm._v("edit")])]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-tooltip",
-                                  {
-                                    attrs: { bottom: "" },
-                                    scopedSlots: _vm._u(
-                                      [
-                                        {
-                                          key: "activator",
-                                          fn: function(ref) {
-                                            var on = ref.on
-                                            return [
-                                              _c(
-                                                "v-btn",
-                                                _vm._g(
-                                                  {
-                                                    staticClass: "mt-1",
-                                                    attrs: {
-                                                      text: "",
-                                                      icon: ""
-                                                    },
-                                                    on: {
-                                                      click: function($event) {
-                                                        _vm.deleteDialog = true
-                                                        _vm.target_item = author
-                                                      }
-                                                    }
-                                                  },
-                                                  on
-                                                ),
-                                                [
-                                                  _c("v-icon", [
-                                                    _vm._v("mdi-delete")
-                                                  ])
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          }
-                                        }
-                                      ],
-                                      null,
-                                      true
-                                    )
-                                  },
-                                  [_vm._v(" "), _c("span", [_vm._v("Delete")])]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticStyle: { "text-decoration": "none" },
-                                    attrs: { to: "/admin/authors/" + author.id }
-                                  },
-                                  [
-                                    _c(
-                                      "v-tooltip",
+                        _c("td", [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "d-flex",
+                              attrs: { justify: "space-between" }
+                            },
+                            [
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
                                       {
-                                        attrs: { bottom: "" },
-                                        scopedSlots: _vm._u(
-                                          [
-                                            {
-                                              key: "activator",
-                                              fn: function(ref) {
-                                                var on = ref.on
-                                                return [
-                                                  _c(
-                                                    "v-btn",
-                                                    _vm._g(
-                                                      {
-                                                        staticClass: "mt-1",
-                                                        attrs: {
-                                                          text: "",
-                                                          icon: ""
-                                                        }
-                                                      },
-                                                      on
-                                                    ),
-                                                    [
-                                                      _c("v-icon", [
-                                                        _vm._v("mdi-eye")
-                                                      ])
-                                                    ],
-                                                    1
-                                                  )
-                                                ]
-                                              }
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-btn",
+                                              _vm._g(
+                                                {
+                                                  staticClass: "mt-1",
+                                                  attrs: { text: "", icon: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.editDialog = true
+                                                      _vm.target_item = author
+                                                      _vm.fields.edit_name =
+                                                        author.name
+                                                      _vm.fields.edit_bio =
+                                                        author.bio
+                                                      _vm.fields.edit_image =
+                                                        author.thumb
+                                                    }
+                                                  }
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-pencil")
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("edit")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-btn",
+                                              _vm._g(
+                                                {
+                                                  staticClass: "mt-1",
+                                                  attrs: { text: "", icon: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.deleteDialog = true
+                                                      _vm.target_item = author
+                                                    }
+                                                  }
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-delete")
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Delete")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  staticStyle: { "text-decoration": "none" },
+                                  attrs: { to: "/admin/authors/" + author.id }
+                                },
+                                [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              return [
+                                                _c(
+                                                  "v-btn",
+                                                  _vm._g(
+                                                    {
+                                                      staticClass: "mt-1",
+                                                      attrs: {
+                                                        text: "",
+                                                        icon: ""
+                                                      }
+                                                    },
+                                                    on
+                                                  ),
+                                                  [
+                                                    _c("v-icon", [
+                                                      _vm._v("mdi-eye")
+                                                    ])
+                                                  ],
+                                                  1
+                                                )
+                                              ]
                                             }
-                                          ],
-                                          null,
-                                          true
-                                        )
-                                      },
-                                      [
-                                        _vm._v(" "),
-                                        _c("span", [_vm._v("View")])
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [_vm._v(" "), _c("span", [_vm._v("View")])]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ])
                       ])
                     ])
                   })
@@ -91238,15 +91226,19 @@ __webpack_require__.r(__webpack_exports__);
         _this.loading = false;
         axios.get("/api/admin/".concat(_this.statename, "/lastrecord")).then(function (_ref) {
           var data = _ref.data;
-
           // ############################### current off cuz of pusher error ##############################
           // this.create_admin_noti('create', data);
-          _this.$router.push({
-            name: 'bookview',
-            params: {
-              id: data.id
-            }
-          });
+          var routename = "".concat(_this.changeSingular(_this.statename), "view");
+          console.log(routename);
+
+          if (routename == 'bookview' || routename == 'userview' || routename == 'authorview') {
+            _this.$router.push({
+              name: "".concat(_this.changeSingular(_this.statename), "view"),
+              params: {
+                id: data.id
+              }
+            });
+          }
         });
         _this.alertMessage = 'Item created successfully';
         _this.alertType = "success";

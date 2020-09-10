@@ -200,6 +200,9 @@ class BookController extends Controller
         $book->published_date = $request->edit_book_published_date;
         
         $file = file_get_contents($request->edit_image);
+
+        
+
         $path = '/images/books/' . $id . "/thumb_nail.png";
         Storage::disk('public')->put($path, $file);
         
