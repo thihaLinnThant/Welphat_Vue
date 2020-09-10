@@ -344,6 +344,7 @@ export default {
     },
     save() {
       this.$refs.form.validate();
+      console.log("here")
       if (
         !this.fields.edit_name ||
         !this.fields.edit_book_description ||

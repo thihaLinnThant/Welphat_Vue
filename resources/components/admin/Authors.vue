@@ -189,7 +189,7 @@
               <td>{{author.name}}</td>
               <td>{{sliceWord(author.bio,300,'...')}}</td>
               <td>
-                <row class="d-flex" justify="space-between">
+                <div class="d-flex" justify="space-between">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn
@@ -230,7 +230,7 @@
                       <span>View</span>
                     </v-tooltip>
                   </router-link>
-                </row>
+                </div>
               </td>
             </tr>
           </tbody>

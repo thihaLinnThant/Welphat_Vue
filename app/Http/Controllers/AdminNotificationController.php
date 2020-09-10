@@ -55,6 +55,7 @@ class AdminNotificationController extends Controller
         $collection = AdminNotification::with('committer:id,name')
                         ->with('committed_item:id,name')
                         ->latest()->take(20)->get();
+                     
         foreach($collection as $noti){
             $this->get_extra_data($noti);
         }
@@ -90,14 +91,14 @@ class AdminNotificationController extends Controller
     public function create(Request $request){
         
         $seen_by = (string)Auth::user()->id . ',';
-        
+        dd($request);
         $noti = AdminNotification::create([
             'noti_type' => $request->noti_type,
             'message'   => $request->message,
             'committer_id' => $request->committer_id,
             'committer_type' => $request->committer_type,
             'seen_by'   => $seen_by,
-            'committed_item_id' => $request->committed_item_id,
+            'committed_item_id' => $request->committed_item_id, 
             'committed_item_type' => $request->committed_item_type,
         ]);
             

@@ -26,7 +26,7 @@ export default{
                 console.log('error in notificationHandler');
                 console.log(error.response);
             });
-            this.lastrecord('notifications');
+            this.lastrecord('notifications'); 
         },
         receive_noti(event) {
             this.lastrecord('notifications');

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-row>
       <v-btn text icon @click="$router.go(-1)">
         <v-icon>mdi-arrow-left</v-icon>
@@ -95,6 +95,14 @@
                 <v-chip class="ma-1 link">#{{tag.name}}</v-chip>
               </router-link>
             </span>
+
+            <v-divider style="margin: 20px"></v-divider>
+            <v-header>BOOK INFO</v-header>
+            <ul>
+              <li>Pages - {{book.pages}}</li>
+              <li>BookSize - {{book.bookSize}}</li>
+              <li>Language - {{book.lang}}</li>
+            </ul>
           </v-col>
         </v-row>
 
@@ -159,7 +167,7 @@
         </v-tabs>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>

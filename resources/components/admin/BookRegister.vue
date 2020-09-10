@@ -3,10 +3,13 @@
     class="ma-10"
     @submit.prevent="submitCreate"
     ref="form"
-    v-model="valid"
     enctype="multipart/form-data"
     lazy-validation
   >
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+
     <h2>Book Register</h2>
     <v-row justify="center">
       <v-col cols="12" md="6">
@@ -119,7 +122,7 @@
         <input type="file" @change="uploadImage" requried :rules="[v => !!v || 'Date is required']" />
       </v-col>
 
-      <v-card width="250px">
+      <v-card width="250px" v-if="previewImage">
         <v-img class="white--text align-end" height="200px" :src="previewImage">
           <v-card-title>{{ fields.book_name }}</v-card-title>
         </v-img>
@@ -135,6 +138,7 @@ import dataListMixin from '../../js/dataListMixin';
 export default {
   data() {
     return {
+      loading : false,
       fields: {},
       image_url:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ3mlqedKcDFuzWNP0CybnRWz8H9TTZVw8d5yUjf1dclZrJX53g&usqp=CAU",
@@ -151,7 +155,6 @@ export default {
       reader.readAsDataURL(image);
       reader.onload = e => {
         this.previewImage = e.target.result;
-        console.log(this.previewImage);
         this.fields.image = e.target.result;
       };
     },

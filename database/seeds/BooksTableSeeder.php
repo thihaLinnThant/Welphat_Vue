@@ -34,13 +34,13 @@ class BooksTableSeeder extends Seeder
                 'bookSize' => 5,
                 'supplier_id' => Supplier::find(rand(1,10))->id
             ]);
-            // $file = file_get_contents("https://creativebonito.com/wp-content/uploads/2018/07/book-cover-mockup-templates-cover.png");
-            // $path = '/images/books/' . $i . "/image_1.png";
-            // Storage::disk('public')->put($path , $file);
+            $file = file_get_contents("https://creativebonito.com/wp-content/uploads/2018/07/book-cover-mockup-templates-cover.png");
+            $path = '/images/books/' . $i . "/image_1.png";
+            Storage::disk('public')->put($path , $file);
 
-            // $thumb_file = file_get_contents('https://creativebonito.com/wp-content/uploads/2018/07/book-cover-mockup-templates-cover.png');
-            // $thumb_path = '/images/books/' . $i . '/thumb_nail.png';
-            // Storage::disk('public')->put($thumb_path , $thumb_file);
+            $thumb_file = file_get_contents('https://creativebonito.com/wp-content/uploads/2018/07/book-cover-mockup-templates-cover.png');
+            $thumb_path = '/images/books/' . $i . '/thumb_nail.png';
+            Storage::disk('public')->put($thumb_path , $thumb_file);
 
             $book->tags()->sync($tags->random(3));
             $book->suppliers()->sync($suppliers->random(3));

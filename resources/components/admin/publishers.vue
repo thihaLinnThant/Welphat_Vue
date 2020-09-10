@@ -28,7 +28,6 @@
           <v-btn text @click="deleteDialog = false; target_item = '';" outlined color="primary">No</v-btn>
 
           <v-btn text @click="deleteDialog = false; submitDelete();">Yes</v-btn>
-
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -71,6 +70,12 @@
                 <td>{{publisher.id}}</td>
                 <td>{{publisher.name}}</td>
                 <td>{{publisher.count}}</td>
+                <td v-if="publisher.ph_no">{{publisher.ph_no}}</td>
+                <td v-else>Not Available</td>
+                <td v-if="publisher.address">{{publisher.address}}</td>
+                <td v-else>Not Available</td>
+                <td v-if="publisher.email">{{publisher.email}}</td>
+                <td v-else>Not Available</td>
                 <td class="d-flex flex-row">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -88,15 +93,18 @@
                     </template>
                     <span>edit</span>
                   </v-tooltip>
-                  <router-link :to="{ name: 'publisherview', params: {id: publisher.id} }" style="text-decoration: none;">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn class="mt-1" text icon v-on="on">
-                        <v-icon>mdi-eye</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>view books</span>
-                  </v-tooltip>
+                  <router-link
+                    :to="{ name: 'publisherview', params: {id: publisher.id} }"
+                    style="text-decoration: none;"
+                  >
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn class="mt-1" text icon v-on="on">
+                          <v-icon>mdi-eye</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>view books</span>
+                    </v-tooltip>
                   </router-link>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -134,25 +142,29 @@ export default {
         {
           text: "Id",
           align: "start",
-          value: "id"
+          value: "id",
         },
         { text: "Name", value: "name" },
         { text: "Book Count", value: "count" },
-        { text: "Actions", value: "actions" }
+        { text: "Phone Number", value: "ph_no" },
+        { text: "Address", value: "address" },
+        { text: "Email", value: "email" },
+        { text: "Actions", value: "actions" },
+
       ],
       act: "/admin/publishers/addpublisher",
       statename: "publishers",
       editDialog: false,
       deleteDialog: false,
       target_item: "",
-      cascade: null
+      cascade: null,
     };
   },
   computed: {
     publishers() {
       return this.$store.state.publishers;
-    }
-  }
+    },
+  },
 };
 </script>
 

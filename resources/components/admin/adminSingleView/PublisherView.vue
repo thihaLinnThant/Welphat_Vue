@@ -1,13 +1,42 @@
 <template>
   <div>
     <v-row class="publisherDisplayContainer">
-      <p style="text-align: center;">Publisher<br> <span style="font-size: 50px"> {{publisher.name}}</span> </p><br>
-
+      <p style="text-align: center;">
+        Publisher
+        <br />
+        <span style="font-size: 50px">{{publisher.name}}</span>
+      </p>
+      <br />
     </v-row>
     <v-row class="mx-auto">
       <v-col cols="12" md="12">
-        <h3 v-if="publisher.books.length > 0">Books ( {{publisher.books.length}} )</h3>
-        <h3 style="text-align:center;color:grey;" v-else>There is no book belonging to {{publisher.name}}</h3>
+        <v-row justify="space-between">
+          <h3 v-if="publisher.books.length > 0">Books ( {{publisher.books.length}} )</h3>
+          <h3
+            style="text-align:center;color:grey;"
+            v-else
+          >There is no book belonging to {{publisher.name}}</h3>
+          <v-menu offset-y style="text-align:right">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">Detail</v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <p v-if="publisher.ph_no">Phone no - {{ publisher.ph_no }}</p>
+                <p>Not Available</p>
+              </v-list-item>
+              <v-list-item>
+                <p v-if="publisher.address">Address - {{ publisher.address }}</p>
+                <p>Not Available</p>
+              </v-list-item>
+              <v-list-item>
+                <p v-if="publisher.email">Email - {{ publisher.email }}</p>
+                <p>Not Available</p>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-row>
+
         <br />
         <div v-for="(book,index) in publisher.books" :key="index">
           <v-card>
@@ -23,7 +52,10 @@
                 <p>Published on - {{book.published_date}}</p>
                 <v-row>
                   <v-spacer></v-spacer>
-                  <router-link :to="{ name: 'bookview', params: { id: book.id }}" style="text-decoration: none">
+                  <router-link
+                    :to="{ name: 'bookview', params: { id: book.id }}"
+                    style="text-decoration: none"
+                  >
                     <v-btn outlined rounded>view book</v-btn>
                   </router-link>
                 </v-row>
@@ -39,12 +71,12 @@
 
 <script>
 export default {
-  computed:{
-    publisher(){
+  computed: {
+    publisher() {
       return this.$store.state.publisherview;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="css" scoped>
 .publisherDisplayContainer {
