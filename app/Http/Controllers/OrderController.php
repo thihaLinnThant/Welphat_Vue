@@ -11,7 +11,6 @@ class OrderController extends Controller
 
     private function get_orders() {
         $collection = Order::with('user')->with('book_orders')->get();
-
         $orders = collect();
         foreach($collection as $order){
             $order->total_price = $order->totalPrice();
@@ -23,13 +22,10 @@ class OrderController extends Controller
               }else{
                 $order->book_orders[$key]->deleted = true;
                 $order->book_orders[$key]->thumb = null;
-              }
-              
+              } 
             }
-
             $orders->push($order);
         }
-
         return collect(['orders' => $orders]);
     }
 
