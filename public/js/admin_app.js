@@ -94912,9 +94912,9 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
-__webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
-module.exports = __webpack_require__(/*! /home/atom/minthudev/Welphat_Vue/resources/sass/user.scss */"./resources/sass/user.scss");
+__webpack_require__(/*! /home/atom/Desktop/welphat/Welphat_Vue/resources/js/admin_app.js */"./resources/js/admin_app.js");
+__webpack_require__(/*! /home/atom/Desktop/welphat/Welphat_Vue/resources/sass/admin.scss */"./resources/sass/admin.scss");
+module.exports = __webpack_require__(/*! /home/atom/Desktop/welphat/Welphat_Vue/resources/sass/user.scss */"./resources/sass/user.scss");
 
 
 /***/ })
